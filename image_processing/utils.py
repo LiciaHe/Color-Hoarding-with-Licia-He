@@ -1,5 +1,6 @@
-from PIL import Image
+from PIL import Image,ImageDraw
 import os,pickle,json
+from re import sub
 
 def mkdir(dir):
     if not os.path.exists(dir):
@@ -8,6 +9,10 @@ def mkdir(dir):
 def read_image(imgAddress):
     im_o = Image.open(imgAddress)
     return im_o
+def read_draw_image(imgAddress):
+    im=read_image(imgAddress)
+    img_draw = ImageDraw.Draw(im, "RGB")
+    return im,img_draw
 
 def save_object(obj, filename):
     with open(filename, 'wb') as output:
@@ -20,3 +25,8 @@ def load_object(fileName):
         obj = pickle.load(inputF)
         inputF.close()
     return obj
+
+def camel_case(s):
+  s = sub(r"(_|-)+", " ", s).title()
+  # return ''.join([s[0].lower(), s[1:]])
+  return s
