@@ -95,7 +95,9 @@ seg_output_dir="../processed/segmented/"
 #     step1_image_segmentation(source_dir,seg_output_dir,filename)
 
 
-#step 2 : secondary cut (remove boundary and name)
-clean_seg_dir=f'{output_dir}clean_seg/'
-utils.mkdir(clean_seg_dir)
-step2_secondary_clean_cut(data_name,clean_seg_dir,seg_output_dir)
+# #step 2 : secondary cut (remove boundary and name)
+# clean_seg_dir=f'{output_dir}clean_seg/'
+# utils.mkdir(clean_seg_dir)
+# step2_secondary_clean_cut(data_name,clean_seg_dir,seg_output_dir)
+
+# # step3: extract color and store in json
