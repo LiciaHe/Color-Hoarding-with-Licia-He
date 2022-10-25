@@ -10,7 +10,7 @@ import color_process as CP
 import extcolors
 import colorsys
 
-def extract_color_from_one_image(img_loc,minimum_percentage=0.05,filter_rgb=235,top_rank=10):
+def extract_color_from_one_image(img_loc,minimum_percentage=0.01,filter_rgb=235,top_rank=10):
     '''
     Only keep color that occupies the minimum percentage of pixels
     :param img_loc:
@@ -97,8 +97,14 @@ def step0_extract_and_filter_color():
         "count":cts,
         "collection":collection_lst
     }
+    for v in full_collection["collection"]:
+        v.sort()
+
     with open(color_output_name+".json","w") as cpj:
         json.dump(full_collection,cpj)
+    with open(web_output_name,"w") as cpj:
+        json.dump(full_collection,cpj)
+
 
 source_dir="../processed/clean_seg/"
 output_dir="../processed/analysis/"
@@ -106,6 +112,7 @@ data_name="../raw_data\color_hoarder_data.csv"
 
 utils.mkdir(output_dir)
 color_output_name=output_dir+"full_data"
+web_output_name=f'../web/full_data.json'
 
 file_ext=".jpg"
 
