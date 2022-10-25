@@ -186,6 +186,42 @@ button{
 .popupinfo{
     text-align: center;
 }
+
+/*visualization*/
+
+#main_display{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1%;
+}
+.card{
+    width: max(5vw,30px);
+    height:  max(5vw,30px);
+    margin: 1vw;
+    border: 8px solid white;
+    padding: 2vw;
+
+}
+/*.card:hover{*/
+/*    border: 8px solid black;*/
+/*    width: 30vw;*/
+/*    height: 40vw;*/
+/*    background-color: white;*/
+/*}*/
+.card img{
+    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    display: none;
+}
+.card div{
+    font-size: max(1.5vw,22px);
+}
+
 /*responsive*/
 @media only screen and (max-width: 700px) {
     *{

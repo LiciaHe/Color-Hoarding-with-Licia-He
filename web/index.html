@@ -40,8 +40,8 @@
                 <div><label for="sortby">Sort By: </label></div>
                 <div>  <select name="sortby" id="sortby">
                     <option value="Hue">Hue</option>
-                    <option value="Value">Value</option>
                     <option value="Saturation">Saturation</option>
+                    <option value="Light">Light</option>
                     <option value="Saturation">Name</option>
                     <option value="Saturation">Brand</option>
                 </select></div>
@@ -50,9 +50,10 @@
                 <div id="Group_By">
                     <div><label for="groupby">Group By: </label></div>
                     <div>  <select name="groupby" id="groupby">
-                        <option value="volvo">Brand</option>
-                        <option value="saab">Type</option>
-                        <option value="opel">Hue</option>
+                        <option value="None">None</option>
+                        <option value="Brand">Brand</option>
+                        <option value="Type">Type</option>
+                        <option value="Hue">Hue</option>
                     </select></div>
                 </div>
                 <div>
@@ -72,53 +73,8 @@
 
 
             </div>
-
-
-<!--            <div class="popupFlex">-->
-<!--                <div class="filter_div">-->
-<!--                    <label class="section_title"> Filter by Brand</label>-->
-<!--                    <div class="filter_options">-->
-<!--                        <div>-->
-<!--                            <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">-->
-<!--                            <label for="vehicle3"> I have a boat</label>-->
-<!--                        </div>-->
-<!--                        <div>-->
-<!--                            <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">-->
-<!--                            <label for="vehicle3"> I have a boat</label>-->
-<!--                        </div>-->
-<!--                        <div>-->
-<!--                            <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">-->
-<!--                            <label for="vehicle3"> I have a boat</label>-->
-<!--                        </div>-->
-<!--                        <div>-->
-<!--                            <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">-->
-<!--                            <label for="vehicle3"> I have a boat</label>-->
-<!--                        </div>-->
-<!--                        <div>-->
-<!--                            <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">-->
-<!--                            <label for="vehicle3"> I have a boat</label>-->
-<!--                        </div>-->
-<!--                        <div>-->
-<!--                            <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">-->
-<!--                            <label for="vehicle3"> I have a boat</label>-->
-<!--                        </div>-->
-
-<!--                        <div>-->
-<!--                            <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">-->
-<!--                            <label for="vehicle3"> I have a boat</label>-->
-<!--                        </div>-->
-<!--                        <div>-->
-<!--                            <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">-->
-<!--                            <label for="vehicle3"> I have a boat</label>-->
-<!--                        </div>-->
-<!--                        <div>-->
-<!--                            <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">-->
-<!--                            <label for="vehicle3"> I have a boat</label>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--            </div>-->
+            <div id="selected_color"></div>
+            <div id="main_display"></div>
 
         </div>
         <div class="lr_margin"></div>
@@ -126,6 +82,7 @@
 </div>
 <script src="js/utils.js" type="text/javascript"></script>
 <script src="js/ui.js" type="text/javascript"></script>
+<script src="js/visualization.js" type="text/javascript"></script>
 <script src="js/main.js" type="module"></script>
 <!--<script src="js/lazyload.min.js" type="text/javascript"></script>-->
 <!--<script>-->
