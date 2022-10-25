@@ -55,6 +55,18 @@ html, body {
 .nav div{
     padding: 3%;
 }
+.nav select{
+    font-size: max(2vw,20px)
+}
+.nav label{
+    font-size: max(2vw,20px)
+}
+.nav div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 p{
     font-size: max(1.5vw,25px);
     text-align: left;
@@ -105,6 +117,74 @@ img{
     margin-right:15%;
 }
 
+/*button*/
+button{
+    padding: 10px;
+    font-size: max(1.5vw,25px);
+}
+/*pop up*/
+
+#popup {
+    position: absolute;
+    overflow-y: auto;
+    overflow-x: hidden;
+    font-size: 2vw;
+    min-font-size: 8px;
+    display: none;
+    opacity: 0.95;
+    width: 80%;
+    height:80%;
+    left:10%;
+    top:10%;
+    border: 2px solid black;
+    background-color: white;
+    z-index: 1;
+}
+.section_title{
+    font-size: max(1.75vw,30px);
+    padding:1% ;
+}
+#closebtn{
+    position: relative;
+    right: -96%;
+    top:3%;
+    cursor:pointer !important;
+    font-size: max(1.5vw,20px);
+}
+#popupFlex{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.filter_div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom:4%;
+    flex-wrap: wrap;
+}
+.filter_div .section_title{
+    display: block;
+    flex-basis: 30%;
+}
+.filter_div .filter_options{
+    display: flex;
+    flex-basis: 70%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.filter_options div{
+    padding: 1%;
+}
+.popupinfo{
+    text-align: center;
+}
+/*responsive*/
 @media only screen and (max-width: 700px) {
     *{
         font-size: 4vw;
@@ -139,3 +219,69 @@ img{
     }
 
 }
+
+
+
+
+
+/*ROUNDED TOGGLE, REFERENCING FROM W3SCHOOLS https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_switch*/
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #181818;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #01090e;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+

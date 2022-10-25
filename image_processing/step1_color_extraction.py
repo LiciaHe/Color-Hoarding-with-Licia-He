@@ -42,7 +42,11 @@ def step0_extract_and_filter_color():
     cts={
         "brand":{},
         "type":{},
-        "hsv_10_group":{},
+        "hue_10":{},
+    }
+    collections={
+        "brand":set(),
+        "type":set(),
     }
     for i,row in enumerate(rows):
         if i==0:
@@ -51,14 +55,16 @@ def step0_extract_and_filter_color():
         if len(content)<4 or "empty" in row:
             continue
 
-        name=utils.camel_case(content[1])
-        brand=utils.camel_case(content[2])
-        type=utils.camel_case(content[3])
+        name=utils.camel_case(content[1]).strip()
+        brand=utils.camel_case(content[2]).strip()
+        type=utils.camel_case(content[3]).strip()
 
         save_name=f'{source_dir}{brand}_{name}_{type}{file_ext}'
         top_rgbs=extract_color_from_one_image(save_name)
         if len(top_rgbs)<1:
             continue
+        hsls=[colorsys.rgb_to_hsv(*[v/255 for v in rgb]) for rgb in top_rgbs]
+        hue_10_group=int(hsls[0][0]/0.1)
 
         info={
             "name":name,
@@ -66,22 +72,30 @@ def step0_extract_and_filter_color():
             "type":type,
             "note":content[4],
             "rgbs":top_rgbs,
-            "rgb_to_hsv":[colorsys.rgb_to_hsv(*[v/255 for v in rgb]) for rgb in top_rgbs]
+            "rgb_to_hsv":hsls,
+            "hue_10":hue_10_group
         }
+        collections["brand"].add(brand)
+        collections["type"].add(type)
         max_rgb_ct=max(len(top_rgbs),max_rgb_ct)
         colors_storage.append(info)
-        for key,value in [("brand",brand),("type",type)]:
+        info["id"]=len(colors_storage)-1
+        for key,value in [("brand",brand),("type",type),("hue_10",hue_10_group)]:
             if value in cts[key]:
                 cts[key][value]+=1
             else:
                 cts[key][value]=1
-
+    collection_lst={
+        "brand": list(collections["brand"]),
+        "type": list(collections["type"]),
+    }
 
     full_collection={
         "total_color":len(colors_storage),
         "max_rgb_ct":max_rgb_ct,
         "data":colors_storage,
-        "count":cts
+        "count":cts,
+        "collection":collection_lst
     }
     with open(color_output_name+".json","w") as cpj:
         json.dump(full_collection,cpj)

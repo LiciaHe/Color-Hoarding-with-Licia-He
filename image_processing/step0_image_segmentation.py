@@ -66,9 +66,9 @@ def step2_secondary_clean_cut(data_dir,clean_seg_dir,seg_output_dir):
         if len(content)<4 or "empty" in row:
             continue
         img_name=f'{seg_output_dir}{content[0]}{file_ext}'
-        name=utils.camel_case(content[1])
-        brand=utils.camel_case(content[2])
-        type=utils.camel_case(content[3])
+        name=utils.camel_case(content[1]).strip()
+        brand=utils.camel_case(content[2]).strip()
+        type=utils.camel_case(content[3]).strip()
 
         save_name=f'{clean_seg_dir}{brand}_{name}_{type}{file_ext}'
         im=utils.read_image(img_name)
@@ -96,8 +96,8 @@ seg_output_dir="../processed/segmented/"
 
 
 # #step 2 : secondary cut (remove boundary and name)
-# clean_seg_dir=f'{output_dir}clean_seg/'
-# utils.mkdir(clean_seg_dir)
-# step2_secondary_clean_cut(data_name,clean_seg_dir,seg_output_dir)
+clean_seg_dir=f'{output_dir}clean_seg/'
+utils.mkdir(clean_seg_dir)
+step2_secondary_clean_cut(data_name,clean_seg_dir,seg_output_dir)
 
 # # step3: extract color and store in json

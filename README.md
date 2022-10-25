@@ -19,9 +19,11 @@ The system has a couple of goals:
 Maybe more features in the future. 
 
 ### System Options 
-1. Display the primary color extracted. It's sorted by hue by default. Additionally, sort by value or saturation. 
-2. 
-3. Click on any color to display the scan. 
+1. Display the primary color extracted. It's sorted by **hue** by default. Alternatively, you can sort by **value** or **saturation**. 
+2. You can group colors into different columns by **Brand** and **Type** dropdown.
+3. Hover over the color to display the supply information (only available on non-mobile devices).
+4. Click on any color to display the scan.
+5. Double click to add a color into your selection.
 
 
 ## Data Collection 
