@@ -1,4 +1,4 @@
-import * as d3 from "https://cdn.skypack.dev/d3@7";
+// import * as d3 from "https://cdn.skypack.dev/d3@7";
 
 function get_image_loc(d){
     return `swatches/${d["brand"]}_${d["name"]}_${d["type"]}.jpg`
@@ -66,8 +66,9 @@ function generate(){
         window.collection=data["collection"];
         window.count=data["count"];
         console.log(data);
-
-        create_chart();
+        // adjust_swatch_view_size(window.entries[0]);
+        // set_bg_color(window.entries[0])
+        // create_chart();
     })
     // popupDisplay
 }

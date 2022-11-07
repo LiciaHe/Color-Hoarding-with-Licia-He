@@ -172,3 +172,39 @@ function populate_popup(){
 function update_filter(){
     console.log("todo, update filter")
 }
+
+function adjust_swatch_view_size(entry){
+    /**
+     * get the current main content height, set the correct size for full content
+     */
+    let hor_containter=document.getElementById("information");
+    console.log(window.innerHeight)
+    let current_height=hor_containter.clientHeight;
+
+    let fc=document.getElementById("full_content");
+    let target_height=window.innerHeight-current_height
+    fc.setAttribute("style",`height:${target_height}px`);
+
+    let  option_height=document.getElementById("options").clientHeight;
+    let svheight=target_height-option_height;
+    document.getElementById("swatch-view").style.height=`${svheight}px`;
+    console.log(entry)
+    let r1,g1,b1=entry["rgbs"][0];
+    console.log(entry["rgbs"][0])
+    document.getElementById("swatch").setAttribute("style",`height:${svheight}px;background-color:rgb(${r1},${g1},${b1})`);
+
+    let r2,g2,b2=entry["rgbs"][1];
+    document.getElementById("color-view").setAttribute("style",`height:${svheight}px;;background-color:rgb(${r2},${g2},${b2})`);
+
+
+    // console.log(window.innerHeight,current_height,target_height)
+    // console.log()
+
+}
+function set_bg_color(entry){
+    let sw=document.getElementById("swatch");
+    let cv=document.getElementById("color-view");
+    sw.style.backgroundColor=entry["rgbs"][0];
+    cv.style.backgroundColor=entry["rgbs"][1];
+    console.log(sw)
+}

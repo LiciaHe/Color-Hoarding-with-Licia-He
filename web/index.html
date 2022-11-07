@@ -17,34 +17,36 @@
 </div>
 
 <div class="container">
-    <div class="hor_container">
-        <div class="lr_margin"></div>
-        <div id="main_container">
-
-            <h1>
+    <div id="main_container">
+        <div id="information">
+            <p>
                 Color Hoarding with Licia He
-            </h1>
-
-            <p id="about">
-                If Licia can only have one passion project, it would be hoarding colorful art supplies. This is a s color management system that hosts swatches of art supplies (mainly ink and watercolor) in her collection.
             </p>
 
+            <!--                <p id="about">-->
+            <!--                    If Licia can only have one passion project, it would be hoarding colorful art supplies. This is a s color management system that hosts swatches of art supplies (mainly ink and watercolor) in her collection.-->
+            <!--                </p>-->
 
-            <div class="nav">
-                <a href="https://github.com/LiciaHe/Color-Hoarding-with-Licia-He" >About</a> |  <a href="https://www.eyesofpanda.com/">Licia He</a>   | <a href="https://twitter.com/Licia_He" target="_blank">Twitter</a>| <a href="https://www.instagram.com/blahblahpaperblah/" target="_blank">Instagram</a>
 
-            </div>
-            <div class="mini-tag"></div>
+            <!--                <div class="nav">-->
+            <!--                    <a href="https://github.com/LiciaHe/Color-Hoarding-with-Licia-He" >About</a> |  <a href="https://www.eyesofpanda.com/">Licia He</a>   | <a href="https://twitter.com/Licia_He" target="_blank">Twitter</a>| <a href="https://www.instagram.com/blahblahpaperblah/" target="_blank">Instagram</a>-->
+
+            <!--                </div>-->
+        </div>
+        <!--            <div class="mini-tag"></div>-->
+        <div id="full_content">
+
+            <!--                EVERYTHING THAT CAN BE COLORED-->
             <div class="nav" id="options">
                 <div id="Sort_By">
-                <div><label for="sortby">Sort By: </label></div>
-                <div>  <select name="sortby" id="sortby">
-                    <option value="Hue">Hue</option>
-                    <option value="Saturation">Saturation</option>
-                    <option value="Light">Light</option>
-                    <option value="Saturation">Name</option>
-                    <option value="Saturation">Brand</option>
-                </select></div>
+                    <div><label for="sortby">Sort By: </label></div>
+                    <div>  <select name="sortby" id="sortby">
+                        <option value="Hue">Hue</option>
+                        <option value="Saturation">Saturation</option>
+                        <option value="Light">Light</option>
+                        <option value="Saturation">Name</option>
+                        <option value="Saturation">Brand</option>
+                    </select></div>
                 </div>
 
                 <div id="Group_By">
@@ -73,11 +75,13 @@
 
 
             </div>
-            <div id="selected_color"></div>
-            <div id="main_display"></div>
-
+            <!--                <div id="selected_color"></div>-->
+            <!--                <div id="main_display"></div>-->
+            <div id="swatch-view">
+                <div id="swatch"></div>
+                <div id="color-view"></div>
+            </div>
         </div>
-        <div class="lr_margin"></div>
     </div>
 </div>
 <script src="js/utils.js" type="text/javascript"></script>
