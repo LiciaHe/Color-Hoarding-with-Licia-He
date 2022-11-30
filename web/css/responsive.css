@@ -1,0 +1,22 @@
+@use "basic";
+.flex-container, .center-start-column, .center-center-row {
+  display: flex; }
+
+.center-start-column {
+  align-items: center;
+  justify-content: start;
+  flex-direction: column; }
+
+.center-center-row {
+  align-items: center;
+  justify-content: center;
+  flex-direction: row; }
+
+@media only screen and (max-width: 700px) {
+  * {
+    font-size: 4vw; }
+
+  h1 {
+    font-size: 8vw; } }
+
+/*# sourceMappingURL=responsive.css.map */

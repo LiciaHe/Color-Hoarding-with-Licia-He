@@ -1,0 +1,26 @@
+@use "basic"
+
+.flex-container
+  display: flex
+
+.center-start-column
+  @extend .flex-container
+  align-items: center
+  justify-content: start
+  flex-direction: column
+
+.center-center-row
+  @extend .flex-container
+  align-items: center
+  justify-content: center
+  flex-direction: row
+
+$mobile-font-size:4vw
+
+@media only screen and (max-width: 700px)
+  *
+    font-size: $mobile-font-size
+  h1
+    font-size: $mobile-font-size*2
+
+
