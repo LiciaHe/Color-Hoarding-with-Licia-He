@@ -1,0 +1,29 @@
+@import "responsive"
+//@use 'basic'
+
+#generator-container
+  @extend .flex-container
+  @extend .center-center-row
+  background-color: gray
+  border: 2px solid black
+
+
+#grayscale_container
+  background-color: bisque
+  flex-basis: 10%
+  height: 100%
+  @extend .flex-container
+  @extend .center-start-column
+
+#svg_container
+  background-color: antiquewhite
+  flex-basis: 65%
+  height: 100%
+  flex-grow: 2
+
+#action-area
+  background-color: rgb(43, 122, 141)
+  flex-basis: 25%
+  height: 100%
+  @extend .flex-container
+  @extend .center-start-column

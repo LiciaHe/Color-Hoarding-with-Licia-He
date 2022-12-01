@@ -1,0 +1,41 @@
+@use "basic";
+.flex-container, .center-start-column, #grayscale_container, #action-area, .center-center-row, #generator-container {
+  display: flex; }
+
+.center-start-column, #grayscale_container, #action-area {
+  align-items: center;
+  justify-content: start;
+  flex-direction: column; }
+
+.center-center-row, #generator-container {
+  align-items: center;
+  justify-content: center;
+  flex-direction: row; }
+
+@media only screen and (max-width: 700px) {
+  * {
+    font-size: 4vw; }
+
+  h1 {
+    font-size: 8vw; } }
+#generator-container {
+  background-color: gray;
+  border: 2px solid black; }
+
+#grayscale_container {
+  background-color: bisque;
+  flex-basis: 10%;
+  height: 100%; }
+
+#svg_container {
+  background-color: antiquewhite;
+  flex-basis: 65%;
+  height: 100%;
+  flex-grow: 2; }
+
+#action-area {
+  background-color: #2b7a8d;
+  flex-basis: 25%;
+  height: 100%; }
+
+/*# sourceMappingURL=combo-structures.css.map */
