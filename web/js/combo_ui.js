@@ -26,3 +26,6 @@ function resize(){
     adjust_window_size();
     update_all_svg_size();
 }
+function drag_gray_bar(e){
+    console.log(e)
+}

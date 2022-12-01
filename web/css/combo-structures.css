@@ -24,12 +24,12 @@
 
 #grayscale_container {
   background-color: bisque;
-  flex-basis: 10%;
+  flex-basis: 5%;
   height: 100%; }
 
 #svg_container {
   background-color: antiquewhite;
-  flex-basis: 65%;
+  flex-basis: 70%;
   height: 100%;
   flex-grow: 2; }
 
@@ -37,5 +37,10 @@
   background-color: #2b7a8d;
   flex-basis: 25%;
   height: 100%; }
+
+#grayscale_bar:hover {
+  stroke-width: 4%;
+  stroke: bisque;
+  cursor: row-resize; }
 
 /*# sourceMappingURL=combo-structures.css.map */

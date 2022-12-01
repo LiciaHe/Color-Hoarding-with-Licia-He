@@ -10,14 +10,14 @@
 
 #grayscale_container
   background-color: bisque
-  flex-basis: 10%
+  flex-basis: 5%
   height: 100%
   @extend .flex-container
   @extend .center-start-column
 
 #svg_container
   background-color: antiquewhite
-  flex-basis: 65%
+  flex-basis: 70%
   height: 100%
   flex-grow: 2
 
@@ -27,3 +27,8 @@
   height: 100%
   @extend .flex-container
   @extend .center-start-column
+
+#grayscale_bar:hover
+  stroke-width: 4%
+  stroke: bisque
+  cursor: row-resize
