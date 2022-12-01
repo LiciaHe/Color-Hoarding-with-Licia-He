@@ -12,7 +12,7 @@ function addElementToSvg(element_name,attribute_dict,svg_group_selector){
 }
 
 function addBackgroundRectangle(svg_selector) {
-    addElementToSvg(
+    return addElementToSvg(
         "rect",
         {
         "width":"100%",
@@ -22,8 +22,9 @@ function addBackgroundRectangle(svg_selector) {
         "y":0
         },
         svg_selector
-    );
+    )
 }
+
 
 function initSVG(svg_id,svg_w,svg_h){
     /*
