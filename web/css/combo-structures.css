@@ -18,27 +18,20 @@
 
   h1 {
     font-size: 8vw; } }
-#generator-container {
-  background-color: gray;
-  border: 2px solid black; }
-
 #grayscale_container {
-  background-color: bisque;
   flex-basis: 5%;
   height: 100%; }
 
 #svg_container {
-  background-color: antiquewhite;
   flex-basis: 70%;
   height: 100%;
   flex-grow: 2; }
 
 #action-area {
-  background-color: #2b7a8d;
   flex-basis: 25%;
   height: 100%; }
 
-#grayscale_bar:hover {
+.grayscale_bar:hover {
   stroke-width: 4%;
   stroke: bisque;
   cursor: row-resize; }

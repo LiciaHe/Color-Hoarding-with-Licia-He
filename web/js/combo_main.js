@@ -13,7 +13,7 @@ function make_gradient(){
                 360/hue_break*(i),
                 // 100,
                 100-100/saturation_break*(j),
-                100-window.current_light
+                100-parseInt((window.current_light_lower+window.current_light_upper)/2)
             )
             addElementToSvg(
                 "rect",
@@ -38,27 +38,37 @@ function add_grayscale_bar(){
     let gray_svg=document.getElementById("grayscale_svg");
     window.gray_c_bbox=gray_c.getBoundingClientRect().top;
     window.gray_c_height=gray_c.clientHeight;
-
-    let gray_bar=addElementToSvg(
-        "line",
-        {
-            "x1":"2%",
-            "x2":"96%",
-            "y1":`${window.current_light}%`,
-            "y2":`${window.current_light}%`,
-            // "style":"fill:white;stroke-width:1;stroke:none",
-            "stroke":"yellow",
-            "stroke-width":"4%",
-            "id":"grayscale_bar",
-            "pointer-events":"all"
-        },
-        document.getElementById("grayscale_g")
+    let attr= {
+        "x1":"2%",
+        "x2":"96%",
+        "y1":`${window.current_light_lower}%`,
+        "y2":`${window.current_light_lower}%`,
+        // "style":"fill:white;stroke-width:1;stroke:none",
+        "stroke":"yellow",
+        "stroke-width":"4%",
+        "id":"0_graybar",
+        "class":"grayscale_bar"
+    }
+    let gsg=document.getElementById("grayscale_g");
+    let b1=addElementToSvg(
+        "line",attr,gsg
+    )
+    attr["y1"]=`${window.current_light_upper}%`
+    attr["y2"]=`${window.current_light_upper}%`
+    attr["id"]="1_graybar"
+    let b2=addElementToSvg(
+        "line",attr,gsg
     )
 
-    gray_svg.addEventListener("mousedown",(e)=start_drag_bar)
-    gray_svg.addEventListener("mousemove",drag_bar)
-    gray_svg.addEventListener("mouseup",endDrag)
-    gray_svg.addEventListener("mouseleave",endDrag)
+    for (let i=0;i<2;i++){
+        let item=[b1,b2][i];
+        item.addEventListener("mousedown",(e)=start_drag_bar)
+        item.addEventListener("mousemove",drag_bar)
+        item.addEventListener("mouseup",endDrag)
+        item.addEventListener("mouseleave",endDrag)
+    }
+
+
     // gray_bar.addEventListener("dragend",(e)=>console.log(e))
     // gray_bar.addEventListener("mouseenter",(e)=>console.log(e))
 
@@ -67,6 +77,7 @@ function update_lightness(){
     // given a new lightness level, update the color
     let svg_selector=document.getElementById("combo_g");
     let children=document.getElementsByClassName("gradient_rect");
+    console.log(window.current_light_lower,current_light_upper,100-parseInt((window.current_light_lower+window.current_light_upper)/2))
     for (let ci=0;ci<children.length;ci++){
         let rect=children[ci];
         let ids=rect.getAttribute("id").split("_");
@@ -76,8 +87,9 @@ function update_lightness(){
             360/window.hue_break*(i),
             // 100,
             100-100/window.saturation_break*(j),
-            100-window.current_light
+            100-parseInt((window.current_light_lower+window.current_light_upper)/2)
         )
+
         update_element_attribute(rect,{"fill":hex});
     }
 }
@@ -114,7 +126,8 @@ function generate(){
     //add exporter
     //add
 }
-window.current_light=50;
+window.current_light_lower=45;
+window.current_light_upper=55;
 //responsive
 window.addEventListener("resize",()=>resize())
 window.addEventListener('load', function () {

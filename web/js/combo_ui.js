@@ -2,11 +2,11 @@ function adjust_window_size(){
     /**
      * set up the generator area size (adjusting height)
      */
-    let hor_containter=document.getElementById("information");
-    let current_height=hor_containter.clientHeight;
-    //
+    // let hor_containter=document.getElementById("information");
+    // let current_height=hor_containter.clientHeight;
+    // //
     let gc=document.getElementById("generator-container");
-    let target_height=window.innerHeight-current_height
+    let target_height=window.innerHeight;
     gc.setAttribute("style",`height:${target_height}px`);
 }
 
@@ -28,11 +28,13 @@ function resize(){
 }
 function start_drag_bar(e){
     window.start_drag=true;
-    drag_bar(e)
+    // drag_bar(e)
 }
 function drag_bar(e){
     if (window.start_drag){
-        let line=document.getElementById("grayscale_bar");
+        // let line=document.getElementById("grayscale_bar");
+        let line=e.target;
+        let id=parseInt(line.getAttribute("id").slice(0,1))
         let y_perc=line.getAttributeNS(null,"y1")
         let y_value=y_perc.slice(0,y_perc.length-1);
         let mouse_y=e.clientY;
@@ -45,7 +47,14 @@ function drag_bar(e){
                     "y2":`${perc}%`,
                 }
             )
-            window.current_light=perc;
+            console.log(id)
+            if (id===0){
+                window.current_light_lower=perc;
+            }else{
+                window.current_light_upper=perc;
+            }
+
+
             update_lightness()
             // console.log(window.current_light)
         }
