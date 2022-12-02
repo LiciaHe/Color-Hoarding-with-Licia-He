@@ -26,6 +26,31 @@ function resize(){
     adjust_window_size();
     update_all_svg_size();
 }
-function drag_gray_bar(e){
-    console.log(e)
+function start_drag_bar(e){
+    window.start_drag=true;
+    drag_bar(e)
+}
+function drag_bar(e){
+    if (window.start_drag){
+        let line=document.getElementById("grayscale_bar");
+        let y_perc=line.getAttributeNS(null,"y1")
+        let y_value=y_perc.slice(0,y_perc.length-1);
+        let mouse_y=e.clientY;
+        let perc=parseInt((mouse_y-window.gray_c_bbox)/gray_c_height*100);
+        if (y_value!==perc){
+            update_element_attribute(
+                line,
+                {
+                    "y1":`${perc}%`,
+                    "y2":`${perc}%`,
+                }
+            )
+            window.current_light=perc;
+            update_lightness()
+            // console.log(window.current_light)
+        }
+    }
+}
+function endDrag(e){
+    window.start_drag=false;
 }

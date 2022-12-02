@@ -1,7 +1,7 @@
 function make_gradient(){
     let svg_selector=document.getElementById("combo_g");
-    let hue_break=36;
-    let saturation_break=36;
+    window.hue_break=80;
+    window.saturation_break=100;
     // let light_break=36;
     let width_perc=100/hue_break;
     let height_perc=100/saturation_break;
@@ -13,7 +13,7 @@ function make_gradient(){
                 360/hue_break*(i),
                 // 100,
                 100-100/saturation_break*(j),
-                window.current_light
+                100-window.current_light
             )
             addElementToSvg(
                 "rect",
@@ -23,7 +23,9 @@ function make_gradient(){
                     "x":`${x}%`,
                     "y":`${y}%`,
                     // "stroke":"black",
-                    "fill":hex
+                    "fill":hex,
+                    "class":"gradient_rect",
+                    "id":`gr_${i}_${j}`
                 },
                 svg_selector
             )
@@ -31,6 +33,12 @@ function make_gradient(){
     }
 }
 function add_grayscale_bar(){
+    //get graybar location
+    let gray_c=document.getElementById("grayscale_container");
+    let gray_svg=document.getElementById("grayscale_svg");
+    window.gray_c_bbox=gray_c.getBoundingClientRect().top;
+    window.gray_c_height=gray_c.clientHeight;
+
     let gray_bar=addElementToSvg(
         "line",
         {
@@ -40,18 +48,38 @@ function add_grayscale_bar(){
             "y2":`${window.current_light}%`,
             // "style":"fill:white;stroke-width:1;stroke:none",
             "stroke":"yellow",
-            "stroke-width":"2%",
+            "stroke-width":"4%",
             "id":"grayscale_bar",
             "pointer-events":"all"
         },
         document.getElementById("grayscale_g")
     )
 
-    gray_bar.addEventListener("mousedown",(e)=>console.log(e))
-    gray_bar.addEventListener("mousemove",(e)=>console.log("move"))
+    gray_svg.addEventListener("mousedown",(e)=start_drag_bar)
+    gray_svg.addEventListener("mousemove",drag_bar)
+    gray_svg.addEventListener("mouseup",endDrag)
+    gray_svg.addEventListener("mouseleave",endDrag)
     // gray_bar.addEventListener("dragend",(e)=>console.log(e))
     // gray_bar.addEventListener("mouseenter",(e)=>console.log(e))
 
+}
+function update_lightness(){
+    // given a new lightness level, update the color
+    let svg_selector=document.getElementById("combo_g");
+    let children=document.getElementsByClassName("gradient_rect");
+    for (let ci=0;ci<children.length;ci++){
+        let rect=children[ci];
+        let ids=rect.getAttribute("id").split("_");
+        let i=parseInt(ids[1]);
+        let j=parseInt(ids[2]);
+        let hex=hslToHex(
+            360/window.hue_break*(i),
+            // 100,
+            100-100/window.saturation_break*(j),
+            100-window.current_light
+        )
+        update_element_attribute(rect,{"fill":hex});
+    }
 }
 function generate(){
 
