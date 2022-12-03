@@ -36,4 +36,18 @@
   stroke: bisque;
   cursor: row-resize; }
 
+.rule_rect {
+  stroke-width: 0.5%;
+  fill: none; }
+
+.rule_rect_forming {
+  stroke: cornflowerblue; }
+
+.rule_rect_pending {
+  stroke: #ef0d15; }
+
+.rule_rect_finalized {
+  stroke: darkgray;
+  opacity: 0.25; }
+
 /*# sourceMappingURL=combo-structures.css.map */

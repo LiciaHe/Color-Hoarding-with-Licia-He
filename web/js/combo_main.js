@@ -22,7 +22,7 @@ function make_gradient(){
                     "height":`${height_perc}%`,
                     "x":`${x}%`,
                     "y":`${y}%`,
-                    // "stroke":"black",
+                    "stroke":hex,
                     "fill":hex,
                     "class":"gradient_rect",
                     "id":`gr_${i}_${j}`
@@ -60,14 +60,17 @@ function add_grayscale_bar(){
         "line",attr,gsg
     )
 
-    for (let i=0;i<2;i++){
-        let item=[b1,b2][i];
-        item.addEventListener("mousedown",(e)=start_drag_bar)
-        item.addEventListener("mousemove",drag_bar)
-        item.addEventListener("mouseup",endDrag)
-        item.addEventListener("mouseleave",endDrag)
-    }
-
+    // for (let i=0;i<2;i++){
+    //     let item=[b1,b2][i];
+    //     item.addEventListener("mousedown",(e)=start_drag_bar)
+    //     item.addEventListener("mousemove",drag_bar)
+    //     item.addEventListener("mouseup",endDrag)
+    //     item.addEventListener("mouseleave",endDrag)
+    // }
+    gray_svg.addEventListener("mousedown",(e)=start_drag_bar)
+    gray_svg.addEventListener("mousemove",drag_bar)
+    gray_svg.addEventListener("mouseup",end_drag_bar)
+    gray_svg.addEventListener("mouseleave",end_drag_bar)
 
     // gray_bar.addEventListener("dragend",(e)=>console.log(e))
     // gray_bar.addEventListener("mouseenter",(e)=>console.log(e))
@@ -77,7 +80,7 @@ function update_lightness(){
     // given a new lightness level, update the color
     let svg_selector=document.getElementById("combo_g");
     let children=document.getElementsByClassName("gradient_rect");
-    console.log(window.current_light_lower,current_light_upper,100-parseInt((window.current_light_lower+window.current_light_upper)/2))
+    // console.log(window.current_light_lower,current_light_upper,100-parseInt((window.current_light_lower+window.current_light_upper)/2))
     for (let ci=0;ci<children.length;ci++){
         let rect=children[ci];
         let ids=rect.getAttribute("id").split("_");
@@ -90,8 +93,15 @@ function update_lightness(){
             100-parseInt((window.current_light_lower+window.current_light_upper)/2)
         )
 
-        update_element_attribute(rect,{"fill":hex});
+        update_element_attribute(rect,{"fill":hex,"stroke":hex});
     }
+}
+function add_gradient_interaction(){
+    let svg_selector=document.getElementById("combo_g");
+    svg_selector.addEventListener("mousedown",(e)=start_selecting_gradient)
+    svg_selector.addEventListener("mousemove",drag_through_gradient)
+    svg_selector.addEventListener("mouseup",end_gradient)
+    svg_selector.addEventListener("mouseleave",end_gradient)
 }
 function generate(){
 
@@ -115,7 +125,7 @@ function generate(){
 
     //make gradient
     make_gradient();
-
+    add_gradient_interaction();
 
 
     // let g=document.getElementById("grayscale_container")
