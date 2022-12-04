@@ -147,9 +147,31 @@ function end_gradient(e){
 }
 
 //pending rect
-function start_drag_pending_rect(){}
-function drag_pending_rect(){}
-function end_drag_pending_rect(){}
+function start_drag_pending_rect(e){
+    SVS(["action","start_drag_pending_rect"],true);
+    // SVS(["action","current_cursor_loc"],[e.clientX,e.clientY]);
+    let rule=GVS(["structure","current_rect_rule"]);
+    let prev_rect_attr=extract_rect_attr(rule);
+
+    let current_loc_perc=get_perc_loc_in_svg(e);
+    let bbox_mode=determine_bbox_update_mode(prev_rect_attr,current_loc_perc)
+    SVS(["action","bbox_adjust_mode"],bbox_mode);
+}
+function drag_pending_rect(e){
+    if(GVS(["action","start_drag_pending_rect"])){
+        let rule_fill=GVS(["structure","current_rect_rule_fill"]);
+        let rule=GVS(["structure","current_rect_rule"]);
+        let prev_rect_attr=extract_rect_attr(rule);
+        // let prev_loc= GVS(["action","current_cursor_loc"]);
+
+        let new_attr=adjust_bounding_box(prev_rect_attr,get_perc_loc_in_svg(e))
+    }
+}
+function end_drag_pending_rect(e){
+    SVS(["action","start_drag_pending_rect"],false);
+    SVS(["action","bbox_adjust_mode"],null);
+
+}
 
 function start_drag_pending_rect_fill(e){
     SVS(["action","start_drag_pending_rect_fill"],true);
@@ -159,12 +181,22 @@ function drag_pending_rect_fill(e){
     if (GVS(["action","start_drag_pending_rect_fill"])){
         let prev_loc= GVS(["action","current_cursor_loc"]);
         let rule_fill=GVS(["structure","current_rect_rule_fill"]);
+        let rule=GVS(["structure","current_rect_rule"]);
         let prev_rect_attr=extract_rect_attr(rule_fill);
         let svg_container=document.getElementById("color_combo_svg");
         let sw=svg_container.clientWidth;
         let sh=svg_container.clientHeight;
-        // console.log()
+        let x_change=((e.clientX-prev_loc[0])/sw*100);
+        let y_change=((e.clientY-prev_loc[1])/sh*100);
 
+        let current_attr={
+            "x":`${prev_rect_attr["x"]+x_change}%`,
+            "y":`${prev_rect_attr["y"]+y_change}%`,
+        }
+        update_element_attribute(rule_fill,current_attr);
+        update_element_attribute(rule,current_attr);
+
+        SVS(["action","current_cursor_loc"],[e.clientX,e.clientY]);
     }
 }
 function end_drag_pending_rect_fill(e){

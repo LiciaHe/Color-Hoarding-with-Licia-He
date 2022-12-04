@@ -37,5 +37,97 @@ function extract_rect_attr(rect){
     return {
         "x":x,"y":y,"width":width,"height":height
     }
+}
+
+function determine_bbox_update_mode(prev_box,cursor_loc){
+    /**
+     * Given a location, determine if it's corner case,or edge case, also which corner it is.
+     * Starting from the top left, going clockwise.
+     * e.g. C0 means top left corner, C2 is bottom right
+     * E0 is top edge, E3 is left edge
+     * The mode is stored as a list [case, number]
+     */
+    let xmin,xmax,ymin,ymax;
+    xmin=prev_box["x"];
+    xmax=prev_box["x"]+prev_box["width"];
+    ymin=prev_box["y"];
+    ymax=prev_box["y"]+prev_box["height"];
+    let x=cursor_loc[0];
+    let y=cursor_loc[1];
+    // let corners=[
+    //     [xmin,ymin],
+    //     [xmax,ymin],
+    //     [xmax,ymax],
+    // ]
+    let bbox_mode;
+    console.log(x,y,"ref",xmin,ymin)
+    if (abs_dist_less_than_thresh(x,xmin)){
+        if(abs_dist_less_than_thresh(y,ymin)){
+            //corner 0
+            bbox_mode=["c",0]
+        }else if (abs_dist_less_than_thresh(y,ymax)){
+            bbox_mode=["c",3]
+        }else{
+            bbox_mode=["e",3]
+        }
+    }else if (abs_dist_less_than_thresh(x,xmax)){
+        if(abs_dist_less_than_thresh(y,ymin)){
+            //corner 0
+            bbox_mode=["c",1]
+        }else if (abs_dist_less_than_thresh(y,ymax)){
+            bbox_mode=["c",2]
+        }else{
+            bbox_mode=["e",1]
+        }
+    }else{
+        if(abs_dist_less_than_thresh(y,ymin)){
+            bbox_mode=["e",0]
+        }else{
+            bbox_mode=["e",2]
+        }
+    }
+    return bbox_mode
+
+}
+function abs_dist_less_than_thresh(value,to_compare){
+    return Math.abs(value-to_compare)<GVS(["calculation","dist_threshold"])
+}
+function get_perc_loc_in_svg(e){
+    let svg_container=document.getElementById("color_combo_svg");
+    let sw=svg_container.clientWidth;
+    let sh=svg_container.clientHeight;
+    let x_loc=e.clientX/sw*100;
+    let y_loc=e.clientY/sh*100;
+    return [x_loc,y_loc]
+}
+function adjust_bounding_box(prev_box,cursor_loc){
+    /**
+     * given a location within or outside of the rectangle, adjust the previous bounding box based on the current location.
+     * 1) determine drag mode -> corner /edge (if there's a mode already, use that)
+     * 2) calculate xmin-xmax bounding box
+     * 3) convert back to wh bounding box
+     * cursor loc is in percentage
+     */
+    let mode=GVS(["action","bbox_adjust_mode"]);
+    let xmin,xmax,ymin,ymax;
+    xmin=prev_box["x"];
+    xmax=prev_box["x"]+prev_box["width"];
+    ymin=prev_box["y"];
+    ymax=prev_box["y"]+prev_box["height"];
+
+    let adjust_action={//return two corners
+        "c0":function (x,y){
+            return [[x,y],[xmax,ymax]]
+        },
+        "c1":(x,y)=>[[xmin,y],[x,ymax]],
+        "c2":(x,y)=>[[xmin,ymin],[x,y]],
+        "c3":(x,y)=>[[x,ymin],[xmax,y]],
+        "e0":(x,y)=>[[xmin,y],[xmax,ymax]],
+        "e1":(x,y)=>[[xmin,ymin],[x,ymax]],
+        "e2":(x,y)=>[[xmin,ymin],[xmax,y]],
+        "e3":(x,y)=>[[x,ymin],[xmax,ymax]],
+    }
+    let two_corners=adjust_action[`${mode[0]}${mode[1]}`](cursor_loc);
+    console.log(two_corners,mode)
 
 }

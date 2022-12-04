@@ -25,7 +25,8 @@ window.SETTING={
         "hue_break":80,
         "saturation_break":100,
         "current_light_lower":45,
-        "current_light_upper":55
+        "current_light_upper":55,
+        "dist_threshold":1
     }
 }
 
