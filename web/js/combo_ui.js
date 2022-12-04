@@ -128,6 +128,7 @@ function end_gradient(e){
         update_element_attribute(rect_fill_rule,{"class":"rule_rect_fill rule_rect_fill_pending"});
         init_pending_rect_interaction(rect_rule,rect_fill_rule);
         SVS(["action","pending_rule"],true);
+        init_new_rule();
     }else{
         SVS(["action","pending_rule"],null);
     }
@@ -212,3 +213,7 @@ function end_drag_pending_rect_fill(e){
     SVS(["action","start_drag_pending_rect_fill"],false);
 }
 
+//button
+function toggle_collapse(e){
+    console.log(e)
+}

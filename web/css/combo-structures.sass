@@ -74,6 +74,38 @@
 
 //action area
 #warning_div
-  font-size: 2vw
+  font-size: 1.5vw
   text-align: center
+.rule
+  width: 100%
+  padding: 2%
+  @extend .flex-container
+  @extend .center-start-column
+
+.collapsible
+  background-color: black
+  color: white
+  cursor: pointer
+  width: 100%
+  border: none
+  text-align: left
+  outline: none
+  font-size: 1.75vw
+  padding: 0.5vw
+
+.active_rule, .collapsible:hover
+  background-color: #0a1d2d
+
+.rule_content
+  font-size: 1.5vw
+  //padding: 0.5vw
+  width: 100%
+  transition: max-height 0.2s ease-out
+  background-color: #e8e8e8
+  overflow: hidden
+  div
+    width: 100%
+    font-size: 1.5vw
+    padding: 0.5vw
+
 

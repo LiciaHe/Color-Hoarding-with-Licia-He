@@ -107,6 +107,13 @@ function add_gradient_interaction(){
     svg_selector.addEventListener("mouseup",end_gradient)
     svg_selector.addEventListener("mouseleave",end_gradient)
 }
+function init_new_rule(){
+    /**
+     * Given the current hsl, init a new rule form.
+     */
+    
+
+}
 function generate(){
 
     update_all_svg_size();
