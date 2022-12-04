@@ -33,20 +33,40 @@
   stroke: bisque
   cursor: row-resize
 
+//svg
+.init_new_rule
+  cursor: crosshair
+.disable_new_rules
+  cursor: default
+
+//rule
 .rule_rect
-  //stroke: gray
   stroke-width: 0.5%
   fill: none
-  //&:hover
-  //  stroke-width: 1.5%
+  pointer-events: stroke
 
 .rule_rect_forming
   stroke: cornflowerblue
 .rule_rect_pending
   stroke: #ef0d15
-
+  &:hover
+    cursor: nwse-resize
 .rule_rect_finalized
   stroke: darkgray
-  opacity: 0.25
+  //opacity: 0.25
 
+.rule_rect_fill
+  stroke: none
+  fill: white
+  opacity: 0.01
+  pointer-events: fill
+
+.rule_rect_fill_forming
+  opacity: 0.1
+.rule_rect_fill_pending
+  opacity: 0.05
+  &:hover
+    cursor: move
+.rule_rect_fill_finalized
+  opacity: 0
 

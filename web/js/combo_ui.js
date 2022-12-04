@@ -93,37 +93,81 @@ function drag_through_gradient(e){
         IIS(["basic","rule_ct"],1);
         // window.rule_ct+=1;
         let start_rect=GVS(["structure","start_rect"]);
-        SVS(["structure","current_rect_rule"],addElementToSvg(
-            "rect",
-            {
-                "width":start_rect.getAttributeNS(null,"width"),
-                "height":start_rect.getAttributeNS(null,"height"),
-                "x":start_rect.getAttributeNS(null,"x"),
-                "y":start_rect.getAttributeNS(null,"y"),
-                // "stroke":"black",
-                // "stroke-width":"1%",
-                // "fill":"none",
-                "class":"rule_rect rule_rect_forming",
-                "id":`rule_${GVS(["basic","rule_ct"])-1}`
-            },
+        let start_attr={
+            "width":start_rect.getAttributeNS(null,"width"),
+            "height":start_rect.getAttributeNS(null,"height"),
+            "x":start_rect.getAttributeNS(null,"x"),
+            "y":start_rect.getAttributeNS(null,"y"),
+        }
+
+        start_attr["id"]=`rule_fill${GVS(["basic","rule_ct"])-1}`
+        start_attr["class"]="rule_rect_fill rule_rect_fill_forming";
+        SVS(["structure","current_rect_rule_fill"],addElementToSvg(
+            "rect", start_attr,
             document.getElementById("combo_g")
         ))
+        start_attr["id"]=`rule_${GVS(["basic","rule_ct"])-1}`
+        start_attr["class"]="rule_rect rule_rect_forming";
+        SVS(["structure","current_rect_rule"],addElementToSvg(
+            "rect", start_attr,
+            document.getElementById("combo_g")
+        ))
+
     }else if (GVS(["action","start_drag_rect"])&&GVS(["structure","current_rect_rule"])&&!GVS(["action","pending_rule"])){
         //update current rule
         let attr=calculate_rect_drag_wh(GVS(["structure","start_rect"]),e.target);
         update_element_attribute(GVS(["structure","current_rect_rule"]),attr);
+        update_element_attribute(GVS(["structure","current_rect_rule_fill"]),attr);
     }
 }
-
-
-
 function end_gradient(e){
     if(GVS(["structure","current_rect_rule"])){
-        update_element_attribute(GVS(["structure","current_rect_rule"]),{"class":"rule_rect rule_rect_pending"});
+        let rect_rule=GVS(["structure","current_rect_rule"]);
+        update_element_attribute(rect_rule,{"class":"rule_rect rule_rect_pending"});
+        let rect_fill_rule=GVS(["structure","current_rect_rule_fill"]);
+        update_element_attribute(rect_fill_rule,{"class":"rule_rect_fill rule_rect_fill_pending"});
+
+        rect_rule.addEventListener("mousedown",(e)=start_drag_pending_rect)
+        rect_rule.addEventListener("mousemove",drag_pending_rect)
+        rect_rule.addEventListener("mouseup",end_drag_pending_rect)
+        rect_rule.addEventListener("mouseleave",end_drag_pending_rect)
+
+        rect_fill_rule.addEventListener("mousedown",(e)=start_drag_pending_rect_fill)
+        rect_fill_rule.addEventListener("mousemove",drag_pending_rect_fill)
+        rect_fill_rule.addEventListener("mouseup",end_drag_pending_rect_fill)
+        rect_fill_rule.addEventListener("mouseleave",end_drag_pending_rect_fill)
+
+
     }
     SVS(["action","start_drag_rect"],false);
     SVS(["action","gradient_dragged"],false);
     SVS(["action","pending_rule"],true);// prevent the creation of the new rect until users have finished the rules
-
+    adjust_rule_status()
 
 }
+
+//pending rect
+function start_drag_pending_rect(){}
+function drag_pending_rect(){}
+function end_drag_pending_rect(){}
+
+function start_drag_pending_rect_fill(e){
+    SVS(["action","start_drag_pending_rect_fill"],true);
+    SVS(["action","current_cursor_loc"],[e.clientX,e.clientY]);
+}
+function drag_pending_rect_fill(e){
+    if (GVS(["action","start_drag_pending_rect_fill"])){
+        let prev_loc= GVS(["action","current_cursor_loc"]);
+        let rule_fill=GVS(["structure","current_rect_rule_fill"]);
+        let prev_rect_attr=extract_rect_attr(rule_fill);
+        let svg_container=document.getElementById("color_combo_svg");
+        let sw=svg_container.clientWidth;
+        let sh=svg_container.clientHeight;
+        // console.log()
+
+    }
+}
+function end_drag_pending_rect_fill(e){
+    SVS(["action","start_drag_pending_rect_fill"],false);
+}
+

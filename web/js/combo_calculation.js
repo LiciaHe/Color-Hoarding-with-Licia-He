@@ -29,3 +29,13 @@ function calculate_rect_drag_wh(start_target,end_target){
         "height":`${height}%`,
     }
 }
+function extract_rect_attr(rect){
+    let x=remove_percentage(rect.getAttributeNS(null,"x"));
+    let y=remove_percentage(rect.getAttributeNS(null,"y"));
+    let width=remove_percentage(rect.getAttributeNS(null,"width"));
+    let height=remove_percentage(rect.getAttributeNS(null,"height"));
+    return {
+        "x":x,"y":y,"width":width,"height":height
+    }
+
+}

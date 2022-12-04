@@ -125,6 +125,11 @@ function generate(){
     // update_svg
     addBackgroundRectangle(document.getElementById("combo_g"));
     update_all_svg_size();
+    let combo_selector=document.getElementById("combo_g");
+    SVS(["structure","combo_g"],combo_selector);
+    update_element_attribute(combo_selector,{"class":"init_new_rule"})
+
+
     //add light bar
 
     //make gradient
@@ -139,6 +144,17 @@ function generate(){
     //add instruction
     //add exporter
     //add
+}
+function adjust_rule_status(){
+    // using the current status to adjust whether the rectrangle is editable
+    if (GVS(["action","pending_rule"])){
+        /**
+         * PENDING, CAN DRAG TO IMPROVE
+         */
+        let combo_selector=document.getElementById("combo_g");
+        update_element_attribute(combo_selector,{"class":"disable_new_rules"})
+        // let current_rule=
+    }
 }
 
 //responsive
