@@ -6,8 +6,8 @@ function get_hs_by_id(id){
     let ids=id.split("_");
     let i=parseInt(ids[1]);
     let j=parseInt(ids[2]);
-    let h=360/window.hue_break*(i);
-    let s=100-100/window.saturation_break*(j);
+    let h=360/GVS(["calculation","hue_break"])*(i);
+    let s=100-100/GVS(["calculation","saturation_break"])*(j);
     return [h,s]
 }
 function remove_percentage(perc){

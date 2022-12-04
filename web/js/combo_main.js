@@ -1,7 +1,10 @@
 function make_gradient(){
     let svg_selector=document.getElementById("combo_g");
-    window.hue_break=80;
-    window.saturation_break=100;
+    let hue_break=GVS(["calculation","hue_break"]);
+    let saturation_break=GVS(["calculation","saturation_break"]);
+    let current_light_lower=GVS(["calculation","current_light_lower"]);
+    let current_light_upper=GVS(["calculation","current_light_upper"]);
+
     // let light_break=36;
     let width_perc=100/hue_break;
     let height_perc=100/saturation_break;
@@ -13,7 +16,7 @@ function make_gradient(){
                 360/hue_break*(i),
                 // 100,
                 100-100/saturation_break*(j),
-                100-parseInt((window.current_light_lower+window.current_light_upper)/2)
+                100-parseInt((current_light_lower+current_light_upper)/2)
             )
             addElementToSvg(
                 "rect",
@@ -36,13 +39,14 @@ function add_grayscale_bar(){
     //get graybar location
     let gray_c=document.getElementById("grayscale_container");
     let gray_svg=document.getElementById("grayscale_svg");
-    window.gray_c_bbox=gray_c.getBoundingClientRect().top;
-    window.gray_c_height=gray_c.clientHeight;
+    SVS(["structure","gray_c_bbox_top"],gray_c.getBoundingClientRect().top);
+    SVS(["structure","gray_c_height"],gray_c.clientHeight);
+
     let attr= {
         "x1":"2%",
         "x2":"96%",
-        "y1":`${window.current_light_lower}%`,
-        "y2":`${window.current_light_lower}%`,
+        "y1":`${GVS(["calculation","current_light_lower"])}%`,
+        "y2":`${GVS(["calculation","current_light_lower"])}%`,
         // "style":"fill:white;stroke-width:1;stroke:none",
         "stroke":"yellow",
         "stroke-width":"4%",
@@ -53,8 +57,8 @@ function add_grayscale_bar(){
     let b1=addElementToSvg(
         "line",attr,gsg
     )
-    attr["y1"]=`${window.current_light_upper}%`
-    attr["y2"]=`${window.current_light_upper}%`
+    attr["y1"]=`${GVS(["calculation","current_light_upper"])}%`
+    attr["y2"]=`${GVS(["calculation","current_light_upper"])}%`
     attr["id"]="1_graybar"
     let b2=addElementToSvg(
         "line",attr,gsg
@@ -80,17 +84,17 @@ function update_lightness(){
     // given a new lightness level, update the color
     let svg_selector=document.getElementById("combo_g");
     let children=document.getElementsByClassName("gradient_rect");
-    // console.log(window.current_light_lower,current_light_upper,100-parseInt((window.current_light_lower+window.current_light_upper)/2))
+
     for (let ci=0;ci<children.length;ci++){
         let rect=children[ci];
         let ids=rect.getAttribute("id").split("_");
         let i=parseInt(ids[1]);
         let j=parseInt(ids[2]);
         let hex=hslToHex(
-            360/window.hue_break*(i),
+            360/GVS(["calculation","hue_break"])*(i),
             // 100,
-            100-100/window.saturation_break*(j),
-            100-parseInt((window.current_light_lower+window.current_light_upper)/2)
+            100-100/GVS(["calculation","saturation_break"])*(j),
+            100-parseInt((GVS(["calculation","current_light_lower"])+GVS(["calculation","current_light_upper"]))/2)
         )
 
         update_element_attribute(rect,{"fill":hex,"stroke":hex});
@@ -136,8 +140,7 @@ function generate(){
     //add exporter
     //add
 }
-window.current_light_lower=45;
-window.current_light_upper=55;
+
 //responsive
 window.addEventListener("resize",()=>resize())
 window.addEventListener('load', function () {

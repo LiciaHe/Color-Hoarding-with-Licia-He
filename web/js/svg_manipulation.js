@@ -1,6 +1,6 @@
 function addSVGElementToParent(element_name,attribute_dict,parent) {
 
-    const element=document.createElementNS(window.svgns,element_name);
+    const element=document.createElementNS(GVS(["basic","svgns"]),element_name);
     for (let key in attribute_dict){
         element.setAttribute(key,attribute_dict[key]);
     }
@@ -31,15 +31,12 @@ function initSVG(svg_id,svg_w,svg_h){
     Use existing info to modify the svg property
      */
 
-    // window.svg=document.getElementById("main_svg");
-    // window.main_g=document.getElementById("main_g");
-    // window.defs=document.getElementById("svg_defs");
     let svg_selector=document.getElementById(svg_id);
     const default_attrs={
         "width":"100%",
         "height":"100%",
         "viewBox":`0 0 ${svg_w} ${svg_h}`,
-        "xmlns":window.svgns,
+        "xmlns":GVS(["basic","svgns"]),
         "xmlns:xlink":"http://www.w3.org/1999/xlink",
         "preserveAspectRatio":"xMidYMid meet"
     }
@@ -49,5 +46,3 @@ function initSVG(svg_id,svg_w,svg_h){
     return svg_selector
 
 }
-window.svgns="http://www.w3.org/2000/svg";
-
