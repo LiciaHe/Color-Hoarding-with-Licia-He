@@ -136,24 +136,24 @@ function generate(){
     make_gradient();
     add_gradient_interaction();
 
+    SVS(["structure","warning_div"],document.getElementById("warning_div"));
+    SVS(["structure","warning_div"],document.getElementById("warning_div"));
+    adjust_rule_status();
 
-    // let g=document.getElementById("grayscale_container")
-    // console.log(g.clientWidth,g.offsetWidth)
-
-    //add svg
-    //add instruction
-    //add exporter
-    //add
 }
 function adjust_rule_status(){
     // using the current status to adjust whether the rectrangle is editable
+    //status: pending, new,
+    let warning=GVS(["structure","warning_div"]);
+    let combo_selector=document.getElementById("combo_g");
     if (GVS(["action","pending_rule"])){
         /**
          * PENDING, CAN DRAG TO IMPROVE
          */
-        let combo_selector=document.getElementById("combo_g");
+        warning.innerText=`Finalize Rule ${GVS(["basic","rule_ct"])} before adding another.`
         update_element_attribute(combo_selector,{"class":"disable_new_rules"})
-        // let current_rule=
+    }else{
+        warning.innerText=`Drag through the canvas to initialize a color rule.`
     }
 }
 

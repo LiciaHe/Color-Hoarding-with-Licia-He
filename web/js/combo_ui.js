@@ -127,11 +127,15 @@ function end_gradient(e){
         let rect_fill_rule=GVS(["structure","current_rect_rule_fill"]);
         update_element_attribute(rect_fill_rule,{"class":"rule_rect_fill rule_rect_fill_pending"});
         init_pending_rect_interaction(rect_rule,rect_fill_rule);
-
+        SVS(["action","pending_rule"],true);
+    }else{
+        SVS(["action","pending_rule"],null);
     }
+
     SVS(["action","start_drag_rect"],false);
     SVS(["action","gradient_dragged"],false);
-    SVS(["action","pending_rule"],true);// prevent the creation of the new rect until users have finished the rules
+
+    // prevent the creation of the new rect until users have finished the rules
     adjust_rule_status()
 
 }

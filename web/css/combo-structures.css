@@ -76,4 +76,8 @@
 .rule_rect_fill_finalized {
   opacity: 0; }
 
+#warning_div {
+  font-size: 2vw;
+  text-align: center; }
+
 /*# sourceMappingURL=combo-structures.css.map */

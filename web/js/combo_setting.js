@@ -4,6 +4,7 @@ window.SETTING={
         "gray_c_height":null,
         "current_rect_rule":null,
         "start_rect":null,
+        "warning_div":null,
 
     },
     "basic":{
@@ -18,8 +19,6 @@ window.SETTING={
         "start_drag_rect":null,
         "pending_rule":null,
         "start_drag_bar":null,
-
-
     },
     "calculation":{
         "hue_break":80,
