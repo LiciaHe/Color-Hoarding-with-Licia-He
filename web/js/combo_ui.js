@@ -126,17 +126,7 @@ function end_gradient(e){
         update_element_attribute(rect_rule,{"class":"rule_rect rule_rect_pending"});
         let rect_fill_rule=GVS(["structure","current_rect_rule_fill"]);
         update_element_attribute(rect_fill_rule,{"class":"rule_rect_fill rule_rect_fill_pending"});
-
-        rect_rule.addEventListener("mousedown",(e)=start_drag_pending_rect)
-        rect_rule.addEventListener("mousemove",drag_pending_rect)
-        rect_rule.addEventListener("mouseup",end_drag_pending_rect)
-        rect_rule.addEventListener("mouseleave",end_drag_pending_rect)
-
-        rect_fill_rule.addEventListener("mousedown",(e)=start_drag_pending_rect_fill)
-        rect_fill_rule.addEventListener("mousemove",drag_pending_rect_fill)
-        rect_fill_rule.addEventListener("mouseup",end_drag_pending_rect_fill)
-        rect_fill_rule.addEventListener("mouseleave",end_drag_pending_rect_fill)
-
+        init_pending_rect_interaction(rect_rule,rect_fill_rule);
 
     }
     SVS(["action","start_drag_rect"],false);
@@ -147,6 +137,18 @@ function end_gradient(e){
 }
 
 //pending rect
+
+function init_pending_rect_interaction(rect_rule,rect_fill_rule){
+    rect_rule.addEventListener("mousedown",(e)=start_drag_pending_rect)
+    rect_rule.addEventListener("mousemove",drag_pending_rect)
+    rect_rule.addEventListener("mouseup",end_drag_pending_rect)
+    rect_rule.addEventListener("mouseleave",end_drag_pending_rect)
+
+    rect_fill_rule.addEventListener("mousedown",(e)=start_drag_pending_rect_fill)
+    rect_fill_rule.addEventListener("mousemove",drag_pending_rect_fill)
+    rect_fill_rule.addEventListener("mouseup",end_drag_pending_rect_fill)
+    rect_fill_rule.addEventListener("mouseleave",end_drag_pending_rect_fill)
+}
 function start_drag_pending_rect(e){
     SVS(["action","start_drag_pending_rect"],true);
     // SVS(["action","current_cursor_loc"],[e.clientX,e.clientY]);
@@ -164,7 +166,9 @@ function drag_pending_rect(e){
         let prev_rect_attr=extract_rect_attr(rule);
         // let prev_loc= GVS(["action","current_cursor_loc"]);
 
-        let new_attr=adjust_bounding_box(prev_rect_attr,get_perc_loc_in_svg(e))
+        let new_attr=adjust_bounding_box(prev_rect_attr,get_perc_loc_in_svg(e));
+        update_element_attribute(rule_fill,new_attr);
+        update_element_attribute(rule,new_attr);
     }
 }
 function end_drag_pending_rect(e){
@@ -172,6 +176,7 @@ function end_drag_pending_rect(e){
     SVS(["action","bbox_adjust_mode"],null);
 
 }
+
 
 function start_drag_pending_rect_fill(e){
     SVS(["action","start_drag_pending_rect_fill"],true);

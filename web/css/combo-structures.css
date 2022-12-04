@@ -51,7 +51,8 @@
   stroke: cornflowerblue; }
 
 .rule_rect_pending {
-  stroke: #ef0d15; }
+  stroke: #ef0d15;
+  stroke-width: 1.5%; }
   .rule_rect_pending:hover {
     cursor: nwse-resize; }
 

@@ -13,13 +13,9 @@ function get_hs_by_id(id){
 function remove_percentage(perc){
     return parseFloat(perc.slice(0,perc.length-1));
 }
-function calculate_rect_drag_wh(start_target,end_target){
-    let start_x=remove_percentage(start_target.getAttributeNS(null,"x"));
-    let start_y=remove_percentage(start_target.getAttributeNS(null,"y"));
-    let end_x=remove_percentage(end_target.getAttributeNS(null,"x"));
-    let end_y=remove_percentage(end_target.getAttributeNS(null,"y"));
-    let top_left=[Math.min(start_x,end_x),Math.min(start_y,end_y)];
-    let bottom_right=[Math.max(start_x,end_x),Math.max(start_y,end_y)];
+function determine_rect_from_two_pts(x0,y0,x1,y1){
+    let top_left=[Math.min(x0,x1),Math.min(y0,y1)];
+    let bottom_right=[Math.max(x0,x1),Math.max(y0,y1)];
     let width=bottom_right[0]-top_left[0];
     let height=bottom_right[1]-top_left[1];
     return {
@@ -28,6 +24,24 @@ function calculate_rect_drag_wh(start_target,end_target){
         "width":`${width}%`,
         "height":`${height}%`,
     }
+
+}
+function calculate_rect_drag_wh(start_target,end_target){
+    let start_x=remove_percentage(start_target.getAttributeNS(null,"x"));
+    let start_y=remove_percentage(start_target.getAttributeNS(null,"y"));
+    let end_x=remove_percentage(end_target.getAttributeNS(null,"x"));
+    let end_y=remove_percentage(end_target.getAttributeNS(null,"y"));
+    return determine_rect_from_two_pts(start_x,start_y,end_y,end_y)
+    // let top_left=[Math.min(start_x,end_x),Math.min(start_y,end_y)];
+    // let bottom_right=[Math.max(start_x,end_x),Math.max(start_y,end_y)];
+    // let width=bottom_right[0]-top_left[0];
+    // let height=bottom_right[1]-top_left[1];
+    // return {
+    //     "x":`${top_left[0]}%`,
+    //     "y":`${top_left[1]}%`,
+    //     "width":`${width}%`,
+    //     "height":`${height}%`,
+    // }
 }
 function extract_rect_attr(rect){
     let x=remove_percentage(rect.getAttributeNS(null,"x"));
@@ -60,7 +74,6 @@ function determine_bbox_update_mode(prev_box,cursor_loc){
     //     [xmax,ymax],
     // ]
     let bbox_mode;
-    console.log(x,y,"ref",xmin,ymin)
     if (abs_dist_less_than_thresh(x,xmin)){
         if(abs_dist_less_than_thresh(y,ymin)){
             //corner 0
@@ -96,8 +109,10 @@ function get_perc_loc_in_svg(e){
     let svg_container=document.getElementById("color_combo_svg");
     let sw=svg_container.clientWidth;
     let sh=svg_container.clientHeight;
-    let x_loc=e.clientX/sw*100;
-    let y_loc=e.clientY/sh*100;
+    let top=svg_container.getBoundingClientRect().top;
+    let left=svg_container.getBoundingClientRect().left;
+    let x_loc=(e.clientX-left)/sw*100;
+    let y_loc=(e.clientY-top)/sh*100;
     return [x_loc,y_loc]
 }
 function adjust_bounding_box(prev_box,cursor_loc){
@@ -127,7 +142,15 @@ function adjust_bounding_box(prev_box,cursor_loc){
         "e2":(x,y)=>[[xmin,ymin],[xmax,y]],
         "e3":(x,y)=>[[x,ymin],[xmax,ymax]],
     }
-    let two_corners=adjust_action[`${mode[0]}${mode[1]}`](cursor_loc);
-    console.log(two_corners,mode)
+    let two_corners=adjust_action[`${mode[0]}${mode[1]}`](cursor_loc[0],cursor_loc[1]);
+    // console.log(mode,two_corners,xmin,xmax,ymin,ymax)
+    let updated_attr=determine_rect_from_two_pts(
+        ...two_corners[0],...two_corners[1]
+    )
+    //figure out new box
+    return updated_attr
+
+
+
 
 }

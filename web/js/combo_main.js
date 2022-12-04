@@ -74,7 +74,7 @@ function add_grayscale_bar(){
     gray_svg.addEventListener("mousedown",(e)=start_drag_bar)
     gray_svg.addEventListener("mousemove",drag_bar)
     gray_svg.addEventListener("mouseup",end_drag_bar)
-    gray_svg.addEventListener("mouseleave",end_drag_bar)
+    // gray_svg.addEventListener("mouseleave",end_drag_bar)
 
     // gray_bar.addEventListener("dragend",(e)=>console.log(e))
     // gray_bar.addEventListener("mouseenter",(e)=>console.log(e))
