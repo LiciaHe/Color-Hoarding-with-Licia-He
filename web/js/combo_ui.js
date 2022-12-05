@@ -92,6 +92,7 @@ function drag_through_gradient(e){
     if (GVS(["action","start_drag_rect"])&&GVS(["structure","current_rect_rule"])===null){
         //initiate a new rule based on the start rect
         IIS(["basic","rule_ct"],1);
+        console.log(GVS(["basic","rect_ct"]))
         // window.rule_ct+=1;
         let start_rect=GVS(["structure","start_rect"]);
         let start_attr={
@@ -279,4 +280,19 @@ function update_rule_from_form(e){
         }
     }
 
+    populate_simulation(parseInt(rcd_id[1]))
+}
+function rule_action_clicked(e){
+    let pc=e.target.parentElement.getAttribute("class");
+    let ids=e.target.parentElement.parentElement.getAttribute("id").split("_");
+    let id_tag=parseInt(ids[ids.length-1]);
+    // console.log(id)
+    if (pc==="coll_test"){
+        populate_simulation(id_tag)
+    } else if (pc==="coll_close"){
+        //close
+        remove_rule(id_tag)
+    }else{
+        //finalize
+    }
 }

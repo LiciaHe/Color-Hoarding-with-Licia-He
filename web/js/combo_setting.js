@@ -9,8 +9,12 @@ window.SETTING={
     "basic":{
         "rule_ct":0,
         "svgns":"http://www.w3.org/2000/svg",
-        "pick_default":[4,10],
-        "weight_default":[1,1],
+        "default":{
+            "current_light_lower":45,
+            "current_light_upper":55,
+            "pick":[4,10],
+            "weight":[1,1]
+        }
     },
     "view":{
         "hint_texts":[
@@ -35,10 +39,11 @@ window.SETTING={
     "calculation":{
         "hue_break":80,
         "saturation_break":100,
-        "current_light_lower":45,
-        "current_light_upper":55,
+        "current_light_lower":null,
+        "current_light_upper":null,
         "dist_threshold":1
-    }
+    },
+    "result":[]
 }
 
 function getValueFromObj(kLst,obj){

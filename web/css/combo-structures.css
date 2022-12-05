@@ -146,12 +146,12 @@
 .rule_test_mini {
   flex-wrap: wrap;
   background-color: #efefef;
-  padding: 0.5vw;
   width: 100%; }
   .rule_test_mini div {
     width: 4vw;
     height: 4vw;
-    border: 0.01vw solid #6e6e6e;
-    margin: 0.5vw; }
+    border: 0.01vw solid #efefef;
+    margin: 0.5vw;
+    border-radius: 0.5vw; }
 
 /*# sourceMappingURL=combo-structures.css.map */

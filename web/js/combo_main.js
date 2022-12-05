@@ -35,6 +35,34 @@ function make_gradient(){
         }
     }
 }
+function update_gray_bar_attr(){
+    let b0=document.getElementById('0_graybar');
+    let b1=document.getElementById('1_graybar');
+    if(GVS(["calculation","current_light_lower"])===null){
+        SVS(
+            ["calculation","current_light_lower"],
+            GVS(["basic","default","current_light_lower"])
+        )
+    }
+    if(GVS(["calculation","current_light_upper"])===null){
+        SVS(
+            ["calculation","current_light_upper"],
+            GVS(["basic","default","current_light_upper"])
+        )
+    }
+    update_element_attribute(
+        b0,{
+            "y1":`${GVS(["calculation","current_light_lower"])}%`,
+            "y2":`${GVS(["calculation","current_light_lower"])}%`,
+        }
+    )
+    update_element_attribute(
+        b1,{
+            "y1":`${GVS(["calculation","current_light_upper"])}%`,
+            "y2":`${GVS(["calculation","current_light_upper"])}%`,
+        }
+    )
+}
 function add_grayscale_bar(){
     //get graybar location
     let gray_c=document.getElementById("grayscale_container");
@@ -45,8 +73,8 @@ function add_grayscale_bar(){
     let attr= {
         "x1":"2%",
         "x2":"96%",
-        "y1":`${GVS(["calculation","current_light_lower"])}%`,
-        "y2":`${GVS(["calculation","current_light_lower"])}%`,
+        // "y1":`${GVS(["calculation","current_light_lower"])}%`,
+        // "y2":`${GVS(["calculation","current_light_lower"])}%`,
         // "style":"fill:white;stroke-width:1;stroke:none",
         "stroke":"yellow",
         "stroke-width":"4%",
@@ -54,16 +82,15 @@ function add_grayscale_bar(){
         "class":"grayscale_bar"
     }
     let gsg=document.getElementById("grayscale_g");
-    let b1=addElementToSvg(
-        "line",attr,gsg
-    )
-    attr["y1"]=`${GVS(["calculation","current_light_upper"])}%`
-    attr["y2"]=`${GVS(["calculation","current_light_upper"])}%`
-    attr["id"]="1_graybar"
-    let b2=addElementToSvg(
+    addElementToSvg(
         "line",attr,gsg
     )
 
+    attr["id"]="1_graybar"
+    addElementToSvg(
+        "line",attr,gsg
+    )
+    update_gray_bar_attr();
     // for (let i=0;i<2;i++){
     //     let item=[b1,b2][i];
     //     item.addEventListener("mousedown",(e)=start_drag_bar)
@@ -140,6 +167,7 @@ function create_rule_container(){
         btn.appendChild(btn_div);
         btn_div.addEventListener("mouseover",adjust_hint_text);
         btn_div.addEventListener("mouseout",adjust_hint_text);
+        btn_div.addEventListener("click",rule_action_clicked);
     }
     rule_div.appendChild(btn);
     let rc=create_element_with_attribute(
@@ -258,12 +286,15 @@ function init_new_rule(){
     //default content
     SVS(
         ["calculation","current_pick_number"],
-        GVS(["basic","pick_default"])
+        GVS(["basic","default","pick"])
     );
     SVS(
         ["calculation","current_weight"],
-        GVS(["basic","weight_default"])
+        GVS(["basic","default","weight"])
     )
+    // let rule_value_container=GVS(["result"]);
+    // rule_value_container[]=null;//add null value as a place holder.
+
     populate_rule_content();
 }
 function pass_lightness_information(id_tag){
@@ -340,7 +371,6 @@ function populate_simulation(id_tag){
             rule_test_div.appendChild(new_div)
         } else{
             let div=color_blocks.pop();
-            console.log(div)
             update_element_attribute(
                 div,
                 {
@@ -448,7 +478,56 @@ function adjust_rule_status(){
     }
     adjust_hint_text();
 }
+function extract_and_reset_rule(id_tag){
+    /**
+     * extract all info from the current rule div, reset all value to default
+     * doesn't touch the rule form.
+     */
+    let value=get_rule_values_by_id(id_tag);
+    let default_reset=[
+        [["calculation","current_light_upper"],["basic","default","current_light_upper"]],
+        [["calculation","current_light_lower"],["basic","default","current_light_lower"]],
+    ];
+    for (let i=0;i<default_reset.length;i++){
+        let d=GVS(default_reset[i][1]);
 
+        SVS(default_reset[i][0],d)
+    }
+    update_gray_bar_attr();
+    //clean up the rectangles
+    let parent_clean=[
+        ["structure","current_rect_rule"],
+        ["structure","current_rect_rule_fill"],
+
+    ];
+    for (let i=0;i<parent_clean.length;i++){
+        let s=GVS(parent_clean[i]);
+        s.parentElement.removeChild(s);
+        SVS(
+            parent_clean[i],null
+        )
+    }
+
+    let null_reset=[
+        ["action","pending_rule"],
+        ["structure","start_rect"]
+    ]
+    for (let i=0;i<null_reset.length;i++){
+        SVS(
+            null_reset[i],null
+        )
+    }
+    adjust_hint_text();
+    return value
+}
+function remove_rule(id_tag){
+    extract_and_reset_rule(id_tag);
+    //RULE CT WILL NOT RESET
+    //reset current keys and graphics
+
+    //reset defaults
+    //remove rules
+}
 //responsive
 window.addEventListener("resize",()=>resize())
 window.addEventListener('load', function () {
