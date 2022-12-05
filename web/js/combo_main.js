@@ -146,7 +146,7 @@ function create_rule_container(){
             "id":`rule_content_${id_tag}`
         })
     rule_div.appendChild(rc);
-    btn.addEventListener("click",toggle_collapse);
+    // btn.addEventListener("click",toggle_collapse);
     return [rc,id_tag]
 }
 function create_rule_content(rc_id_tag){
@@ -241,8 +241,59 @@ function init_new_rule(){
     let rc_id_tag=create_rule_container();
     create_rule_content(rc_id_tag);
     //create the inner structures
+    //populate rule content
+    populate_rule_content();
+}
+function pass_lightness_information(id_tag){
+    let b0=document.getElementById("0_graybar");
+    let b1=document.getElementById("1_graybar");
 
-
+    let l_percs=[
+        remove_percentage(b0.getAttributeNS(null,"y1")),
+        remove_percentage(b1.getAttributeNS(null,"y1")),
+    ];
+    l_percs.sort();
+    let lightness_id=2;
+    let rule_content_div=document.getElementById(
+        `rcd_${id_tag}_${lightness_id}`
+    )
+    let inputs=rule_content_div.getElementsByTagName("input");
+    for (let i=0;i<inputs.length;i++){
+        inputs[i].value=l_percs[i]
+    }
+}
+function pass_hue_saturation_information(id_tag){
+    let rect_rule=GVS(["structure","current_rect_rule"]);
+    let rect_attr=extract_rect_attr(rect_rule);
+    let h_s=convert_rect_attr_to_hs_range(rect_attr);
+    let keys=[
+        ["hue",0],
+        ["saturation",1],
+    ]
+    for (let i=0;i<keys.length;i++){
+        let value=h_s[keys[i][0]];
+        value.sort();
+        let id=keys[i][1]
+        let rule_content_div=document.getElementById(
+            `rcd_${id_tag}_${id}`
+        )
+        let inputs=rule_content_div.getElementsByTagName("input");
+        for (let i=0;i<inputs.length;i++){
+            inputs[i].value=value[i]
+        }
+    }
+}
+function populate_rule_content(){
+    /**
+     * extract hsl information from the current rect
+     */
+    let id_tag=GVS(["basic","rule_ct"])-1;
+    let current_rule_div=document.getElementById(`rule_${id_tag}`);
+    if (!current_rule_div){
+        return
+    }
+    pass_lightness_information(id_tag);
+    pass_hue_saturation_information(id_tag)
 
 }
 function generate(){

@@ -52,7 +52,21 @@ function extract_rect_attr(rect){
         "x":x,"y":y,"width":width,"height":height
     }
 }
+function convert_rect_attr_to_hs_range(rect_attr){
+    /**
+     * given a rect_attr (percentage, convert it back to the range
+     */
+    let hue_start=rect_attr["x"]/100*360;
+    let hue_end=(rect_attr["x"]+rect_attr["width"])/100*360;
+    let sat_start=rect_attr["y"];
+    let sat_end=(rect_attr["y"]+rect_attr["height"])
+    return {
+        "hue":[hue_start,hue_end],
+        "saturation":[sat_start,sat_end]
+    }
 
+
+}
 function determine_bbox_update_mode(prev_box,cursor_loc){
     /**
      * Given a location, determine if it's corner case,or edge case, also which corner it is.

@@ -71,6 +71,7 @@ function drag_bar(e){
             update_lightness()
 
         }
+        populate_rule_content();
     }
 }
 function end_drag_bar(e){
@@ -176,6 +177,7 @@ function drag_pending_rect(e){
         let new_attr=adjust_bounding_box(prev_rect_attr,get_perc_loc_in_svg(e));
         update_element_attribute(rule_fill,new_attr);
         update_element_attribute(rule,new_attr);
+        populate_rule_content();
     }
 }
 function end_drag_pending_rect(e){
@@ -209,6 +211,7 @@ function drag_pending_rect_fill(e){
         update_element_attribute(rule,current_attr);
 
         SVS(["action","current_cursor_loc"],[e.clientX,e.clientY]);
+        populate_rule_content();
     }
 }
 function end_drag_pending_rect_fill(e){
@@ -217,6 +220,6 @@ function end_drag_pending_rect_fill(e){
 
 
 //button
-function toggle_collapse(e){
-    console.log(e)
-}
+// function toggle_collapse(e){
+//     console.log(e)
+// }
