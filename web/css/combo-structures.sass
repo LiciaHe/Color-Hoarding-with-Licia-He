@@ -76,6 +76,8 @@
 #warning_div
   font-size: 1.5vw
   text-align: center
+  height: 12%
+  overflow: auto
 .rule
   width: 100%
   padding: 2%
@@ -85,16 +87,34 @@
 .collapsible
   background-color: black
   color: white
-  cursor: pointer
+  //cursor: pointer
   width: 100%
   border: none
   text-align: left
   outline: none
   font-size: 1.75vw
   padding: 0.5vw
+  @extend .center-between-row
+  flex-wrap: nowrap
+  .coll_rule
+    flex-basis: 70%
+  .coll_close
+    cursor: pointer
+    &:hover
+      background-color: gray
+      color: white
+  .coll_finalize
+    cursor: pointer
+    &:hover
+      background-color: gray
+      color: white
 
-.active_rule, .collapsible:hover
-  background-color: #0a1d2d
+
+  //&:hover
+  //  cursor:
+//
+//.active_rule, .collapsible:hover
+//  background-color: #0a1d2d
 
 .rule_content
   font-size: 1.5vw

@@ -119,12 +119,25 @@ function create_rule_container(){
     )
     action_a.appendChild(rule_div);
     let btn=create_element_with_attribute(
-        "button",
+        "div",
         {
             "class":"collapsible",
             "id":`btn_r_${id_tag}`
         });
-    btn.innerText=`Rule ${id_tag}`
+    //add 3 divs
+    let btn_content=[
+        [`Rule ${id_tag}`,"coll_rule"],
+        ["&#128473;","coll_close"],
+        ["&#10004;","coll_finalize"],
+    ];
+    for (let i=0;i<btn_content.length;i++){
+        let btn_div=create_element_with_attribute(
+            "div",
+            {"class":btn_content[i][1]}
+        );
+        btn_div.innerHTML=`<span>${btn_content[i][0]}</span>`;
+        btn.appendChild(btn_div);
+    }
     rule_div.appendChild(btn);
     let rc=create_element_with_attribute(
         "div",
@@ -196,6 +209,8 @@ function create_rule_content(rc_id_tag){
                     }
                 )
                 content.innerText=rule[1];
+                 content.addEventListener("mouseover",adjust_hint_text);
+                 content.addEventListener("mouseout",adjust_hint_text);
 
             }else if (rule[0]==="i"){
                  content=create_element_with_attribute(
@@ -260,7 +275,7 @@ function generate(){
     add_gradient_interaction();
 
     SVS(["structure","warning_div"],document.getElementById("warning_div"));
-    SVS(["structure","warning_div"],document.getElementById("warning_div"));
+    // SVS(["structure","warning_div"],document.getElementById("warning_div"));
     adjust_rule_status();
 
     //hint text
@@ -272,22 +287,38 @@ function generate(){
             "If there are multiple color rules, rules with larger weight are more likely to be chosen. The weight range values are non-negative numbers.",
         ]
     )
+}
+function adjust_hint_text(e){
+    let warning=GVS(["structure","warning_div"]);
+    let text=`Finalize Rule ${GVS(["basic","rule_ct"])} before adding another.`;
+    // let default_text;
+    if (GVS(["action","pending_rule"])){
+        if (e){
+            let span=e.target;
+            if (e.type==="mouseover"){
+                let c_lst=span.getAttribute("class").split("_");
+                let id=parseInt(c_lst[c_lst.length-1]);
+                text=GVS(["view","hint_texts"])[id];
+            }
+        }
+    }else{
+        text=`Drag through the canvas to initialize a color rule.`
+    }
+    warning.innerText=text;
 
 }
 function adjust_rule_status(){
     // using the current status to adjust whether the rectrangle is editable
     //status: pending, new,
-    let warning=GVS(["structure","warning_div"]);
+
     let combo_selector=document.getElementById("combo_g");
     if (GVS(["action","pending_rule"])){
         /**
          * PENDING, CAN DRAG TO IMPROVE
          */
-        warning.innerText=`Finalize Rule ${GVS(["basic","rule_ct"])} before adding another.`
         update_element_attribute(combo_selector,{"class":"disable_new_rules"})
-    }else{
-        warning.innerText=`Drag through the canvas to initialize a color rule.`
     }
+    adjust_hint_text()
 }
 
 //responsive

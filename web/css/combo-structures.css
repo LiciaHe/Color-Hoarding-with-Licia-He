@@ -1,5 +1,5 @@
 @use "basic";
-.flex-container, .center-start-column, #grayscale_container, #action-area, .rule, .center-center-row, #generator-container {
+.flex-container, .center-start-column, #grayscale_container, #action-area, .rule, .center-center-row, #generator-container, .center-between-row, .collapsible {
   display: flex; }
 
 .center-start-column, #grayscale_container, #action-area, .rule {
@@ -10,6 +10,11 @@
 .center-center-row, #generator-container {
   align-items: center;
   justify-content: center;
+  flex-direction: row; }
+
+.center-between-row, .collapsible {
+  align-items: center;
+  justify-content: space-between;
   flex-direction: row; }
 
 @media only screen and (max-width: 700px) {
@@ -78,7 +83,9 @@
 
 #warning_div {
   font-size: 1.5vw;
-  text-align: center; }
+  text-align: center;
+  height: 12%;
+  overflow: auto; }
 
 .rule {
   width: 100%;
@@ -87,16 +94,25 @@
 .collapsible {
   background-color: black;
   color: white;
-  cursor: pointer;
   width: 100%;
   border: none;
   text-align: left;
   outline: none;
   font-size: 1.75vw;
-  padding: 0.5vw; }
-
-.active_rule, .collapsible:hover {
-  background-color: #0a1d2d; }
+  padding: 0.5vw;
+  flex-wrap: nowrap; }
+  .collapsible .coll_rule {
+    flex-basis: 70%; }
+  .collapsible .coll_close {
+    cursor: pointer; }
+    .collapsible .coll_close:hover {
+      background-color: gray;
+      color: white; }
+  .collapsible .coll_finalize {
+    cursor: pointer; }
+    .collapsible .coll_finalize:hover {
+      background-color: gray;
+      color: white; }
 
 .rule_content {
   font-size: 1.5vw;
