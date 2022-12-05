@@ -107,11 +107,127 @@ function add_gradient_interaction(){
     svg_selector.addEventListener("mouseup",end_gradient)
     svg_selector.addEventListener("mouseleave",end_gradient)
 }
+function create_rule_container(){
+    let action_a=document.getElementById("action-area");
+    let id_tag=GVS(["basic","rule_ct"])-1;
+    let rule_div=create_element_with_attribute(
+        "div",
+        {
+            "class":"rule",
+            "id":`rule_${id_tag}`
+        }
+    )
+    action_a.appendChild(rule_div);
+    let btn=create_element_with_attribute(
+        "button",
+        {
+            "class":"collapsible",
+            "id":`btn_r_${id_tag}`
+        });
+    btn.innerText=`Rule ${id_tag}`
+    rule_div.appendChild(btn);
+    let rc=create_element_with_attribute(
+        "div",
+        {
+            "class":"rule_content",
+            "id":`rule_content_${id_tag}`
+        })
+    rule_div.appendChild(rc);
+    btn.addEventListener("click",toggle_collapse);
+    return [rc,id_tag]
+}
+function create_rule_content(rc_id_tag){
+    /**
+     * go through the rule content to create  individual div
+     */
+    let rules_template=[
+        [
+            ["s","Hue Range: "],
+            ["i",[0,359]],
+            ["p"," to "],
+            ["i",[0,359]],
+        ],
+        [
+            ["s","Saturation Range: "],
+            ["i",[0,99]],
+            ["p"," to "],
+            ["i",[0,99]],
+        ],
+        [
+            ["s","Lightness Range: "],
+            ["i",[0,99]],
+            ["p"," to "],
+            ["i",[0,99]],
+        ],
+        [
+            ["s","Pick "],
+            ["i",[0,99]],
+            ["p"," to "],
+            ["i",[0,99]],
+            ["s"," color from this rule."],
+        ],
+        [
+            ["s","Rule Weight: "],
+            ["i",[0,99]],
+            ["p"," to "],
+            ["i",[0,99]],
+        ]
+    ];
+    let rc=rc_id_tag[0];
+    let id_tag=rc_id_tag[1];
+    // console.log(rc,id_tag)
+    for (let i=0;i<rules_template.length;i++){
+        let rules=rules_template[i];
+        let div=create_element_with_attribute(
+            "div",
+            {
+                "id":`rcd_${id_tag}_${i}`
+            }
+        )
+        rc.appendChild(div);
+        let content;
+        for (let j=0;j<rules.length;j++){
+            let rule=rules[j];
+            if(rule[0]==="s"){
+                 content=create_element_with_attribute(
+                    "span",
+                    {
+                        "class":`rule_hint rcs_${i}`
+                    }
+                )
+                content.innerText=rule[1];
+
+            }else if (rule[0]==="i"){
+                 content=create_element_with_attribute(
+                    "input",
+                    {
+                        "type":"number",
+                        "min":rule[1][0],
+                        "max":rule[1][1],
+                    }
+                )
+            }else{
+                 content=create_element_with_attribute(
+                    "span",
+                    {
+                    }
+                )
+                content.innerText=rule[1]
+            }
+            div.appendChild(content)
+        }
+    }
+}
 function init_new_rule(){
     /**
      * Given the current hsl, init a new rule form.
      */
-    
+
+    let rc_id_tag=create_rule_container();
+    create_rule_content(rc_id_tag);
+    //create the inner structures
+
+
 
 }
 function generate(){
@@ -146,6 +262,16 @@ function generate(){
     SVS(["structure","warning_div"],document.getElementById("warning_div"));
     SVS(["structure","warning_div"],document.getElementById("warning_div"));
     adjust_rule_status();
+
+    //hint text
+    SVS(["view","hint_texts"],[
+            "Hue is a value between 0 and 360 (degrees). Adjust the red rectangle horizontally to modify the range of hue.",
+            "Saturation is a value between 0 and 100 (percent). Adjust the red rectangle vertically to modify the range of saturation.",
+            "Lightness is a value between 0 and 100 (percent). Adjust the yellow bars to modify the range of lightness.",
+            "Determine the number of color (between 0 and 50) that this rule can potentially produce.",
+            "If there are multiple color rules, rules with larger weight are more likely to be chosen. The weight range values are non-negative numbers.",
+        ]
+    )
 
 }
 function adjust_rule_status(){

@@ -80,10 +80,10 @@ function end_drag_bar(e){
 
 //rectangle
 function start_selecting_gradient(e){
-    SVS(["action","start_drag_rect"],true);
-
-    SVS(["structure","start_rect"],e.target);
-
+    if (!GVS(["action","pending_rule"])){
+        SVS(["action","start_drag_rect"],true);
+        SVS(["structure","start_rect"],e.target);
+    }
 }
 function drag_through_gradient(e){
     // window.gradient_dragged=true;
@@ -121,21 +121,23 @@ function drag_through_gradient(e){
     }
 }
 function end_gradient(e){
-    if(GVS(["structure","current_rect_rule"])){
+
+    if(GVS(["structure","current_rect_rule"])&&GVS(["action","start_drag_rect"])){
         let rect_rule=GVS(["structure","current_rect_rule"]);
         update_element_attribute(rect_rule,{"class":"rule_rect rule_rect_pending"});
         let rect_fill_rule=GVS(["structure","current_rect_rule_fill"]);
         update_element_attribute(rect_fill_rule,{"class":"rule_rect_fill rule_rect_fill_pending"});
         init_pending_rect_interaction(rect_rule,rect_fill_rule);
+        if(!GVS(["action","pending_rule"])){
+            init_new_rule();
+        }
+
         SVS(["action","pending_rule"],true);
-        init_new_rule();
     }else{
         SVS(["action","pending_rule"],null);
+        SVS(["action","start_drag_rect"],false);
+        SVS(["action","gradient_dragged"],false);
     }
-
-    SVS(["action","start_drag_rect"],false);
-    SVS(["action","gradient_dragged"],false);
-
     // prevent the creation of the new rect until users have finished the rules
     adjust_rule_status()
 
@@ -212,6 +214,7 @@ function drag_pending_rect_fill(e){
 function end_drag_pending_rect_fill(e){
     SVS(["action","start_drag_pending_rect_fill"],false);
 }
+
 
 //button
 function toggle_collapse(e){
