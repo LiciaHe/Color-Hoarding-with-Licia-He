@@ -149,6 +149,15 @@ function create_rule_container(){
             "id":`rule_content_${id_tag}`
         })
     rule_div.appendChild(rc);
+    //testing area
+    let test_div=create_element_with_attribute(
+        "div",
+        {
+            "class":"rule_test_mini",
+            "id":`rule_test_m_${id_tag}`
+        }
+    )
+    rule_div.appendChild(test_div);
     // btn.addEventListener("click",toggle_collapse);
     return [rc,id_tag]
 }
@@ -249,11 +258,11 @@ function init_new_rule(){
     //default content
     SVS(
         ["calculation","current_pick_number"],
-        [1,5]
+        GVS(["basic","pick_default"])
     );
     SVS(
         ["calculation","current_weight"],
-        [1,1]
+        GVS(["basic","weight_default"])
     )
     populate_rule_content();
 }
@@ -308,6 +317,45 @@ function pass_hue_saturation_information(id_tag){
         }
     }
 }
+function populate_simulation(id_tag){
+    //generate from rules
+    //append div
+    let rule_values=get_rule_values_by_id(id_tag);
+    let simulate_results_hsl=run_single_rule_simulation(rule_values);
+    let sr_hexs=simulate_results_hsl.map((hsl)=>hslToHex(...hsl));
+    let rule_test_div=document.getElementById(`rule_test_m_${id_tag}`);
+    let color_blocks=Array.from(rule_test_div.getElementsByTagName("div"));
+    // console.log(color_blocks)
+    // console.log(color_blocks.pop())
+
+    for (let i=0;i<sr_hexs.length;i++){
+        if (i>=color_blocks.length){
+            //create new div
+            let new_div=create_element_with_attribute(
+                "div",
+                {
+                    "style":`background-color:${sr_hexs[i]};`
+                }
+            )
+            rule_test_div.appendChild(new_div)
+        } else{
+            let div=color_blocks.pop();
+            console.log(div)
+            update_element_attribute(
+                div,
+                {
+                    "background-color":sr_hexs[i]
+                }
+            )
+        }
+    }
+    while(color_blocks.length>0){
+        rule_test_div.removeChild(color_blocks.pop())
+    }
+
+
+
+}
 function populate_rule_content(){
     /**
      * extract hsl information from the current rect
@@ -318,8 +366,8 @@ function populate_rule_content(){
         return
     }
     pass_lightness_information(id_tag);
-    pass_hue_saturation_information(id_tag)
-
+    pass_hue_saturation_information(id_tag);
+    populate_simulation(id_tag);
 }
 function generate(){
 

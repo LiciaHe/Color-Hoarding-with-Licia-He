@@ -51,3 +51,12 @@ function chooseWithWeight(items, weights){
     }
     return items[i];
 }
+function calculateScale(input, inputDomain, outputRange){
+    //helper function to scale values (e.g., height and color) for canvas without using D3
+    // let inputDiff=inputDomain.max-inputDomain.min;
+    // // let outputDiff=outputRange.max-outputRange.min;
+    // if ((input - inputDomain.min) === 0) {
+    //     return(outputRange.min);
+    // }
+    return ((input - inputDomain.min) === 0)?outputRange.min:(input-inputDomain.min)/(inputDomain.max-inputDomain.min)*(outputRange.max-outputRange.min)+outputRange.min
+}

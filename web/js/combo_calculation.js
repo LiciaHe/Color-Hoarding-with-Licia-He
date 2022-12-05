@@ -188,4 +188,41 @@ function adjust_bounding_box(prev_box,cursor_loc){
 
 
 }
+function get_rule_values_by_id(id_tag){
+    /**
+     * extract from the rule set
+     */
+    let current_rule_div=document.getElementById(`rule_content_${id_tag}`);
+    let rules=current_rule_div.getElementsByTagName("div");
+    let order=["hue","saturation","lightness","pick","weight"];
+    let rule_value={}
+    for (let i=0;i<rules.length;i++){
+        let key=order[i];
+        let inputs=rules[i].getElementsByTagName("input");
+        let values=[];
+        for (let j=0;j<inputs.length;j++){
+            values.push(parseFloat(inputs[j].value));
+        }
+        rule_value[key]=values
+    }
+    return rule_value
+}
+
+function run_single_rule_simulation(rule_values){
+    /**
+     * given a set of rule values ({}),
+     * return the result of the simulation (hsls, sorted)
+     */
+    let pick_ct=parseInt(random_in_range(rule_values["pick"]));
+    let hsls=[];
+    for (let i=0;i<pick_ct;i++){
+        let hsl=[
+            random_in_range(rule_values["hue"]),
+            random_in_range(rule_values["saturation"]),
+            random_in_range(rule_values["lightness"]),
+        ]
+        hsls.push(hsl)
+    }
+    return hsls
+}
 

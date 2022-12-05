@@ -5,11 +5,12 @@ window.SETTING={
         "current_rect_rule":null,
         "start_rect":null,
         "warning_div":null,
-
     },
     "basic":{
         "rule_ct":0,
         "svgns":"http://www.w3.org/2000/svg",
+        "pick_default":[4,10],
+        "weight_default":[1,1],
     },
     "view":{
         "hint_texts":[

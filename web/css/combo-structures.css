@@ -1,5 +1,5 @@
 @use "basic";
-.flex-container, .center-start-column, #grayscale_container, #action-area, .rule, .center-center-row, #generator-container, .center-between-row, .collapsible {
+.flex-container, .center-start-column, #grayscale_container, #action-area, .rule, .center-center-row, #generator-container, .center-between-row, .collapsible, .center-around-row, .rule_test_mini {
   display: flex; }
 
 .center-start-column, #grayscale_container, #action-area, .rule {
@@ -15,6 +15,11 @@
 .center-between-row, .collapsible {
   align-items: center;
   justify-content: space-between;
+  flex-direction: row; }
+
+.center-around-row, .rule_test_mini {
+  align-items: center;
+  justify-content: space-around;
   flex-direction: row; }
 
 @media only screen and (max-width: 700px) {
@@ -137,5 +142,16 @@
     color: white;
     background-color: gray;
     cursor: help; }
+
+.rule_test_mini {
+  flex-wrap: wrap;
+  background-color: #efefef;
+  padding: 0.5vw;
+  width: 100%; }
+  .rule_test_mini div {
+    width: 4vw;
+    height: 4vw;
+    border: 0.01vw solid #6e6e6e;
+    margin: 0.5vw; }
 
 /*# sourceMappingURL=combo-structures.css.map */
