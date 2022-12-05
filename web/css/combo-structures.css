@@ -103,6 +103,11 @@
   flex-wrap: nowrap; }
   .collapsible .coll_rule {
     flex-basis: 70%; }
+  .collapsible .coll_test {
+    cursor: pointer; }
+    .collapsible .coll_test:hover {
+      background-color: gray;
+      color: white; }
   .collapsible .coll_close {
     cursor: pointer; }
     .collapsible .coll_close:hover {
@@ -125,7 +130,7 @@
     font-size: 1.5vw;
     padding: 0.75vw; }
   .rule_content input {
-    width: 4.5vw;
+    width: 4.8vw;
     margin-left: 0.1vw;
     margin-right: 0.1vw; }
   .rule_content .rule_hint:hover {

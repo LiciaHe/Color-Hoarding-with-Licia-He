@@ -15,8 +15,8 @@ function make_gradient(){
             let hex=hslToHex(
                 360/hue_break*(i),
                 // 100,
-                100-100/saturation_break*(j),
-                100-parseInt((current_light_lower+current_light_upper)/2)
+                100/saturation_break*(j),
+                parseInt((current_light_lower+current_light_upper)/2)
             )
             addElementToSvg(
                 "rect",
@@ -93,8 +93,8 @@ function update_lightness(){
         let hex=hslToHex(
             360/GVS(["calculation","hue_break"])*(i),
             // 100,
-            100-100/GVS(["calculation","saturation_break"])*(j),
-            100-parseInt((GVS(["calculation","current_light_lower"])+GVS(["calculation","current_light_upper"]))/2)
+            100/GVS(["calculation","saturation_break"])*(j),
+            parseInt((GVS(["calculation","current_light_lower"])+GVS(["calculation","current_light_upper"]))/2)
         )
 
         update_element_attribute(rect,{"fill":hex,"stroke":hex});
@@ -128,6 +128,7 @@ function create_rule_container(){
     let btn_content=[
         [`Rule ${id_tag}`,"coll_rule"],
         ["&#128473;","coll_close"],
+        ["&#129514;","coll_test"],
         ["&#10004;","coll_finalize"],
     ];
     for (let i=0;i<btn_content.length;i++){
@@ -137,6 +138,8 @@ function create_rule_container(){
         );
         btn_div.innerHTML=`<span>${btn_content[i][0]}</span>`;
         btn.appendChild(btn_div);
+        btn_div.addEventListener("mouseover",adjust_hint_text);
+        btn_div.addEventListener("mouseout",adjust_hint_text);
     }
     rule_div.appendChild(btn);
     let rc=create_element_with_attribute(
@@ -221,6 +224,7 @@ function create_rule_content(rc_id_tag){
                         "max":rule[1][1],
                     }
                 )
+                content.addEventListener("change",update_rule_from_form)
             }else{
                  content=create_element_with_attribute(
                     "span",
@@ -242,6 +246,15 @@ function init_new_rule(){
     create_rule_content(rc_id_tag);
     //create the inner structures
     //populate rule content
+    //default content
+    SVS(
+        ["calculation","current_pick_number"],
+        [1,5]
+    );
+    SVS(
+        ["calculation","current_weight"],
+        [1,1]
+    )
     populate_rule_content();
 }
 function pass_lightness_information(id_tag){
@@ -252,34 +265,46 @@ function pass_lightness_information(id_tag){
         remove_percentage(b0.getAttributeNS(null,"y1")),
         remove_percentage(b1.getAttributeNS(null,"y1")),
     ];
-    l_percs.sort();
+    l_percs.sort((a,b)=>a-b);
     let lightness_id=2;
     let rule_content_div=document.getElementById(
         `rcd_${id_tag}_${lightness_id}`
     )
     let inputs=rule_content_div.getElementsByTagName("input");
     for (let i=0;i<inputs.length;i++){
-        inputs[i].value=l_percs[i]
+        inputs[i].value=l_percs[i].toFixed(1)
     }
 }
 function pass_hue_saturation_information(id_tag){
     let rect_rule=GVS(["structure","current_rect_rule"]);
     let rect_attr=extract_rect_attr(rect_rule);
     let h_s=convert_rect_attr_to_hs_range(rect_attr);
+    h_s["pick"]=GVS(["calculation","current_pick_number"]);
+    h_s["weight"]=GVS(["calculation","current_weight"]);
     let keys=[
         ["hue",0],
         ["saturation",1],
+        ["pick",3],
+        ["weight",4],
     ]
     for (let i=0;i<keys.length;i++){
         let value=h_s[keys[i][0]];
-        value.sort();
+        value.sort((a,b)=>a-b);
         let id=keys[i][1]
         let rule_content_div=document.getElementById(
             `rcd_${id_tag}_${id}`
         )
         let inputs=rule_content_div.getElementsByTagName("input");
-        for (let i=0;i<inputs.length;i++){
-            inputs[i].value=value[i]
+
+        for (let j=0;j<inputs.length;j++){
+            let v;
+            if (i<2){
+
+                v=value[j].toFixed(1)
+            }else{
+                v=parseInt(value[j]);
+            }
+            inputs[j].value=v;
         }
     }
 }
@@ -330,27 +355,31 @@ function generate(){
     adjust_rule_status();
 
     //hint text
-    SVS(["view","hint_texts"],[
-            "Hue is a value between 0 and 360 (degrees). Adjust the red rectangle horizontally to modify the range of hue.",
-            "Saturation is a value between 0 and 100 (percent). Adjust the red rectangle vertically to modify the range of saturation.",
-            "Lightness is a value between 0 and 100 (percent). Adjust the yellow bars to modify the range of lightness.",
-            "Determine the number of color (between 0 and 50) that this rule can potentially produce.",
-            "If there are multiple color rules, rules with larger weight are more likely to be chosen. The weight range values are non-negative numbers.",
-        ]
-    )
+
 }
 function adjust_hint_text(e){
     let warning=GVS(["structure","warning_div"]);
-    let text=`Finalize Rule ${GVS(["basic","rule_ct"])} before adding another.`;
+    let default_text=`Finalize Rule ${GVS(["basic","rule_ct"])} before adding another.`;
+    let text=default_text;
     // let default_text;
     if (GVS(["action","pending_rule"])){
         if (e){
-            let span=e.target;
             if (e.type==="mouseover"){
-                let c_lst=span.getAttribute("class").split("_");
-                let id=parseInt(c_lst[c_lst.length-1]);
-                text=GVS(["view","hint_texts"])[id];
+                let parent=e.target.parentElement.parentElement;
+                let pc=parent.getAttribute("class");
+                if (pc==="collapsible"){
+                    // console.log(e.target.getAttribute("class"))
+                    text=GVS(["view","rule_action_hint_text"])[e.target.parentElement.getAttribute("class")]
+                }
+                else{
+                    let c_lst=e.target.getAttribute("class").split("_");
+                    let id=parseInt(c_lst[c_lst.length-1]);
+                    text=GVS(["view","hint_texts"])[id];
+                }
             }
+        }
+        if (text===undefined){
+            text=default_text;
         }
     }else{
         text=`Drag through the canvas to initialize a color rule.`
@@ -369,7 +398,7 @@ function adjust_rule_status(){
          */
         update_element_attribute(combo_selector,{"class":"disable_new_rules"})
     }
-    adjust_hint_text()
+    adjust_hint_text();
 }
 
 //responsive

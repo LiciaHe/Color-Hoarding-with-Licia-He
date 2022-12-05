@@ -214,12 +214,69 @@ function drag_pending_rect_fill(e){
         populate_rule_content();
     }
 }
+
 function end_drag_pending_rect_fill(e){
     SVS(["action","start_drag_pending_rect_fill"],false);
 }
 
 
-//button
-// function toggle_collapse(e){
-//     console.log(e)
-// }
+function update_rule_from_form(e){
+    /**
+     * one of the value has been changed from the form. Update the view
+     *
+     */
+    let parent=e.target.parentElement;
+    let rcd_id=parent.getAttribute("id").split("_");
+    let inputs=parent.getElementsByTagName("input");
+    let values =[];
+    for (let i=0;i<inputs.length;i++){
+        values.push(parseFloat(inputs[i].value));
+    }
+    values.sort((a,b)=>a-b);
+    let field_id=parseInt(rcd_id[2]);
+    let value_treatment=[
+        (val)=>[Math.max(0,val[0]),Math.min(360,val[1])],//hue
+        (val)=>[Math.max(0,val[0]),Math.min(100,val[1])],//sat
+        (val)=>[Math.max(0,val[0]),Math.min(100,val[1])],//light
+        (val)=>[Math.max(0,val[0]),Math.min(50,val[1])],//pick
+        (val)=>[Math.max(0,val[0]),Math.min(50,val[1])],//weight
+    ]
+    values=value_treatment[field_id](values);
+    for (let i=0;i<inputs.length;i++){
+        inputs[i].value=values[i];//push back the treated value
+    }
+    if (field_id>2){
+        let key=field_id===3?"current_pick_number":"current_weight";
+        SVS(
+            ["calculation",key],
+            values
+        )
+    }else{
+        if (field_id===0){
+            //hue,
+            update_rect_attr_by_hs_info(values,null)
+        }else if (field_id===1){
+            //saturation
+            update_rect_attr_by_hs_info(null,values)
+        }else{
+            //lightness
+            //update grayscale bar
+            for (let i=0;i<2;i++){
+                let bar=document.getElementById(`${i}_graybar`);
+                let key=i===0?"current_light_lower":"current_light_upper";
+                update_element_attribute(
+                    bar,
+                    {
+                        "y1":`${values[i]}%`,
+                        "y2":`${values[i]}%`,
+                    }
+                )
+                SVS(["calculation",key],values[i]);
+            }
+
+            //update lightness
+            update_lightness();
+        }
+    }
+
+}

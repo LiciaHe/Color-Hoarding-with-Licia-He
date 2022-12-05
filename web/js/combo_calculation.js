@@ -7,7 +7,7 @@ function get_hs_by_id(id){
     let i=parseInt(ids[1]);
     let j=parseInt(ids[2]);
     let h=360/GVS(["calculation","hue_break"])*(i);
-    let s=100-100/GVS(["calculation","saturation_break"])*(j);
+    let s=100/GVS(["calculation","saturation_break"])*(j);
     return [h,s]
 }
 function remove_percentage(perc){
@@ -42,6 +42,26 @@ function calculate_rect_drag_wh(start_target,end_target){
     //     "width":`${width}%`,
     //     "height":`${height}%`,
     // }
+}
+function update_rect_attr_by_hs_info(hue_range,sat_range){
+    /**
+     * hue
+     */
+    let attr={}
+    if (hue_range){
+
+        attr["x"]=`${hue_range[0]/360*100}%`;
+        attr["width"]=`${(hue_range[1]-hue_range[0])/360*100}%`
+    }
+    if (sat_range){
+        attr["y"]=`${sat_range[0]}%`;
+        attr["height"]=`${sat_range[1]-sat_range[0]}%`;
+    }
+
+    let rect=GVS(["structure","current_rect_rule"]);
+    let rect_fill=GVS(["structure","current_rect_rule_fill"]);
+    update_element_attribute(rect,attr);
+    update_element_attribute(rect_fill,attr);
 }
 function extract_rect_attr(rect){
     let x=remove_percentage(rect.getAttributeNS(null,"x"));

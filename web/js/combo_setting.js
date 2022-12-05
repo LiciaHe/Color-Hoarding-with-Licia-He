@@ -12,7 +12,18 @@ window.SETTING={
         "svgns":"http://www.w3.org/2000/svg",
     },
     "view":{
-
+        "hint_texts":[
+            "Hue is a value between 0 and 360 (degrees). Adjust the red rectangle horizontally to modify the range of hue.",
+            "Saturation is a value between 0 and 100 (percent). Adjust the red rectangle vertically to modify the range of saturation.",
+            "Lightness is a value between 0 and 100 (percent). Adjust the yellow bars to modify the range of lightness. Mean value is visualized.",
+            "Determine the number of color (between 0 and 50) that this rule can potentially produce.",
+            "If there are multiple color rules, rules with larger weight are more likely to be chosen. The weight range values are non-negative numbers.",
+        ],
+        "rule_action_hint_text": {
+            "coll_test":"Simulate: Click to run another simulation.",
+            "coll_close":"Delete: Click to delete this rule.",
+            "coll_finalize":"Finalize: Click to finalize and fold this rule.",
+        }
     },
     "action":{
         "gradient_dragged":null,
