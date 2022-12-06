@@ -8,6 +8,14 @@ function adjust_window_size(){
     let gc=document.getElementById("generator-container");
     let target_height=window.innerHeight;
     gc.setAttribute("style",`height:${target_height}px`);
+    let pal_div=document.getElementById("palette");
+    let pdc=pal_div.getAttribute("class")
+    if (pdc&&pdc.includes("palette_active")){
+        //the pal_div is active
+        pal_div.setAttribute("style",`height:${target_height}px`);
+    }else{
+        pal_div.setAttribute("style",`display:none`);//hide
+    }
 }
 function update_svg_size(container_id,svg_id){
     let svg_container=document.getElementById(container_id);
@@ -22,6 +30,7 @@ function update_all_svg_size(){
 }
 function resize(){
     adjust_window_size();
+
     update_all_svg_size();
 }
 ////bar
@@ -92,6 +101,7 @@ function drag_through_gradient(e){
     if (GVS(["action","start_drag_rect"])&&GVS(["structure","current_rect_rule"])===null){
         //initiate a new rule based on the start rect
         IIS(["basic","rule_ct"],1);
+        IIS(["basic","valid_rule_ct"],1);
 
         // window.rule_ct+=1;
         let start_rect=GVS(["structure","start_rect"]);

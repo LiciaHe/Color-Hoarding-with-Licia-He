@@ -7,7 +7,8 @@ window.SETTING={
         "warning_div":null,
     },
     "basic":{
-        "rule_ct":0,
+        "rule_ct":0,//number of all rules that have ever been created
+        "valid_rule_ct":0,//number of rules that still exist in the system
         "svgns":"http://www.w3.org/2000/svg",
         "default":{
             "current_light_lower":45,
@@ -30,13 +31,17 @@ window.SETTING={
             "coll_test":"Simulate: Click to run another simulation.",
             "coll_close":"Delete: Click to delete this rule.",
             "coll_finalize":"Finalize: Click to fold/unfold this rule.",
-        }
-    },
+        },
+        "palette_no_display_ids":[
+            "palette","preview_svg_container","palette_display"
+        ]
+        },
     "action":{
         "gradient_dragged":null,
         "start_drag_rect":null,
         "pending_rule":null,
         "start_drag_bar":null,
+        "palette_active":false
     },
     "calculation":{
         "hue_break":80,
@@ -45,7 +50,8 @@ window.SETTING={
         "current_light_upper":null,
         "dist_threshold":1
     },
-    "result":[]
+    "result":[],
+    "sim_result":[],
 }
 
 function getValueFromObj(kLst,obj){

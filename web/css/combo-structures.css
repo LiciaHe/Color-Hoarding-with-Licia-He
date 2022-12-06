@@ -1,13 +1,13 @@
 @use "basic";
-.flex-container, .center-start-column, #grayscale_container, #action-area, .rule, .center-center-row, #generator-container, .center-between-row, .collapsible, .center-around-row, .rule_test_mini {
+.flex-container, .center-start-column, #grayscale_container, #action-area, .rule, #palette_display, #palette_preview, .center-center-row, #generator-container, #palette, .center-between-row, .collapsible, .center-around-row, .rule_test_mini {
   display: flex; }
 
-.center-start-column, #grayscale_container, #action-area, .rule {
+.center-start-column, #grayscale_container, #action-area, .rule, #palette_display, #palette_preview {
   align-items: center;
   justify-content: start;
   flex-direction: column; }
 
-.center-center-row, #generator-container {
+.center-center-row, #generator-container, #palette {
   align-items: center;
   justify-content: center;
   flex-direction: row; }
@@ -39,7 +39,9 @@
 
 #action-area {
   flex-basis: 25%;
-  height: 100%; }
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden; }
 
 .grayscale_bar:hover {
   stroke-width: 4%;
@@ -89,7 +91,7 @@
 #warning_div {
   font-size: 1.5vw;
   text-align: center;
-  height: 12%;
+  height: 8vw;
   overflow: auto; }
 
 .rule {
@@ -147,6 +149,12 @@
 .hidden {
   visibility: hidden; }
 
+.no_display {
+  display: none; }
+
+.flex_display {
+  display: flex; }
+
 .fold_content {
   display: none; }
   .fold_content div {
@@ -165,5 +173,36 @@
     border: 0.01vw solid #efefef;
     margin: 0.5vw;
     border-radius: 0.5vw; }
+
+#palette {
+  width: 100%; }
+
+#palette_display {
+  flex-basis: 35%;
+  height: 100%;
+  background-color: gray; }
+  #palette_display div {
+    border: 1px solid black;
+    width: 100%; }
+  #palette_display .title_text {
+    font-size: 4vw;
+    flex-basis: 10%; }
+  #palette_display #rule_sample_container {
+    flex-basis: 75%; }
+  #palette_display #sample_action_container {
+    flex-basis: 15%; }
+
+#palette_preview {
+  flex-basis: 65%;
+  height: 100%;
+  background-color: darkseagreen; }
+  #palette_preview div {
+    border: 1px solid black;
+    width: 100%; }
+  #palette_preview #preview_svg_container {
+    flex-basis: 85%;
+    padding: 2vw; }
+  #palette_preview #preview_action_container {
+    flex-basis: 15%; }
 
 /*# sourceMappingURL=combo-structures.css.map */

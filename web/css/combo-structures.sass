@@ -27,6 +27,8 @@
   height: 100%
   @extend .flex-container
   @extend .center-start-column
+  overflow-y: scroll
+  overflow-x: hidden
 
 .grayscale_bar:hover
   stroke-width: 4%
@@ -76,7 +78,7 @@
 #warning_div
   font-size: 1.5vw
   text-align: center
-  height: 12%
+  height: 8vw
   overflow: auto
 .rule
   width: 100%
@@ -147,7 +149,12 @@
 
 .hidden
   visibility: hidden
+.no_display
+  display: none
 
+
+.flex_display
+  display: flex
 
 .fold_content
   display: none
@@ -171,6 +178,46 @@
     border: 0.01vw solid #efefef
     margin: 0.5vw
     border-radius: 0.5vw
+
+
+#palette
+  width: 100%
+  @extend .center-center-row
+
+
+
+#palette_display
+  flex-basis: 35%
+  height: 100%
+  background-color: gray
+  @extend .center-start-column
+  div
+    border: 1px solid black
+    width: 100%
+  .title_text
+    font-size: 4vw
+    flex-basis: 10%
+  #rule_sample_container
+    flex-basis: 75%
+  #sample_action_container
+    flex-basis: 15%
+
+
+#palette_preview
+  flex-basis: 65%
+  height: 100%
+  background-color: darkseagreen
+  @extend .center-start-column
+  div
+    border: 1px solid black
+    width: 100%
+
+  #preview_svg_container
+    flex-basis: 85%
+    padding: 2vw
+  #preview_action_container
+    flex-basis: 15%
+
 
 
 

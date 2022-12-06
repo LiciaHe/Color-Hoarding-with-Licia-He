@@ -363,6 +363,7 @@ function populate_simulation(id_tag){
     let rule_values=get_rule_values_by_id(id_tag);
     let simulate_results_hsl=run_single_rule_simulation(rule_values);
     let sr_hexs=simulate_results_hsl.map((hsl)=>hslToHex(...hsl));
+    GVS(["sim_result"])[id_tag]=sr_hexs;
     let rule_test_div=document.getElementById(`rule_test_m_${id_tag}`);
     let color_blocks=Array.from(rule_test_div.getElementsByTagName("div"));
     // console.log(color_blocks)
@@ -548,6 +549,10 @@ function remove_rule(id_tag){
     )
     //remove rules
     r[id_tag]=null;//set the result as null.
+    IIS(["basic","valid_rule_ct"],-1);
+    if(GVS(["basic","valid_rule_ct"])<1){
+        hide_palette_div();
+    }
 }
 function toggle_rule_form(id_tag,e){
     //toggle
@@ -558,18 +563,40 @@ function toggle_rule_form(id_tag,e){
     let btn_div=e.target.parentElement.parentElement;
     let btn_div_class=btn_div.getAttribute("class");
 
-
     if (btn_div_class.includes("fold")){
         //expand
         if (GVS(["action","active_rule_id"])!==null && GVS(["action","active_rule_id"])!==id_tag){
             fold_rule_by_id(GVS(["action","active_rule_id"]));
         }
         expand_rule_by_id(id_tag);
-
-
     }else{
         fold_rule_by_id(id_tag);
     }
+    if(!GVS(["action","palette_active"])||GVS(["basic","valid_rule_ct"])>0){
+        init_palette_div();
+    }
+}
+function init_palette_div(){
+    /**
+     * put "palette_active"in the class
+     */
+    if (GVS(["structure","palette_active"])){
+        //already active
+        return
+    }
+    let palette_div=document.getElementById("palette");
+    palette_div.setAttribute("class","palette_active flex_display");
+
+    SVS(["structure","palette_active"],true);
+    resize();
+}
+function hide_palette_div(){
+    /**
+     * modify palette and preview_svg_container
+     */
+    document.getElementById("palette").setAttribute("class","");
+    SVS(["structure","palette_active"],false);
+    resize();
 }
 function fold_rule_by_id(id_tag){
 
