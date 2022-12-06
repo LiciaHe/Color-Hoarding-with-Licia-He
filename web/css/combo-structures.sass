@@ -27,7 +27,7 @@
   height: 100%
   @extend .flex-container
   @extend .center-start-column
-  overflow-y: scroll
+  overflow-y: auto
   overflow-x: hidden
 
 .grayscale_bar:hover
@@ -183,33 +183,80 @@
 #palette
   width: 100%
   @extend .center-center-row
+  .button
+    font-size: 2vw
+    background-color: #01090e
+    color: #e8e8e8
+    margin: 0.5vw
+    padding: 0.5vw
+    border-radius: 0.5vw
+    flex-basis: 5vw
+    text-align: center
+    &:hover
+      background-color: gray
+      cursor: pointer
 
 
 
 #palette_display
   flex-basis: 35%
   height: 100%
-  background-color: gray
+  //background-color: gray
   @extend .center-start-column
+  border: 1px solid black
   div
-    border: 1px solid black
+    //border: 1px solid black
     width: 100%
   .title_text
+    padding-top: 20px
     font-size: 4vw
     flex-basis: 10%
   #rule_sample_container
+    @extend .center-start-column
+    overflow-y: auto
+    overflow-x: hidden
     flex-basis: 75%
+    .sample_display
+      width: 95%
+      @extend .center-center-row
+      margin-top: 5px
+      margin-bottom: 5px
+      //padding: 20px
+      background-color: #e8e8e8
+      .rule_id_display
+        text-align: center
+        font-size: 2vw
+        flex-basis: 10%
+        &:hover
+          background-color: #01090e
+          color: white
+          cursor: pointer
+
+
+      .sample_div
+        flex-basis: 90%
+        @extend .center-between-row
+        flex-wrap: wrap
+        div
+          width: 4vw
+          height: 4vw
+          border: 0.01vw solid #efefef
+          margin: 0.5vw
+          border-radius: 0.5vw
+
+
   #sample_action_container
     flex-basis: 15%
+    @extend .center-around-row
 
 
 #palette_preview
   flex-basis: 65%
   height: 100%
-  background-color: darkseagreen
+  //background-color: darkseagreen
   @extend .center-start-column
   div
-    border: 1px solid black
+    //border: 1px solid black
     width: 100%
 
   #preview_svg_container
@@ -217,6 +264,9 @@
     padding: 2vw
   #preview_action_container
     flex-basis: 15%
+    @extend .center-around-row
+
+
 
 
 

@@ -14,7 +14,7 @@ function adjust_window_size(){
         //the pal_div is active
         pal_div.setAttribute("style",`height:${target_height}px`);
     }else{
-        pal_div.setAttribute("style",`display:none`);//hide
+        // pal_div.setAttribute("style",`display:none`);//hide
     }
 }
 function update_svg_size(container_id,svg_id){
@@ -46,7 +46,7 @@ function find_nearest_bar(e){
     let y_value_0=y_perc_0.slice(0,y_perc_0.length-1);
     let y_perc_1=b1.getAttributeNS(null,"y1")
     let y_value_1=y_perc_1.slice(0,y_perc_1.length-1);
-    let mouse_perc=parseInt((mouse_y-GVS(["structure","gray_c_bbox_top"]))/GVS(["structure","gray_c_height"])*100);
+    let mouse_perc=parseInt((mouse_y-GVS(["structure","gray_c_bbox_top"]))/GVS(["structure","gray_c_height"])*100);//todo: multiple screen update 
 
 
     if (Math.abs(mouse_perc-y_value_0)>Math.abs(mouse_perc-y_value_1)){
@@ -307,7 +307,47 @@ function rule_action_clicked(e){
         toggle_rule_form(id_tag,e)
     }
 }
-// function toggle_collapse(e){
-//
-//     console.log(parent);
-// }
+
+function create_sample_display(id_tag){
+    /**
+     * example
+     *             <div class="sample_display">
+     *                 <div class="rule_id_display">1</div>
+     *                 <div class="sample_div">
+     *                     <div></div>
+     *                     <div></div>
+     *                     <div></div>
+     *                 </div>
+     *             </div>
+     *
+     */
+    let rsc=document.getElementById("rule_sample_container");
+    let sd=create_element_with_attribute(
+        "div",
+        {
+            "class":"sample_display",
+            "id":`sample_display_${id_tag}`
+        }
+    )
+    rsc.appendChild(sd);
+    let rid=create_element_with_attribute(
+        "div",
+        {
+            "class":"rule_id_display"
+        }
+    )
+    rid.innerText=id_tag;
+    sd.appendChild(rid);
+    let sample_div=create_element_with_attribute(
+        "div",
+        {
+            "class":"sample_div",
+            "id":`sample_div_${id_tag}`
+        }
+    )
+    sd.appendChild(sample_div);
+    console.log(rsc)
+}
+function remove_sample_display(id_tag){
+
+}

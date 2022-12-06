@@ -1,23 +1,23 @@
 @use "basic";
-.flex-container, .center-start-column, #grayscale_container, #action-area, .rule, #palette_display, #palette_preview, .center-center-row, #generator-container, #palette, .center-between-row, .collapsible, .center-around-row, .rule_test_mini {
+.flex-container, .center-start-column, #grayscale_container, #action-area, .rule, #palette_display, #palette_display #rule_sample_container, #palette_preview, .center-center-row, #generator-container, #palette, #palette_display #rule_sample_container .sample_display, .center-between-row, .collapsible, #palette_display #rule_sample_container .sample_display .sample_div, .center-around-row, .rule_test_mini, #palette_display #sample_action_container, #palette_preview #preview_action_container {
   display: flex; }
 
-.center-start-column, #grayscale_container, #action-area, .rule, #palette_display, #palette_preview {
+.center-start-column, #grayscale_container, #action-area, .rule, #palette_display, #palette_display #rule_sample_container, #palette_preview {
   align-items: center;
   justify-content: start;
   flex-direction: column; }
 
-.center-center-row, #generator-container, #palette {
+.center-center-row, #generator-container, #palette, #palette_display #rule_sample_container .sample_display {
   align-items: center;
   justify-content: center;
   flex-direction: row; }
 
-.center-between-row, .collapsible {
+.center-between-row, .collapsible, #palette_display #rule_sample_container .sample_display .sample_div {
   align-items: center;
   justify-content: space-between;
   flex-direction: row; }
 
-.center-around-row, .rule_test_mini {
+.center-around-row, .rule_test_mini, #palette_display #sample_action_container, #palette_preview #preview_action_container {
   align-items: center;
   justify-content: space-around;
   flex-direction: row; }
@@ -40,7 +40,7 @@
 #action-area {
   flex-basis: 25%;
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden; }
 
 .grayscale_bar:hover {
@@ -176,28 +176,62 @@
 
 #palette {
   width: 100%; }
+  #palette .button {
+    font-size: 2vw;
+    background-color: #01090e;
+    color: #e8e8e8;
+    margin: 0.5vw;
+    padding: 0.5vw;
+    border-radius: 0.5vw;
+    flex-basis: 5vw;
+    text-align: center; }
+    #palette .button:hover {
+      background-color: gray;
+      cursor: pointer; }
 
 #palette_display {
   flex-basis: 35%;
   height: 100%;
-  background-color: gray; }
+  border: 1px solid black; }
   #palette_display div {
-    border: 1px solid black;
     width: 100%; }
   #palette_display .title_text {
+    padding-top: 20px;
     font-size: 4vw;
     flex-basis: 10%; }
   #palette_display #rule_sample_container {
+    overflow-y: auto;
+    overflow-x: hidden;
     flex-basis: 75%; }
+    #palette_display #rule_sample_container .sample_display {
+      width: 95%;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      background-color: #e8e8e8; }
+      #palette_display #rule_sample_container .sample_display .rule_id_display {
+        text-align: center;
+        font-size: 2vw;
+        flex-basis: 10%; }
+        #palette_display #rule_sample_container .sample_display .rule_id_display:hover {
+          background-color: #01090e;
+          color: white;
+          cursor: pointer; }
+      #palette_display #rule_sample_container .sample_display .sample_div {
+        flex-basis: 90%;
+        flex-wrap: wrap; }
+        #palette_display #rule_sample_container .sample_display .sample_div div {
+          width: 4vw;
+          height: 4vw;
+          border: 0.01vw solid #efefef;
+          margin: 0.5vw;
+          border-radius: 0.5vw; }
   #palette_display #sample_action_container {
     flex-basis: 15%; }
 
 #palette_preview {
   flex-basis: 65%;
-  height: 100%;
-  background-color: darkseagreen; }
+  height: 100%; }
   #palette_preview div {
-    border: 1px solid black;
     width: 100%; }
   #palette_preview #preview_svg_container {
     flex-basis: 85%;

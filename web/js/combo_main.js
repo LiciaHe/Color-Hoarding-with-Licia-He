@@ -282,7 +282,6 @@ function init_new_rule(){
     }
     let id_tag=GVS(["basic","rule_ct"])-1;
     let test_rc=document.getElementById(`rule_${id_tag}`);
-    // console.log(test_rc)
     if(test_rc){
         return
     }
@@ -302,9 +301,15 @@ function init_new_rule(){
     )
     // let rule_value_container=GVS(["result"]);
     // rule_value_container[]=null;//add null value as a place holder.
+    //add palette preview section
+    create_sample_display(id_tag);
+
 
     populate_rule_content();
     SVS(["action","active_rule_id"],id_tag);
+
+
+
 }
 function pass_lightness_information(id_tag){
     let b0=document.getElementById("0_graybar");
@@ -357,17 +362,9 @@ function pass_hue_saturation_information(id_tag){
         }
     }
 }
-function populate_simulation(id_tag){
-    //generate from rules
-    //append div
-    let rule_values=get_rule_values_by_id(id_tag);
-    let simulate_results_hsl=run_single_rule_simulation(rule_values);
-    let sr_hexs=simulate_results_hsl.map((hsl)=>hslToHex(...hsl));
-    GVS(["sim_result"])[id_tag]=sr_hexs;
-    let rule_test_div=document.getElementById(`rule_test_m_${id_tag}`);
-    let color_blocks=Array.from(rule_test_div.getElementsByTagName("div"));
-    // console.log(color_blocks)
-    // console.log(color_blocks.pop())
+function populate_color_div(div_id,id_tag,sr_hexs){
+    let div=document.getElementById(`${div_id}_${id_tag}`);
+    let color_blocks=Array.from(div.getElementsByTagName("div"));
 
     for (let i=0;i<sr_hexs.length;i++){
         if (i>=color_blocks.length){
@@ -378,7 +375,7 @@ function populate_simulation(id_tag){
                     "style":`background-color:${sr_hexs[i]};`
                 }
             )
-            rule_test_div.appendChild(new_div)
+            div.appendChild(new_div)
         } else{
             let div=color_blocks.pop();
             update_element_attribute(
@@ -390,8 +387,23 @@ function populate_simulation(id_tag){
         }
     }
     while(color_blocks.length>0){
-        rule_test_div.removeChild(color_blocks.pop())
+        div.removeChild(color_blocks.pop())
     }
+}
+function populate_simulation(id_tag){
+    //generate from rules
+    //append div
+    let rule_values=get_rule_values_by_id(id_tag);
+    let simulate_results_hsl=run_single_rule_simulation(rule_values);
+    let sr_hexs=simulate_results_hsl.map((hsl)=>hslToHex(...hsl));
+    GVS(["sim_result"])[id_tag]=sr_hexs;
+    let rule_test_div=document.getElementById(`rule_test_m_${id_tag}`);
+
+    populate_color_div("rule_test_m",id_tag,sr_hexs);
+    populate_color_div("sample_div",id_tag,sr_hexs);
+    // console.log(color_blocks)
+    // console.log(color_blocks.pop())
+
 
 
 
@@ -431,7 +443,6 @@ function generate(){
     SVS(["structure","combo_g"],combo_selector);
     update_element_attribute(combo_selector,{"class":"init_new_rule"})
 
-
     //add light bar
 
     //make gradient
@@ -441,9 +452,9 @@ function generate(){
     SVS(["structure","warning_div"],document.getElementById("warning_div"));
     // SVS(["structure","warning_div"],document.getElementById("warning_div"));
     adjust_rule_status();
-
+    //for testing only
+    init_palette_div();
     //hint text
-
 }
 function adjust_hint_text(e){
     let warning=GVS(["structure","warning_div"]);
@@ -549,6 +560,7 @@ function remove_rule(id_tag){
     )
     //remove rules
     r[id_tag]=null;//set the result as null.
+    remove_sample_display(id_tag);
     IIS(["basic","valid_rule_ct"],-1);
     if(GVS(["basic","valid_rule_ct"])<1){
         hide_palette_div();
@@ -575,6 +587,7 @@ function toggle_rule_form(id_tag,e){
     if(!GVS(["action","palette_active"])||GVS(["basic","valid_rule_ct"])>0){
         init_palette_div();
     }
+
 }
 function init_palette_div(){
     /**
