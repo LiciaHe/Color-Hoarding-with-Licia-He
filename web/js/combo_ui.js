@@ -67,11 +67,11 @@ function drag_bar(e){
             }else{
                 SVS(["calculation","current_light_upper"],perc);
             }
-
             update_lightness()
-
         }
-        populate_rule_content();
+        if(GVS(["action","pending_rule"])){
+            populate_rule_content();
+        }
     }
 }
 function end_drag_bar(e){
@@ -92,7 +92,7 @@ function drag_through_gradient(e){
     if (GVS(["action","start_drag_rect"])&&GVS(["structure","current_rect_rule"])===null){
         //initiate a new rule based on the start rect
         IIS(["basic","rule_ct"],1);
-        console.log(GVS(["basic","rect_ct"]))
+
         // window.rule_ct+=1;
         let start_rect=GVS(["structure","start_rect"]);
         let start_attr={
@@ -108,7 +108,7 @@ function drag_through_gradient(e){
             "rect", start_attr,
             document.getElementById("combo_g")
         ))
-        start_attr["id"]=`rule_${GVS(["basic","rule_ct"])-1}`
+        start_attr["id"]=`rule_rect_${GVS(["basic","rule_ct"])-1}`
         start_attr["class"]="rule_rect rule_rect_forming";
         SVS(["structure","current_rect_rule"],addElementToSvg(
             "rect", start_attr,
@@ -294,5 +294,10 @@ function rule_action_clicked(e){
         remove_rule(id_tag)
     }else{
         //finalize
+        toggle_rule_form(id_tag,e)
     }
 }
+// function toggle_collapse(e){
+//
+//     console.log(parent);
+// }

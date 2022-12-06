@@ -134,9 +134,9 @@ function add_gradient_interaction(){
     svg_selector.addEventListener("mouseup",end_gradient)
     svg_selector.addEventListener("mouseleave",end_gradient)
 }
-function create_rule_container(){
+function create_rule_container(id_tag){
     let action_a=document.getElementById("action-area");
-    let id_tag=GVS(["basic","rule_ct"])-1;
+
     let rule_div=create_element_with_attribute(
         "div",
         {
@@ -187,9 +187,9 @@ function create_rule_container(){
     )
     rule_div.appendChild(test_div);
     // btn.addEventListener("click",toggle_collapse);
-    return [rc,id_tag]
+    return rc
 }
-function create_rule_content(rc_id_tag){
+function create_rule_content(rc,id_tag){
     /**
      * go through the rule content to create  individual div
      */
@@ -226,8 +226,7 @@ function create_rule_content(rc_id_tag){
             ["i",[0,99]],
         ]
     ];
-    let rc=rc_id_tag[0];
-    let id_tag=rc_id_tag[1];
+
     // console.log(rc,id_tag)
     for (let i=0;i<rules_template.length;i++){
         let rules=rules_template[i];
@@ -278,9 +277,18 @@ function init_new_rule(){
     /**
      * Given the current hsl, init a new rule form.
      */
+    if (GVS(["action","pending_rule"])){
+        return
+    }
+    let id_tag=GVS(["basic","rule_ct"])-1;
+    let test_rc=document.getElementById(`rule_${id_tag}`);
+    // console.log(test_rc)
+    if(test_rc){
+        return
+    }
+    let rc=create_rule_container(id_tag);
 
-    let rc_id_tag=create_rule_container();
-    create_rule_content(rc_id_tag);
+    create_rule_content(rc,id_tag);
     //create the inner structures
     //populate rule content
     //default content
@@ -296,6 +304,7 @@ function init_new_rule(){
     // rule_value_container[]=null;//add null value as a place holder.
 
     populate_rule_content();
+    SVS(["action","active_rule_id"],id_tag);
 }
 function pass_lightness_information(id_tag){
     let b0=document.getElementById("0_graybar");
@@ -437,7 +446,7 @@ function generate(){
 }
 function adjust_hint_text(e){
     let warning=GVS(["structure","warning_div"]);
-    let default_text=`Finalize Rule ${GVS(["basic","rule_ct"])} before adding another.`;
+    let default_text=`Finalize Rule ${GVS(["action","active_rule_id"])} before adding another.`;
     let text=default_text;
     // let default_text;
     if (GVS(["action","pending_rule"])){
@@ -445,12 +454,14 @@ function adjust_hint_text(e){
             if (e.type==="mouseover"){
                 let parent=e.target.parentElement.parentElement;
                 let pc=parent.getAttribute("class");
-                if (pc==="collapsible"){
+                if (pc.includes("collapsible")){
                     // console.log(e.target.getAttribute("class"))
                     text=GVS(["view","rule_action_hint_text"])[e.target.parentElement.getAttribute("class")]
                 }
                 else{
+                    // console.log(e.target.getAttribute("class"));
                     let c_lst=e.target.getAttribute("class").split("_");
+
                     let id=parseInt(c_lst[c_lst.length-1]);
                     text=GVS(["view","hint_texts"])[id];
                 }
@@ -507,10 +518,11 @@ function extract_and_reset_rule(id_tag){
             parent_clean[i],null
         )
     }
-
     let null_reset=[
         ["action","pending_rule"],
-        ["structure","start_rect"]
+        ["action","start_drag_rect"],
+        ["structure","start_rect"],
+        ["action","gradient_dragged"]
     ]
     for (let i=0;i<null_reset.length;i++){
         SVS(
@@ -518,15 +530,153 @@ function extract_and_reset_rule(id_tag){
         )
     }
     adjust_hint_text();
+    SVS(["action","active_rule_id"],null);
     return value
 }
 function remove_rule(id_tag){
-    extract_and_reset_rule(id_tag);
     //RULE CT WILL NOT RESET
     //reset current keys and graphics
-
     //reset defaults
+    extract_and_reset_rule(id_tag);
+    //delete the rule div
+    let rule_div=document.getElementById(
+        `rule_${id_tag}`
+    )
+    rule_div.parentElement.removeChild(rule_div);
+    let r=GVS(
+        ["result"]
+    )
     //remove rules
+    r[id_tag]=null;//set the result as null.
+}
+function toggle_rule_form(id_tag,e){
+    //toggle
+    /**
+     * check of the
+     * @type {{}}
+     */
+    let btn_div=e.target.parentElement.parentElement;
+    let btn_div_class=btn_div.getAttribute("class");
+
+
+    if (btn_div_class.includes("fold")){
+        //expand
+        if (GVS(["action","active_rule_id"])!==null && GVS(["action","active_rule_id"])!==id_tag){
+            fold_rule_by_id(GVS(["action","active_rule_id"]));
+        }
+        expand_rule_by_id(id_tag);
+
+
+    }else{
+        fold_rule_by_id(id_tag);
+    }
+}
+function fold_rule_by_id(id_tag){
+
+    let btn_div=document.getElementById(`btn_r_${id_tag}`);
+    if(btn_div.getAttribute("class").includes("fold")){
+        //already folded
+        return
+    }
+    let rc=document.getElementById(`rule_content_${id_tag}`);
+    let rtm=document.getElementById(`rule_test_m_${id_tag}`);
+    //this rule has to be active
+    let value=extract_and_reset_rule(id_tag);
+    let r=GVS(
+        ["result"]
+    )
+    r[id_tag]=value;
+    update_element_attribute(btn_div,{"class":"collapsible fold"});
+    let fold_span=btn_div.getElementsByClassName("coll_finalize")[0].getElementsByTagName("span")[0];
+
+    fold_span.innerHTML=GVS(["basic","default","expand_icon"]);
+    let hidden_tags=["coll_close","coll_test"];
+    for (let i=0;i<hidden_tags.length;i++){
+        let action_div=btn_div.getElementsByClassName(hidden_tags[i])[0];
+        update_element_attribute(action_div,
+            {"class":`${hidden_tags[i]} hidden`}
+        )
+    }
+
+
+    update_element_attribute(btn_div,{"class":"collapsible fold"})
+    for (let i=0;i<2;i++){
+        let elem=[rc,rtm][i];
+        let c=elem.getAttribute("class");
+        update_element_attribute(
+            elem,
+            {"class":`${c} fold_content`}
+        )
+    }
+}
+function update_visual_by_values(value,id_tag){
+    /**
+     * given a set of values, update the bar, hidden values, and construct the rectangles
+     */
+    SVS(["calculation","current_light_lower"],value["lightness"][0]);
+    SVS(["calculation","current_light_upper"],value["lightness"][1]);
+    update_gray_bar_attr();
+    //h_sat
+    let start_attr={
+        "x":`${value["hue"][0]/360*100}%`,
+        "width":`${(value["hue"][1]-value["hue"][0])/360*100}%`,
+        "y":`${(value["saturation"][0])}%`,
+        "height":`${(value["saturation"][1]-value["saturation"][0])}%`
+    }
+
+    start_attr["id"]=`rule_fill${id_tag}`
+    start_attr["class"]="rule_rect_fill rule_rect_fill_pending"
+
+    SVS(["structure","current_rect_rule_fill"],addElementToSvg(
+        "rect", start_attr,
+        document.getElementById("combo_g")
+    ))
+
+    start_attr["id"]=`rule_rect_${id_tag}`
+    start_attr["class"]="rule_rect rule_rect_pending"
+
+    SVS(["structure","current_rect_rule"],addElementToSvg(
+        "rect", start_attr,
+        document.getElementById("combo_g")
+    ))
+    SVS(["action","pending_rule"],true);
+}
+function expand_rule_by_id(id_tag){
+    let rc=document.getElementById(`rule_content_${id_tag}`);
+    let rtm=document.getElementById(`rule_test_m_${id_tag}`);
+    let btn_div=document.getElementById(`btn_r_${id_tag}`)
+    //set the current active
+    SVS(["action","active_rule_id"],id_tag);
+    SVS(["action","pending_rule"],true);
+
+    //update span icon
+    let fold_span=btn_div.getElementsByClassName("coll_finalize")[0].getElementsByTagName("span")[0];
+    fold_span.innerHTML=GVS(["basic","default","finalize_icon"]);
+    //update other span
+    let hidden_tags=["coll_close","coll_test"];
+    for (let i=0;i<hidden_tags.length;i++){
+        let action_div=btn_div.getElementsByClassName(hidden_tags[i])[0];
+        update_element_attribute(action_div,
+            {"class":`${hidden_tags[i]}`}
+        )
+    }
+
+    //update content class (remove folded)
+    for (let i=0;i<2;i++){
+        let elem=[rc,rtm][i];
+        let c=elem.getAttribute("class");
+        update_element_attribute(
+            elem,
+            {"class":c.split(" ")[0]}
+        )
+    }
+
+    //remove fold  from btn class
+    update_element_attribute(btn_div,{"class":"collapsible"})
+
+    //restore rectangle and bar
+    let values=GVS(["result"])[id_tag];
+    update_visual_by_values(values,id_tag);
 }
 //responsive
 window.addEventListener("resize",()=>resize())

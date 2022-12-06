@@ -87,7 +87,7 @@
 .collapsible
   background-color: black
   color: white
-  //cursor: pointer
+
   width: 100%
   border: none
   text-align: left
@@ -127,7 +127,8 @@
   width: 100%
   transition: max-height 0.2s ease-out
   background-color: #e8e8e8
-  overflow: hidden
+  display: block
+  height: auto
   div
     width: 100%
     font-size: 1.5vw
@@ -144,15 +145,26 @@
       background-color: gray
       cursor: help
 
+.hidden
+  visibility: hidden
+
+
+.fold_content
+  display: none
+  div
+    display: none
+  //height: 0!important
+  //overflow: hidden
+  //flex-wrap: nowrap!important
+
 .rule_test_mini
   @extend .center-around-row
   flex-wrap: wrap
   background-color: #efefef
-  //padding: 0.5vw
-  //border: 0.01vw solid #6e6e6e
   width: 100%
-
-
+  transition: max-height 0.2s ease-out
+  height: auto
+  display: flex
   div
     width: 4vw
     height: 4vw

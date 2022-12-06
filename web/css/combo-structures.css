@@ -129,7 +129,8 @@
   width: 100%;
   transition: max-height 0.2s ease-out;
   background-color: #e8e8e8;
-  overflow: hidden; }
+  display: block;
+  height: auto; }
   .rule_content div {
     width: 100%;
     font-size: 1.5vw;
@@ -143,10 +144,21 @@
     background-color: gray;
     cursor: help; }
 
+.hidden {
+  visibility: hidden; }
+
+.fold_content {
+  display: none; }
+  .fold_content div {
+    display: none; }
+
 .rule_test_mini {
   flex-wrap: wrap;
   background-color: #efefef;
-  width: 100%; }
+  width: 100%;
+  transition: max-height 0.2s ease-out;
+  height: auto;
+  display: flex; }
   .rule_test_mini div {
     width: 4vw;
     height: 4vw;

@@ -13,7 +13,9 @@ window.SETTING={
             "current_light_lower":45,
             "current_light_upper":55,
             "pick":[4,10],
-            "weight":[1,1]
+            "weight":[1,1],
+            "expand_icon":"&#128449;",
+            "finalize_icon":"&#10004;"
         }
     },
     "view":{
@@ -27,7 +29,7 @@ window.SETTING={
         "rule_action_hint_text": {
             "coll_test":"Simulate: Click to run another simulation.",
             "coll_close":"Delete: Click to delete this rule.",
-            "coll_finalize":"Finalize: Click to finalize and fold this rule.",
+            "coll_finalize":"Finalize: Click to fold/unfold this rule.",
         }
     },
     "action":{
