@@ -50,8 +50,9 @@ window.SETTING={
         "current_light_upper":null,
         "dist_threshold":1
     },
-    "result":[],
-    "sim_result":[],
+    "result": {},
+    "sim_result":{},
+    "valid_rule_id":new Set(),
 }
 
 function getValueFromObj(kLst,obj){

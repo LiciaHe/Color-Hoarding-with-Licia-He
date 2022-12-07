@@ -27,6 +27,7 @@ function update_svg_size(container_id,svg_id){
 function update_all_svg_size(){
     update_svg_size("grayscale_container","grayscale_svg");
     update_svg_size("svg_container","color_combo_svg");
+    update_svg_size("preview_svg_container","preview_svg");
 }
 function resize(){
     adjust_window_size();
@@ -39,14 +40,16 @@ function start_drag_bar(e){
     drag_bar(e)
 }
 function find_nearest_bar(e){
-    let mouse_y=e.clientY;
     let b0=document.getElementById("0_graybar");
     let b1=document.getElementById("1_graybar");
     let y_perc_0=b0.getAttributeNS(null,"y1")
     let y_value_0=y_perc_0.slice(0,y_perc_0.length-1);
     let y_perc_1=b1.getAttributeNS(null,"y1")
     let y_value_1=y_perc_1.slice(0,y_perc_1.length-1);
-    let mouse_perc=parseInt((mouse_y-GVS(["structure","gray_c_bbox_top"]))/GVS(["structure","gray_c_height"])*100);//todo: multiple screen update 
+    let box=document.getElementById("grayscale_container").getBoundingClientRect();
+    let mouse_perc=parseInt(
+        (e.clientY-box.top)/box.height*100
+    );
 
 
     if (Math.abs(mouse_perc-y_value_0)>Math.abs(mouse_perc-y_value_1)){
@@ -346,8 +349,14 @@ function create_sample_display(id_tag){
         }
     )
     sd.appendChild(sample_div);
-    console.log(rsc)
 }
 function remove_sample_display(id_tag){
 
+}
+
+function init_palette_preview_interaction(){
+    document.getElementById("redraw_palette").addEventListener("click",redraw_palette());
+    document.getElementById("download_palette").addEventListener("click",download_palette());
+    document.getElementById("redraw_preview").addEventListener("click",redraw_preview());
+    document.getElementById("download_preview").addEventListener("click",download_preview());
 }

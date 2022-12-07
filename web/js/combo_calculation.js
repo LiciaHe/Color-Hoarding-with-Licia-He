@@ -27,21 +27,13 @@ function determine_rect_from_two_pts(x0,y0,x1,y1){
 
 }
 function calculate_rect_drag_wh(start_target,end_target){
+
     let start_x=remove_percentage(start_target.getAttributeNS(null,"x"));
     let start_y=remove_percentage(start_target.getAttributeNS(null,"y"));
     let end_x=remove_percentage(end_target.getAttributeNS(null,"x"));
     let end_y=remove_percentage(end_target.getAttributeNS(null,"y"));
-    return determine_rect_from_two_pts(start_x,start_y,end_y,end_y)
-    // let top_left=[Math.min(start_x,end_x),Math.min(start_y,end_y)];
-    // let bottom_right=[Math.max(start_x,end_x),Math.max(start_y,end_y)];
-    // let width=bottom_right[0]-top_left[0];
-    // let height=bottom_right[1]-top_left[1];
-    // return {
-    //     "x":`${top_left[0]}%`,
-    //     "y":`${top_left[1]}%`,
-    //     "width":`${width}%`,
-    //     "height":`${height}%`,
-    // }
+
+    return determine_rect_from_two_pts(start_x,start_y,end_x,end_y)
 }
 function update_rect_attr_by_hs_info(hue_range,sat_range){
     /**

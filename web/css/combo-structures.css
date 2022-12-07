@@ -207,7 +207,10 @@
       width: 95%;
       margin-top: 5px;
       margin-bottom: 5px;
-      background-color: #e8e8e8; }
+      background-color: #e8e8e8;
+      border: 2px solid white; }
+      #palette_display #rule_sample_container .sample_display:hover {
+        border: 2px solid black; }
       #palette_display #rule_sample_container .sample_display .rule_id_display {
         text-align: center;
         font-size: 2vw;
@@ -230,7 +233,8 @@
 
 #palette_preview {
   flex-basis: 65%;
-  height: 100%; }
+  height: 100%;
+  border: 1px solid black; }
   #palette_preview div {
     width: 100%; }
   #palette_preview #preview_svg_container {

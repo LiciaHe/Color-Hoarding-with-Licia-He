@@ -36,20 +36,43 @@ function random_in_range(rg) {
     // let v=random();
     return calculateScale(random(),{"max":1,"min":0},{"max":rg[1],"min":rg[0]})
 }
-function chooseWithWeight(items, weights){
-    let i;
-
-    for (i = 0; i < weights.length; i++){
-        weights[i] += weights[i - 1] || 0;
+function convert_to_accumulate_weight(weights){
+    let accu_sum=[];
+    let accu=0
+    for (let i=0;i<weights.length;i++){
+        accu+=weights[i]
+        accu_sum.push(accu)
     }
-    let randomValue = random() * weights[weights.length - 1];
-
-    for (i = 0; i < weights.length; i++){
-        if (weights[i] > randomValue){
-            break;
+    return accu_sum
+}
+function closest_value_id_in_sorted_lst(sorted_lst,value_to_compare){
+    let s=0;
+    let e=sorted_lst.length;
+    let m;
+    while(s<e){
+        m=Math.floor((s+e)/2);
+        if(sorted_lst[m]<value_to_compare){
+            s=m+1
+        }else{
+            e=m
         }
     }
-    return items[i];
+
+    return s
+}
+function chooseWithWeight(items, weights){
+
+    //convert weight to accumulate weight
+    let cum_weight=convert_to_accumulate_weight(weights)
+    let total=cum_weight[cum_weight.length-1]
+    if (total<=0){
+        return choose(items)
+    }
+    // [population[bisect(cum_weights, random() * total, 0, hi)]
+    // for i in _repeat(None, k)]
+    let v_val=random()*total;
+    let idx=closest_value_id_in_sorted_lst(cum_weight,v_val);
+    return items[idx]
 }
 function calculateScale(input, inputDomain, outputRange){
     //helper function to scale values (e.g., height and color) for canvas without using D3
