@@ -1,5 +1,5 @@
 function make_gradient(){
-    let svg_selector=document.getElementById("combo_g");
+    let svg_selector=document.getElementById("background");
     let hue_break=GVS(["calculation","hue_break"]);
     let saturation_break=GVS(["calculation","saturation_break"]);
     let current_light_lower=GVS(["calculation","current_light_lower"]);
@@ -47,15 +47,8 @@ function init_new_rule(){
         //already exist
         return
     }
-    // let active_rule_id=GVS(["action","active_rule_id"]);
-    // if (active_rule_id!==null &&active_rule_id!==undefined&& active_rule_id!==id_tag){
-    //     //fold previous rule
-    //     console.log(GVS(["action","active_rule_id"]),id_tag)
-    //     fold_rule_by_id(GVS(["action","active_rule_id"]));
-    // }
 
     let rc=create_rule_container(id_tag);
-
     create_rule_content(rc,id_tag);
     //create the inner structures
     //populate rule content
@@ -68,15 +61,13 @@ function init_new_rule(){
         ["calculation","current_weight"],
         GVS(["basic","default","weight"])
     )
-    // let rule_value_container=GVS(["result"]);
-    // rule_value_container[]=null;//add null value as a place holder.
+
     //add palette preview section
     create_sample_display(id_tag);
-
     populate_rule_content();
     SVS(["action","active_rule_id"],id_tag);
     GVS(["valid_rule_id"]).add(id_tag);
-    GVS(["result"])[id_tag]=extract_and_reset_rule(id_tag);
+    GVS(["result"])[id_tag]=get_rule_values_by_id(id_tag);
     if(!GVS(["action","palette_active"])){
         display_palette_div();
         draw_preview_color();
@@ -127,8 +118,7 @@ function draw_preview_color(){
             id_color_ct[id]=GVS(['sim_result'])[id].length;
         }
     )
-    console.log(id_ordered,weight_ordered)
-    let ct={}
+
     for (let i=0;i<100;i++){
         let rule_id=chooseWithWeight(
             id_ordered,
@@ -136,15 +126,11 @@ function draw_preview_color(){
         );
         let color_rg=[0,id_color_ct[rule_id]];
         let color_id=Math.floor(random_in_range(color_rg));
-        if (ct[rule_id]){
-            ct[rule_id]+=1
-        }else{
-            ct[rule_id]=1
-        }
         let hex=GVS(['sim_result'])[rule_id][color_id];
         draw_result.push([rule_id,color_id,hex])
     }
-    console.log(ct)
+    // console.log(ct)
+    return draw_result
 }
 
 function generate(){
@@ -162,7 +148,7 @@ function generate(){
     );
     add_grayscale_bar();
     // update_svg
-    addBackgroundRectangle(document.getElementById("combo_g"));
+    // addBackgroundRectangle(document.getElementById("combo_g"));
     update_all_svg_size();
     let combo_selector=document.getElementById("combo_g");
     SVS(["structure","combo_g"],combo_selector);

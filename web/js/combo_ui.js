@@ -146,12 +146,12 @@ function end_gradient(e){
         if(!GVS(["action","pending_rule"])){
             init_new_rule();
         }
-
         SVS(["action","pending_rule"],true);
     }else{
         SVS(["action","pending_rule"],null);
         SVS(["action","start_drag_rect"],false);
         SVS(["action","gradient_dragged"],false);
+
     }
     // prevent the creation of the new rect until users have finished the rules
     adjust_rule_status()

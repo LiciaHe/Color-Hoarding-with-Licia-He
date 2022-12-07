@@ -94,7 +94,7 @@ function update_lightness(){
     }
 }
 function add_gradient_interaction(){
-    let svg_selector=document.getElementById("combo_g");
+    let svg_selector=document.getElementById("color_combo_svg");
     svg_selector.addEventListener("mousedown",(e)=start_selecting_gradient)
     svg_selector.addEventListener("mousemove",drag_through_gradient)
     svg_selector.addEventListener("mouseup",end_gradient)
@@ -381,6 +381,9 @@ function fold_rule_by_id(id_tag){
     let rtm=document.getElementById(`rule_test_m_${id_tag}`);
     //this rule has to be active
 
+    GVS(["valid_rule_id"]).add(id_tag);
+    GVS(["result"])[id_tag]=extract_and_reset_rule(id_tag);
+
     update_element_attribute(btn_div,{"class":"collapsible fold"});
     let fold_span=btn_div.getElementsByClassName("coll_finalize")[0].getElementsByTagName("span")[0];
 
@@ -485,6 +488,7 @@ function adjust_rule_status(){
     }
     adjust_hint_text();
 }
+
 function extract_and_reset_rule(id_tag){
     /**
      * extract all info from the current rule div, reset all value to default
