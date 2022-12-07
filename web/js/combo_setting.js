@@ -48,7 +48,8 @@ window.SETTING={
         "saturation_break":100,
         "current_light_lower":null,
         "current_light_upper":null,
-        "dist_threshold":1
+        "dist_threshold":1,
+        "preview_col_row":[10,10],
     },
     "result": {},
     "sim_result":{},

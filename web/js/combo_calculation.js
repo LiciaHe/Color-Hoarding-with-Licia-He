@@ -24,7 +24,6 @@ function determine_rect_from_two_pts(x0,y0,x1,y1){
         "width":`${width}%`,
         "height":`${height}%`,
     }
-
 }
 function calculate_rect_drag_wh(start_target,end_target){
 

@@ -238,9 +238,9 @@
   #palette_preview div {
     width: 100%; }
   #palette_preview #preview_svg_container {
-    flex-basis: 85%;
-    padding: 2vw; }
+    height: 85%;
+    padding: 20px; }
   #palette_preview #preview_action_container {
-    flex-basis: 15%; }
+    height: 15%; }
 
 /*# sourceMappingURL=combo-structures.css.map */

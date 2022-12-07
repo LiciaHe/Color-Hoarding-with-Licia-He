@@ -331,8 +331,11 @@ function populate_simulation(id_tag){
 
     populate_color_div("rule_test_m",id_tag,sr_hexs);
     populate_color_div("sample_div",id_tag,sr_hexs);
-    // console.log(color_blocks)
-    // console.log(color_blocks.pop())
+
+    //will trigger preview change
+    if(GVS(["valid_rule_id"]).size>0){
+        populate_preview_color()
+    }
 }
 function populate_rule_content(){
     /**
@@ -594,9 +597,64 @@ function expand_rule_by_id(id_tag){
     update_visual_by_values(values,id_tag);
 }
 
-function redraw_palette(){}
+function redraw_palette(){
+    let valid_id=GVS(["valid_rule_id"]);
+    valid_id.forEach(
+        (id)=>populate_simulation(id)
+    )
+}
 function download_palette(){}
-function redraw_preview(){}
+function redraw_preview(){
+    populate_preview_color();
+}
 function download_preview(){}
+
+function init_preview_rects(){
+    /**
+     * initiate rectangles in the preview svg
+     */
+    let pcr=GVS(["calculation","preview_col_row"]);
+    let w=100/pcr[0];
+    let h=100/pcr[0];
+    let attr={
+        "width":`${w}%`,
+        "height":`${h}%`,
+        "class":"preview_block"
+    }
+    let selector=document.getElementById("preview_g");
+    let idx=0
+    for (let i=0;i<pcr[1];i++){
+        let y=i*h;
+        for (let j=0;j<pcr[0];j++){
+            let x=j*w;
+            attr["id"]=`preview_block_${idx}`;
+            attr["x"]=`${x}%`;
+            attr["y"]=`${y}%`;
+            addElementToSvg(
+                "rect",
+                attr,
+                selector
+            )
+            idx+=1
+        }
+    }
+
+}
+function populate_preview_color(){
+    let draw_result=draw_preview_color();
+    SVS(["preview_result"],draw_result);
+    let rects=document.getElementsByClassName("preview_block");
+    for (let i=0;i<rects.length;i++){
+        let r=rects[i];
+        let id_l=r.getAttribute("id").split("_");
+        let idx=id_l[id_l.length-1];
+        let hex=draw_result[idx][2];
+        update_element_attribute(r,
+            {
+                "fill":hex,
+                "stroke":hex,
+            })
+    }
+}
 
 

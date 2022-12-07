@@ -70,9 +70,8 @@ function init_new_rule(){
     GVS(["result"])[id_tag]=get_rule_values_by_id(id_tag);
     if(!GVS(["action","palette_active"])){
         display_palette_div();
-        draw_preview_color();
+        populate_preview_color()
     }
-
 }
 function remove_rule(id_tag){
     //RULE CT WILL NOT RESET
@@ -118,17 +117,21 @@ function draw_preview_color(){
             id_color_ct[id]=GVS(['sim_result'])[id].length;
         }
     )
-
-    for (let i=0;i<100;i++){
+    let pcr=GVS(["calculation","preview_col_row"]);
+    for (let i=0;i<pcr[0]*pcr[1];i++){
         let rule_id=chooseWithWeight(
             id_ordered,
             weight_ordered
         );
         let color_rg=[0,id_color_ct[rule_id]];
         let color_id=Math.floor(random_in_range(color_rg));
+
         let hex=GVS(['sim_result'])[rule_id][color_id];
         draw_result.push([rule_id,color_id,hex])
     }
+    draw_result.sort(
+        (a,b)=>a[0]-b[0]||a[1]-b[1]
+    )
     // console.log(ct)
     return draw_result
 }
@@ -159,6 +162,9 @@ function generate(){
     //make gradient
     make_gradient();
     add_gradient_interaction();
+
+    //palette rectangles
+    init_preview_rects();
 
     SVS(["structure","warning_div"],document.getElementById("warning_div"));
     // SVS(["structure","warning_div"],document.getElementById("warning_div"));

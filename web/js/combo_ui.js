@@ -355,8 +355,8 @@ function remove_sample_display(id_tag){
 }
 
 function init_palette_preview_interaction(){
-    document.getElementById("redraw_palette").addEventListener("click",redraw_palette());
-    document.getElementById("download_palette").addEventListener("click",download_palette());
-    document.getElementById("redraw_preview").addEventListener("click",redraw_preview());
-    document.getElementById("download_preview").addEventListener("click",download_preview());
+    document.getElementById("redraw_palette").addEventListener("click",redraw_palette);
+    document.getElementById("download_palette").addEventListener("click",download_palette);
+    document.getElementById("redraw_preview").addEventListener("click",redraw_preview);
+    document.getElementById("download_preview").addEventListener("click",download_preview);
 }

@@ -11,7 +11,6 @@ function set_popup_scale() {
     update_element_attribute(popup,attr);
 }
 
-
 function hidePopup() {
     window.popupDisplay="none";
     document.getElementById("popup").style.display=window.popupDisplay;
