@@ -13,7 +13,7 @@ window.SETTING={
         "default":{
             "current_light_lower":45,
             "current_light_upper":55,
-            "pick":[4,10],
+            "pick":[2,4],
             "weight":[1,1],
             "expand_icon":"&#128449;",
             "finalize_icon":"&#10004;"

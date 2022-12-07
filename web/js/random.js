@@ -30,10 +30,12 @@ function shuffle(a) {
     return a;
 }
 function random(){
+    /**
+     * replace with your own random function
+     */
     return Math.random()
 }
 function random_in_range(rg) {
-    // let v=random();
     return calculateScale(random(),{"max":1,"min":0},{"max":rg[1],"min":rg[0]})
 }
 function convert_to_accumulate_weight(weights){
@@ -61,25 +63,16 @@ function closest_value_id_in_sorted_lst(sorted_lst,value_to_compare){
     return s
 }
 function chooseWithWeight(items, weights){
-
-    //convert weight to accumulate weight
     let cum_weight=convert_to_accumulate_weight(weights)
     let total=cum_weight[cum_weight.length-1]
     if (total<=0){
         return choose(items)
     }
-    // [population[bisect(cum_weights, random() * total, 0, hi)]
-    // for i in _repeat(None, k)]
     let v_val=random()*total;
     let idx=closest_value_id_in_sorted_lst(cum_weight,v_val);
     return items[idx]
 }
 function calculateScale(input, inputDomain, outputRange){
-    //helper function to scale values (e.g., height and color) for canvas without using D3
-    // let inputDiff=inputDomain.max-inputDomain.min;
-    // // let outputDiff=outputRange.max-outputRange.min;
-    // if ((input - inputDomain.min) === 0) {
-    //     return(outputRange.min);
-    // }
+    //helper function to scale values
     return ((input - inputDomain.min) === 0)?outputRange.min:(input-inputDomain.min)/(inputDomain.max-inputDomain.min)*(outputRange.max-outputRange.min)+outputRange.min
 }

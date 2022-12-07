@@ -98,45 +98,35 @@ function remove_rule(id_tag){
     sd.parentElement.removeChild(sd);
     GVS(["valid_rule_id"]).remove(id_tag);
 }
+
+function export_rules(){
+    let valid_rule_id=GVS(["valid_rule_id"]);
+    let rules={};
+    let rule_simulates={};
+    valid_rule_id.forEach(
+        function (id){
+            rules[id]=GVS(["result"])[id]
+            rule_simulates[id]=GVS(["sim_result"])[id]
+        }
+    )
+    return {
+        "rules":rules,
+        "rule_simulates":rule_simulates
+    }
+}
 function draw_preview_color(){
     /**
      * Picking colors fill a 10 by 10 grid.
      * Utilize all existing tools
      */
-    let valid_rule_id=GVS(["valid_rule_id"]);
-    let draw_result=[];//choose rules
-    let id_ordered=[]
-    let weight_ordered=[]
-    let id_color_ct={}
-    valid_rule_id.forEach(
-        function (id){
-            let weight_range=GVS(["result"])[id]["weight"];
-            let w=Math.floor(random_in_range(weight_range));
-            id_ordered.push(id)
-            weight_ordered.push(w)
-            id_color_ct[id]=GVS(['sim_result'])[id].length;
-        }
-    )
+    let er=export_rules()
     let pcr=GVS(["calculation","preview_col_row"]);
-    for (let i=0;i<pcr[0]*pcr[1];i++){
-        let rule_id=chooseWithWeight(
-            id_ordered,
-            weight_ordered
-        );
-        let color_rg=[0,id_color_ct[rule_id]];
-        let color_id=Math.floor(random_in_range(color_rg));
-
-        let hex=GVS(['sim_result'])[rule_id][color_id];
-        draw_result.push([rule_id,color_id,hex])
-    }
-    draw_result.sort(
-        (a,b)=>a[0]-b[0]||a[1]-b[1]
-    )
-    // console.log(ct)
-    return draw_result
+    let draw_ct=pcr[0]*pcr[1];
+    return draw_colors_from_rules(er["rules"],er["rule_simulates"],draw_ct)
 }
 
 function generate(){
+    init_popup();
     update_all_svg_size();
     let gray_rect=addBackgroundRectangle(
         document.getElementById("grayscale_g")

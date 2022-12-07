@@ -360,3 +360,9 @@ function init_palette_preview_interaction(){
     document.getElementById("redraw_preview").addEventListener("click",redraw_preview);
     document.getElementById("download_preview").addEventListener("click",download_preview);
 }
+
+function init_popup(){
+    SVS(["action","popupDisplay"],"none");
+    document.getElementById("popup").style.display="none";//test only
+    document.getElementById("noselect").addEventListener("click",hidePopup);
+}

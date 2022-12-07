@@ -11,6 +11,19 @@
 </head>
 <body>
 
+<div id="popup" style="display: none">
+    <div id="closebtn"><span id="noselect">x</span></div>
+    <div id="btn_copy"><span id="copy_text">copy</span></div>
+    <div id="popupFlex">
+        <div id="popup_title">
+            <span class="title_text"> Download Color Rules</span>
+        </div>
+        <div id="download_text_div" >
+            <textarea id="download_text_area" name="palette_export" readonly wrap="soft">
+</textarea>
+        </div>
+    </div>
+</div>
 
 <div id="generator-container" class="flex-container">
     <div id="grayscale_container">
@@ -82,13 +95,14 @@
 </div>
 
 <script src="js/utils.js" type="text/javascript"></script>
-<script src="js/random.js" type="text/javascript"></script>
-<script src="js/combo_setting.js" type="text/javascript"></script>
+<script src="js/combo/color_rule_helper_functions.js" type="text/javascript"></script>
+<script src="js/combo/combo_setting.js" type="text/javascript"></script>
+<script src="js/ui.js" type="text/javascript"></script>
 <script src="js/svg_manipulation.js" type="text/javascript"></script>
-<script src="js/combo_ui.js" type="text/javascript"></script>
+<script src="js/combo/combo_ui.js" type="text/javascript"></script>
 <script src="js/color.js" type="text/javascript"></script>
-<script src="js/combo_calculation.js" type="text/javascript"></script>
-<script src="js/combo_action.js" type="text/javascript"></script>
-<script src="js/combo_main.js" type="text/javascript"></script>
+<script src="js/combo/combo_calculation.js" type="text/javascript"></script>
+<script src="js/combo/combo_action.js" type="text/javascript"></script>
+<script src="js/combo/combo_main.js" type="text/javascript"></script>
 </body>
 </html>

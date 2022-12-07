@@ -1,8 +1,8 @@
 @use "basic";
-.flex-container, .center-start-column, #grayscale_container, #action-area, .rule, #palette_display, #palette_display #rule_sample_container, #palette_preview, .center-center-row, #generator-container, #palette, #palette_display #rule_sample_container .sample_display, .center-between-row, .collapsible, #palette_display #rule_sample_container .sample_display .sample_div, .center-around-row, .rule_test_mini, #palette_display #sample_action_container, #palette_preview #preview_action_container {
+.flex-container, .center-start-column, #grayscale_container, #action-area, .rule, #palette_display, #palette_display #rule_sample_container, #palette_preview, #popup #popupFlex, .center-center-row, #generator-container, #palette, #palette_display #rule_sample_container .sample_display, .center-between-row, .collapsible, #palette_display #rule_sample_container .sample_display .sample_div, .center-around-row, .rule_test_mini, #palette_display #sample_action_container, #palette_preview #preview_action_container {
   display: flex; }
 
-.center-start-column, #grayscale_container, #action-area, .rule, #palette_display, #palette_display #rule_sample_container, #palette_preview {
+.center-start-column, #grayscale_container, #action-area, .rule, #palette_display, #palette_display #rule_sample_container, #palette_preview, #popup #popupFlex {
   align-items: center;
   justify-content: start;
   flex-direction: column; }
@@ -189,6 +189,10 @@
       background-color: gray;
       cursor: pointer; }
 
+.title_text {
+  padding-top: 20px;
+  font-size: 4vw; }
+
 #palette_display {
   flex-basis: 35%;
   height: 100%;
@@ -196,8 +200,6 @@
   #palette_display div {
     width: 100%; }
   #palette_display .title_text {
-    padding-top: 20px;
-    font-size: 4vw;
     flex-basis: 10%; }
   #palette_display #rule_sample_container {
     overflow-y: auto;
@@ -242,5 +244,64 @@
     padding: 20px; }
   #palette_preview #preview_action_container {
     height: 15%; }
+
+.hover_change, #popup #closebtn #noselect:hover, #popup #btn_copy span:hover {
+  background-color: #01090e;
+  color: white;
+  cursor: pointer; }
+
+#popup {
+  width: 80%;
+  height: 80%;
+  background-color: #f3f3f3;
+  border: 2px solid black;
+  position: fixed;
+  top: 10%;
+  left: 10%; }
+  #popup #closebtn {
+    text-align: right;
+    font-size: 2vw;
+    padding: 1vw;
+    position: fixed;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 5%; }
+    #popup #closebtn #noselect {
+      padding: 5px; }
+  #popup #btn_copy {
+    text-align: right;
+    font-size: 2vw;
+    padding: 1vw;
+    position: fixed;
+    top: 10%;
+    left: 10%;
+    width: 75%;
+    height: 5%; }
+    #popup #btn_copy span {
+      padding: 5px; }
+  #popup #download_text_div {
+    overflow: auto; }
+  #popup #popupFlex {
+    width: 100%;
+    height: 100%; }
+    #popup #popupFlex div {
+      width: 100%; }
+    #popup #popupFlex #popup_title {
+      text-align: center;
+      padding: 20px;
+      background-color: white;
+      flex-basis: 15%; }
+    #popup #popupFlex #download_text_div {
+      flex-basis: 85%; }
+      #popup #popupFlex #download_text_div textarea {
+        width: 100%;
+        height: 99%;
+        resize: none;
+        font-size: 2vw;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        white-space: pre-wrap; }
 
 /*# sourceMappingURL=combo-structures.css.map */

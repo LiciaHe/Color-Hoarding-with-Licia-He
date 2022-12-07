@@ -374,7 +374,7 @@ function hide_palette_div(){
     resize();
 }
 function fold_rule_by_id(id_tag){
-
+    update_lightness();
     let btn_div=document.getElementById(`btn_r_${id_tag}`);
     if(btn_div.getAttribute("class").includes("fold")){
         //already folded
@@ -419,6 +419,7 @@ function update_visual_by_values(value,id_tag){
     SVS(["calculation","current_light_lower"],value["lightness"][0]);
     SVS(["calculation","current_light_upper"],value["lightness"][1]);
     update_gray_bar_attr();
+    update_lightness();
     //h_sat
     let start_attr={
         "x":`${value["hue"][0]/360*100}%`,
@@ -595,6 +596,7 @@ function expand_rule_by_id(id_tag){
     //restore rectangle and bar
     let values=GVS(["result"])[id_tag];
     update_visual_by_values(values,id_tag);
+
 }
 
 function redraw_palette(){
@@ -603,7 +605,25 @@ function redraw_palette(){
         (id)=>populate_simulation(id)
     )
 }
-function download_palette(){}
+function download_palette(){
+    /**
+     * Export the following information in a popup window
+     *
+     */
+    let rules=export_rules();
+    let pretty_print=JSON.stringify(rules, undefined, 1);
+    let reg1=/\n\s\s\s+/igm;
+    pretty_print=pretty_print.replace(reg1," ")
+    pretty_print=pretty_print.replace(/\n\s+\},/igm,"},");
+    pretty_print=pretty_print.replace(/\n\s+\}/igm,"}");
+    pretty_print=pretty_print.replace(/\n\s+\],/igm,"],");
+    pretty_print=pretty_print.replace(/\n\s+\]/igm,"]");
+    // pretty_print=pretty_print.replace(/\n\s\s/igm," ");
+    console.log(pretty_print.includes("  \n"))
+    let content=`  let rules=${pretty_print}};`
+    document.getElementById("download_text_area").innerHTML=content
+    showPopup();
+}
 function redraw_preview(){
     populate_preview_color();
 }
