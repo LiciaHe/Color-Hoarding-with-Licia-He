@@ -1,5 +1,5 @@
-@use "basic";
-.flex-container, .center-start-column, .center-center-row {
+@use "basic.css";
+.flex-container, .center-start-column, .center-center-row, .center-between-row, .center-around-row {
   display: flex; }
 
 .center-start-column {
@@ -10,6 +10,16 @@
 .center-center-row {
   align-items: center;
   justify-content: center;
+  flex-direction: row; }
+
+.center-between-row {
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row; }
+
+.center-around-row {
+  align-items: center;
+  justify-content: space-around;
   flex-direction: row; }
 
 @media only screen and (max-width: 700px) {
