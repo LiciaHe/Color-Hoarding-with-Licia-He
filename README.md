@@ -9,7 +9,7 @@ This is Licia's repository for sharing her color collections and experiments.
 
 ## [Color Combo Generator](tutorial/Color_Combo_Generator)
 
-[Color Combo Generator](#todo) is a color scheme creating tool designed for generative artists. In contrast to tools that assist the curation of sets of colors, this tool help users to create color-generating rules.
+[Color Combo Generator](#todo) is a color scheme-creating tool designed for generative artists. In contrast to tools that assist in curating sets of colors, this tool helps users to create color-generating rules.
 
 
 ![color_combo_overview](tutorial/gif/03_multiple_rules.gif)
@@ -26,9 +26,9 @@ Coming in 2023
 
 ## License and Note
 
-This is a one-women project growing purely out of passion. It's not affiliated with any of brand/company/manufacturer included in the collection. The color might look significantly different if they were swatched or processed in other ways.
+This is a one-woman project growing purely out of passion. It's not affiliated with any of brand/company/manufacturer included in the collection. The color might look significantly different if they were swatched or processed in other ways.
 
-I decide to open source this project, including all the data (spreadsheet + color swatches), the code I used to process the data (in Python), and the web-based system (in Javascript).
+I decided to open source this project, including all the data (spreadsheet + color swatches), the code I used to process the data (in Python), and the web-based system (in Javascript).
 
 If you would like to support me or this project, please consider supporting organizations/movements that help women and non-binary artists & technologists. I recommend donating to organizations like [AnitaB Institute](https://anitab.org/) and [Girls Who Code](https://girlswhocode.com/).
 

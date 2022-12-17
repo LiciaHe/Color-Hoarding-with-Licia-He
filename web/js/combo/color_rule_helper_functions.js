@@ -1,13 +1,3 @@
-// let function_list=[
-//     random,
-//     choose,
-//     random_in_range,
-//     calculateScale,
-//     convert_to_accumulate_weight,
-//     closest_value_id_in_sorted_lst,
-//     chooseWithWeight,
-//     draw_colors_from_rules,
-// ];
 
 function random(){
     /**
