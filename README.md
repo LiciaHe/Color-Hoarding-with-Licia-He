@@ -15,8 +15,11 @@ This is Licia's repository for sharing her color collections and experiments.
 ![color_combo_overview](tutorial/gif/03_multiple_rules.gif)
 
 [**Read more about this tool | Turorial**](/web/color_generator.html)
+
 [**Link to the tool**](#todo)
+
 [**Link to the source code folder**](/web/color_generator.html)
+
 
 
 ## Color Swatcher 
