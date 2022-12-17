@@ -162,7 +162,7 @@ function generate(){
 
     // init_palette_div();
     //add preview_interaction
-    init_palette_preview_interaction()
+    init_palette_preview_interaction();
 }
 //responsive
 window.addEventListener("resize",()=>resize())

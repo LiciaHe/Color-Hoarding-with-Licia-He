@@ -613,21 +613,28 @@ function download_palette(){
     let rules=export_rules();
     let pretty_print=JSON.stringify(rules, undefined, 1);
     let reg1=/\n\s\s\s+/igm;
-    pretty_print=pretty_print.replace(reg1," ")
+    pretty_print=pretty_print.replace(reg1,"");
     pretty_print=pretty_print.replace(/\n\s+\},/igm,"},");
     pretty_print=pretty_print.replace(/\n\s+\}/igm,"}");
     pretty_print=pretty_print.replace(/\n\s+\],/igm,"],");
     pretty_print=pretty_print.replace(/\n\s+\]/igm,"]");
     // pretty_print=pretty_print.replace(/\n\s\s/igm," ");
-    console.log(pretty_print.includes("  \n"))
-    let content=`  let rules=${pretty_print}};`
+    let content=`let rules=${pretty_print};`
     document.getElementById("download_text_area").innerHTML=content
     showPopup();
+}
+function copy_result(){
+    let text_area=document.getElementById("download_text_area").innerHTML;
+    navigator.clipboard.writeText(text_area);
+
 }
 function redraw_preview(){
     populate_preview_color();
 }
-function download_preview(){}
+function download_preview(){
+    let copy_svg=document.getElementById("preview_svg");
+    download_svg(copy_svg,"color_combo");
+}
 
 function init_preview_rects(){
     /**

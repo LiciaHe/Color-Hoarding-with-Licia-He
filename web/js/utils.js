@@ -38,3 +38,16 @@ function hsl_to_rgb(h,s,l){
     return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
 
 }
+
+
+function download_svg(content,save_name){
+    let svgData = content.outerHTML;
+    let svgBlob = new Blob([svgData], {type:"image/svg+xml;charset=utf-8"});
+    let svgUrl = URL.createObjectURL(svgBlob);
+    let downloadLink = document.createElement("a");
+    downloadLink.href = svgUrl;
+    downloadLink.download = `${save_name}.svg`;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+}

@@ -1,3 +1,5 @@
 .idea/
 *.pyc
 web/css/.sass-cache/
+.obsidian/
+tutorial/raw/
