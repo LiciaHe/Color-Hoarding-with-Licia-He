@@ -1,21 +1,26 @@
-# Color Combo Generator 
+# Color Rule Generator 
 
-[Color Combo Generator](#todo) is a color scheme-creating tool designed for generative artists. In contrast to tools that assist in curating sets of colors, this tool helps users create color-generating rules.
+[Color Rule Generator](https://www.eyesofpanda.com/project/color_rule_generator/) is a color scheme-creating tool designed for generative artists. In contrast to tools that assist in curating sets of colors, this tool helps users create color-generating rules.
+
+[Go to the Live System](https://www.eyesofpanda.com/project/color_rule_generator/)
 
 ## Getting Started 
 
-The Color Combo Generator helps users to create a set of **color generating rules.**  Each rule is essentially a section of the 3-dimensional space formed by Hue, Saturation, and Lightness (known as [HSL](https://en.wikipedia.org/wiki/HSL_and_HSV)). Users create rules by setting a **selection range** for each of these dimensions. 
+The Color Rule Generator helps users to create a set of **color generating rules.**  Each rule is essentially a section of the 3-dimensional space formed by Hue, Saturation, and Lightness (known as [HSL](https://en.wikipedia.org/wiki/HSL_and_HSV)). Users create rules by setting a **selection range** for each of these dimensions. 
 
 ### Step 0: Adjust Lightness 
-![color_combo_overview](tutorial/gif/00_adjust_lightness.gif)
-The leftmost panel indicates the lightness level. The lightest value (0%) is on the bottom, and the darkest value (100%) is on the top. Drag yellow bars to adjust the lightness range for the current rule. 
+![color_combo_overview](gif/00_adjust_lightness.gif)
+The leftmost panel indicates the lightness level. The lightest value (0%) is on the bottom, and the darkest value (100%) is on the top. Drag yellow bars to adjust the lightness range for the current rule.  The *mean* lightness value within this range is visualized on the hue-saturation screen (the rainbow area). 
+
+e.g., the lower bar has the value of 75, the upper bar has the value of 25, then the hue-saturation screen displays a lightness value of 50. 
 
 ### Step 1: Define Hue and Saturation Range 
-![color_combo_overview](tutorial/gif/01_drag_rectangle.gif)
-Define the Hue and Saturation range by dragging a rectangle on the main (rainbow) display. A rule information panel will appear on the right. 
+![color_combo_overview](gif/01_drag_rectangle.gif)
+Define the Hue and Saturation range by dragging a rectangle on the main (rainbow) display. A rule information panel will appear on the right. You can enter adjust the rectangle by entering values on the panel, or modify the rectangle directly. 
+
 
 ### Step 2: Simulate Color Sampling from One Rule. 
-![color_combo_overview](tutorial/static/cc_control_overview.png)
+![color_combo_overview](static/cc_control_overview.png)
 <figcaption align = "center"><b>Details of the Information Panel</b></figcaption>
 
 The information panel displays the specific content of each rule. Specifically, each rule contains 
@@ -26,7 +31,7 @@ The information panel displays the specific content of each rule. Specifically, 
 5. Rule Weight:  If multiple rules exist, you can associate a weight with each rule. Rules with higher weights are more likely to be selected. 
 
 The information panel also provides a quick sample preview on the bottom of each rule.  
-![color_combo_overview](tutorial/gif/02_simulate.gif)
+![color_combo_overview](gif/02_simulate.gif)
 
 Click on the "Testing" icon to resample. 
 
@@ -34,7 +39,7 @@ Click on the "Testing" icon to resample.
 
 You can create as many rules as you want, **as long as you do not have an unfinalized/pending rule.** Finalize a rule by clicking the "Check" icon. Once the check sign is clicked, the rule information is folded, and you can start adding another rule by going through steps 0 and 1 (adjust yellow bars and create rectangles). If you want to edit a previous rule, click on the "Unfold" icon. 
 
-![color_combo_overview](tutorial/gif/03_multiple_rules.gif)
+![color_combo_overview](gif/03_multiple_rules.gif)
 
 ### Step 4: Generate Simulation 
 
@@ -103,6 +108,7 @@ Use these functions at your own risk; I cannot guarantee the bug-freeness of the
 
 - There are several known UI issues waiting to be fixed. 
 	- The lightness bars and the preview image are not automatically updated in some cases. 
+	- If the range (hue/saturation/lightness) is too small, (e.g., 10 to 10), the red rectangle or yellow bar might disappear. 
 - Might add additional export format. 
 - If you have suggestions, found a bug, or have other comments, feel free to comment on this repository, reach out to me on SNS (Twitter: [licia_he](https://twitter.com/Licia_He))
 - Read more about the license information and other project info on the [main repository page](../README.md)
