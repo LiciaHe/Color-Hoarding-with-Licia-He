@@ -7,16 +7,16 @@ This is Licia's repository for sharing her color collections and experiments.
 ## About
 [Licia He](https://www.eyesofpanda.com/) is a generative artist who loves collecting art supplies. Licia has been focused on bridging her digital and physical painting practices through digital and physical innovations.
 
-## [Color Rule Generator](Color_Rule_Generator.md)
+## [Color Rules Generator](tutorial/Color_Rules_Generator.md)
 
-[Color Rule Generator](https://www.eyesofpanda.com/project/color_rule_generator/) is a color scheme-creating tool designed for generative artists. In contrast to tools that assist in curating sets of colors, this tool helps users to create color-generating rules.
+[Color Rule Generator](https://www.eyesofpanda.com/project/color_rules_generator/) is a color scheme-creating tool designed for generative artists. In contrast to tools that assist in curating sets of colors, this tool helps users to create color-generating rules.
 
 
 ![color_combo_overview](tutorial/gif/03_multiple_rules.gif)
 
-[**Read more about this tool | Turorial**](tutorial/Color_Rule_Generator.md)
+[**Read more about this tool | Turorial**](tutorial/Color_Rules_Generator.md)
 
-[**Link to the tool**](https://www.eyesofpanda.com/project/color_rule_generator/)
+[**Link to the tool**](https://www.eyesofpanda.com/project/color_rules_generator/)
 
 [**Link to the source code folder**](/web/color_generator.html)
 

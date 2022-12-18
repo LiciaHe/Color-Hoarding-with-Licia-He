@@ -1,8 +1,8 @@
-# Color Rule Generator 
+# Color Rules Generator 
 
-[Color Rule Generator](https://www.eyesofpanda.com/project/color_rule_generator/) is a color scheme-creating tool designed for generative artists. In contrast to tools that assist in curating sets of colors, this tool helps users create color-generating rules.
+[Color Rules Generator](https://www.eyesofpanda.com/project/color_rules_generator/) is a color scheme-creating tool designed for generative artists. In contrast to tools that assist in curating sets of colors, this tool helps users create color-generating rules.
 
-[Go to the Live System](https://www.eyesofpanda.com/project/color_rule_generator/)
+[Go to the Live System](https://www.eyesofpanda.com/project/color_rules_generator/)
 
 ## Getting Started 
 
