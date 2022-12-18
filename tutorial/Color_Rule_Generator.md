@@ -55,14 +55,16 @@ The system draws a specific number of colors from each rule. All of these colors
 When selecting rules, the weights associated with rules are considered. Rules with higher weights are more likely to be chosen. 
 
 
-![color_combo_overview](04_sample_palette.gif)
+![color_combo_overview](gif/04_sample_palette.gif)
 
 - The "Redraw Palette" button will recreate the palette by resampling colors from each of the rules in the system. 
 
 - The "Redraw Preview" button will resign the colors of rectangles in the preview image. The palette will not update. 
 
 ## Step 5: Adjust Color Weight 
-![color_combo_overview](05_weight.gif)
+
+
+![color_combo_overview](gif/05_weight.gif)
 
 If users have two rules whose weights are both 1, then the preview image is likely to have a 50-50 area ratio between rule 1 and rule 2. If rule 2 is associated with a weight of 3, then the preview image is likely to have a 25:75 area ratio. 
 
@@ -70,7 +72,7 @@ The weight is defined as a range. e.g., color rule 1 has a weight between 1 and 
 
 ## Step 6: Export 
 
-![color_combo_overview](06_export.gif)
+![color_combo_overview](gif/06_export.gif)
 
 There are two export buttons: 
 1. Export Rules: it displays the rule set used in the system as a javascript variable: 
@@ -96,7 +98,7 @@ The color sample (simulations) associated with each rule is included in the `rul
 
 ## Step 7: Helper Functions 
 
-The system provides a list of [Helper Functions](web/js/combo/color_rule_helper_functions.js) that you can use to plug into your own generative systems. Specifically, you can use the `draw_color_from_rules` function to draw colors using rules and simulations created with this system. 
+The system provides a list of [Helper Functions](web/js/combo/color_rule_helper_functions.js) that you can use to plug into your own generative systems. Specifically, you can use the `draw_colors_from_rules` function to draw colors using rules and simulations created with this system. 
 
 All the dependencies of this function (e.g., random function, choose, choose with weight function) are included in the same [Helper Functions](web/js/combo/color_rule_helper_functions.js) file.  
 
@@ -104,13 +106,39 @@ You can replace the random() function with your own if you wish to test other di
 
 Use these functions at your own risk; I cannot guarantee the bug-freeness of these functions. 
 
+e.g., you have exported the following rules 
+```
+let rules={
+ "rules": {
+  "0": {"hue": [249.4,298.9],"saturation": [26.1,50.5],"lightness": [45,55],"pick": [2,4],"weight": [1,1]},
+  "1": {"hue": [209.6,254.6],"saturation": [78.5,94.5],"lightness": [69,76],"pick": [2,4],"weight": [2,5]}},
+ "rule_simulates": {
+  "0": ["#664bae","#7850be","#693faa"],
+  "1": ["#898ef2","#927cfa"]}
+};
+```
+
+running the following code will generate `x` colors from these rules
+```
+let x=3;
+let results=draw_colors_from_rules(rules["rules"],rules["rule_simulates"],x);
+```
+results is a list of list. `console.log(results)` will display information similar to this:
+
+```
+1.  0: (3)['0', 2, '#693faa'] //each list within the results list is a color selection. 
+2.  1: (3) ['1', 0, '#898ef2'] //the first value indicates the rule. e.g., this selection is associated with rule "1". 
+3.  2: (3) ['1', 1, '#927cfa']//The second value indicates the index of the color sample chosen from the rule. The third value is the selected color sample in hex format. 
+```
+
+
 ## Note | Future Todo:
 
 - There are several known UI issues waiting to be fixed. 
 	- The lightness bars and the preview image are not automatically updated in some cases. 
 	- If the range (hue/saturation/lightness) is too small, (e.g., 10 to 10), the red rectangle or yellow bar might disappear. 
 - Might add additional export format. 
-- If you have suggestions, found a bug, or have other comments, feel free to comment on this repository, reach out to me on SNS (Twitter: [licia_he](https://twitter.com/Licia_He))
+- If you have suggestions, found a bug, or have other comments, feel free to comment on this repository, or reach out to me on SNS (Twitter: [licia_he](https://twitter.com/Licia_He))
 - Read more about the license information and other project info on the [main repository page](../README.md)
 
 
