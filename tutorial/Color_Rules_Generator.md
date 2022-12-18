@@ -61,7 +61,7 @@ When selecting rules, the weights associated with rules are considered. Rules wi
 
 - The "Redraw Preview" button will resign the colors of rectangles in the preview image. The palette will not update. 
 
-## Step 5: Adjust Color Weight 
+### Step 5: Adjust Color Weight 
 
 
 ![color_combo_overview](gif/05_weight.gif)
@@ -70,7 +70,7 @@ If users have two rules whose weights are both 1, then the preview image is like
 
 The weight is defined as a range. e.g., color rule 1 has a weight between 1 and 5. The final weight used for drawing the preview image is a random number between 1 and 5. 
 
-## Step 6: Export 
+### Step 6: Export 
 
 ![color_combo_overview](gif/06_export.gif)
 
@@ -96,7 +96,7 @@ The color sample (simulations) associated with each rule is included in the `rul
 
 2. Export Preview: Download the current preview image as an svg file. 
 
-## Step 7: Helper Functions 
+### Step 7: Helper Functions 
 
 The system provides a list of [Helper Functions](web/js/combo/color_rule_helper_functions.js) that you can use to plug into your own generative systems. Specifically, you can use the `draw_colors_from_rules` function to draw colors using rules and simulations created with this system. 
 
