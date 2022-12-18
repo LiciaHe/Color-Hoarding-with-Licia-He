@@ -96,7 +96,7 @@ function remove_rule(id_tag){
     //remove the sample_div
     let sd=document.getElementById(`sample_display_${id_tag}`);
     sd.parentElement.removeChild(sd);
-    GVS(["valid_rule_id"]).remove(id_tag);
+    GVS(["valid_rule_id"]).delete(id_tag);
 }
 
 function export_rules(){
