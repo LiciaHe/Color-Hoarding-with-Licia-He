@@ -1,30 +1,307 @@
-/*
-Sass::SyntaxError: "#generator-container" failed to @extend ".flex-container".
-The selector ".flex-container" was not found.
-Use "@extend .flex-container !optional" if the extend should be able to fail.
+@use "basic";
+.flex-container, .center-start-column, #grayscale_container, #action-area, .rule, #palette_display, #palette_display #rule_sample_container, #palette_preview, #popup #popupFlex, .center-center-row, #generator-container, #palette, #palette_display #rule_sample_container .sample_display, .center-between-row, .collapsible, #palette_display #rule_sample_container .sample_display .sample_div, .center-around-row, .rule_test_mini, #palette_display #sample_action_container, #palette_preview #preview_action_container {
+  display: flex; }
 
+.center-start-column, #grayscale_container, #action-area, .rule, #palette_display, #palette_display #rule_sample_container, #palette_preview, #popup #popupFlex {
+  align-items: center;
+  justify-content: start;
+  flex-direction: column; }
 
-Backtrace:
-combo-structures.sass:5
-C:/Ruby30-x64/lib/ruby/gems/3.0.0/gems/sass-3.7.4/lib/sass/tree/visitors/extend.rb:56:in `block in check_extends_fired!'
-C:/Ruby30-x64/lib/ruby/gems/3.0.0/gems/sass-3.7.4/lib/sass/util/subset_map.rb:105:in `block in each_value'
-C:/Ruby30-x64/lib/ruby/gems/3.0.0/gems/sass-3.7.4/lib/sass/util/subset_map.rb:105:in `each'
-C:/Ruby30-x64/lib/ruby/gems/3.0.0/gems/sass-3.7.4/lib/sass/util/subset_map.rb:105:in `each_value'
-C:/Ruby30-x64/lib/ruby/gems/3.0.0/gems/sass-3.7.4/lib/sass/tree/visitors/extend.rb:51:in `check_extends_fired!'
-C:/Ruby30-x64/lib/ruby/gems/3.0.0/gems/sass-3.7.4/lib/sass/tree/visitors/extend.rb:16:in `visit'
-C:/Ruby30-x64/lib/ruby/gems/3.0.0/gems/sass-3.7.4/lib/sass/tree/root_node.rb:39:in `css_tree'
-C:/Ruby30-x64/lib/ruby/gems/3.0.0/gems/sass-3.7.4/lib/sass/tree/root_node.rb:29:in `render_with_sourcemap'
-C:/Ruby30-x64/lib/ruby/gems/3.0.0/gems/sass-3.7.4/lib/sass/engine.rb:389:in `_render_with_sourcemap'
-C:/Ruby30-x64/lib/ruby/gems/3.0.0/gems/sass-3.7.4/lib/sass/engine.rb:307:in `render_with_sourcemap'
-C:/Ruby30-x64/lib/ruby/gems/3.0.0/gems/sass-3.7.4/lib/sass/exec/sass_scss.rb:387:in `run'
-C:/Ruby30-x64/lib/ruby/gems/3.0.0/gems/sass-3.7.4/lib/sass/exec/sass_scss.rb:63:in `process_result'
-C:/Ruby30-x64/lib/ruby/gems/3.0.0/gems/sass-3.7.4/lib/sass/exec/base.rb:50:in `parse'
-C:/Ruby30-x64/lib/ruby/gems/3.0.0/gems/sass-3.7.4/lib/sass/exec/base.rb:18:in `parse!'
-C:/Ruby30-x64/lib/ruby/gems/3.0.0/gems/sass-3.7.4/bin/sass:13:in `<top (required)>'
-C:/Ruby30-x64/bin/sass:25:in `load'
-C:/Ruby30-x64/bin/sass:25:in `<main>'
-*/
-body:before {
-  white-space: pre;
-  font-family: monospace;
-  content: "Sass::SyntaxError: \"#generator-container\" failed to @extend \".flex-container\".\A The selector \".flex-container\" was not found.\A Use \"@extend .flex-container !optional\" if the extend should be able to fail.\A "; }
+.center-center-row, #generator-container, #palette, #palette_display #rule_sample_container .sample_display {
+  align-items: center;
+  justify-content: center;
+  flex-direction: row; }
+
+.center-between-row, .collapsible, #palette_display #rule_sample_container .sample_display .sample_div {
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row; }
+
+.center-around-row, .rule_test_mini, #palette_display #sample_action_container, #palette_preview #preview_action_container {
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: row; }
+
+@media only screen and (max-width: 700px) {
+  * {
+    font-size: 4vw; }
+
+  h1 {
+    font-size: 8vw; } }
+#grayscale_container {
+  flex-basis: 5%;
+  height: 100%; }
+
+#svg_container {
+  flex-basis: 70%;
+  height: 100%;
+  flex-grow: 2; }
+
+#action-area {
+  flex-basis: 25%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden; }
+
+.grayscale_bar:hover {
+  stroke-width: 4%;
+  stroke: bisque;
+  cursor: row-resize; }
+
+.init_new_rule {
+  cursor: crosshair; }
+
+.disable_new_rules {
+  cursor: default; }
+
+.rule_rect {
+  stroke-width: 0.5%;
+  fill: none;
+  pointer-events: stroke; }
+
+.rule_rect_forming {
+  stroke: cornflowerblue; }
+
+.rule_rect_pending {
+  stroke: #ef0d15;
+  stroke-width: 1.5%; }
+.rule_rect_pending:hover {
+  cursor: nwse-resize; }
+
+.rule_rect_finalized {
+  stroke: darkgray; }
+
+.rule_rect_fill {
+  stroke: none;
+  fill: white;
+  opacity: 0.01;
+  pointer-events: fill; }
+
+.rule_rect_fill_forming {
+  opacity: 0.1; }
+
+.rule_rect_fill_pending {
+  opacity: 0.05; }
+.rule_rect_fill_pending:hover {
+  cursor: move; }
+
+.rule_rect_fill_finalized {
+  opacity: 0; }
+
+#warning_div {
+  font-size: 1.5vw;
+  text-align: center;
+  height: 8vw;
+  overflow: auto; }
+
+.rule {
+  width: 100%;
+  padding: 2%; }
+
+.collapsible {
+  background-color: black;
+  color: white;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 1.75vw;
+  padding: 0.5vw;
+  flex-wrap: nowrap; }
+.collapsible .coll_rule {
+  flex-basis: 70%; }
+.collapsible .coll_test {
+  cursor: pointer; }
+.collapsible .coll_test:hover {
+  background-color: gray;
+  color: white; }
+.collapsible .coll_close {
+  cursor: pointer; }
+.collapsible .coll_close:hover {
+  background-color: gray;
+  color: white; }
+.collapsible .coll_finalize {
+  cursor: pointer; }
+.collapsible .coll_finalize:hover {
+  background-color: gray;
+  color: white; }
+
+.rule_content {
+  font-size: 1.5vw;
+  width: 100%;
+  transition: max-height 0.2s ease-out;
+  background-color: #e8e8e8;
+  display: block;
+  height: auto; }
+.rule_content div {
+  width: 100%;
+  font-size: 1.5vw;
+  padding: 0.75vw; }
+.rule_content input {
+  width: 4.8vw;
+  margin-left: 0.1vw;
+  margin-right: 0.1vw; }
+.rule_content .rule_hint:hover {
+  color: white;
+  background-color: gray;
+  cursor: help; }
+
+.hidden {
+  visibility: hidden; }
+
+.no_display {
+  display: none; }
+
+.flex_display {
+  display: flex; }
+
+.fold_content {
+  display: none; }
+.fold_content div {
+  display: none; }
+
+.rule_test_mini {
+  flex-wrap: wrap;
+  background-color: #efefef;
+  width: 100%;
+  transition: max-height 0.2s ease-out;
+  height: auto;
+  display: flex; }
+.rule_test_mini div {
+  width: 4vw;
+  height: 4vw;
+  border: 0.01vw solid #efefef;
+  margin: 0.5vw;
+  border-radius: 0.5vw; }
+
+#palette {
+  width: 100%; }
+#palette .button {
+  font-size: 2vw;
+  background-color: #01090e;
+  color: #e8e8e8;
+  margin: 0.5vw;
+  padding: 0.5vw;
+  border-radius: 0.5vw;
+  flex-basis: 5vw;
+  text-align: center; }
+#palette .button:hover {
+  background-color: gray;
+  cursor: pointer; }
+
+.title_text {
+  padding-top: 20px;
+  font-size: 4vw; }
+
+#palette_display {
+  flex-basis: 35%;
+  height: 100%;
+  border: 1px solid black; }
+#palette_display div {
+  width: 100%; }
+#palette_display .title_text {
+  flex-basis: 10%; }
+#palette_display #rule_sample_container {
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex-basis: 75%; }
+#palette_display #rule_sample_container .sample_display {
+  width: 95%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  background-color: #e8e8e8;
+  border: 2px solid white; }
+#palette_display #rule_sample_container .sample_display:hover {
+  border: 2px solid black; }
+#palette_display #rule_sample_container .sample_display .rule_id_display {
+  text-align: center;
+  font-size: 2vw;
+  flex-basis: 10%; }
+#palette_display #rule_sample_container .sample_display .rule_id_display:hover {
+  background-color: #01090e;
+  color: white;
+  cursor: pointer; }
+#palette_display #rule_sample_container .sample_display .sample_div {
+  flex-basis: 90%;
+  flex-wrap: wrap; }
+#palette_display #rule_sample_container .sample_display .sample_div div {
+  width: 4vw;
+  height: 4vw;
+  border: 0.01vw solid #efefef;
+  margin: 0.5vw;
+  border-radius: 0.5vw; }
+#palette_display #sample_action_container {
+  flex-basis: 15%; }
+
+#palette_preview {
+  flex-basis: 65%;
+  height: 100%;
+  border: 1px solid black; }
+#palette_preview div {
+  width: 100%; }
+#palette_preview #preview_svg_container {
+  height: 85%;
+  padding: 20px; }
+#palette_preview #preview_action_container {
+  height: 15%; }
+
+.hover_change, #popup #closebtn #noselect:hover, #popup #btn_copy span:hover {
+  background-color: #01090e;
+  color: white;
+  cursor: pointer; }
+
+#popup {
+  width: 80%;
+  height: 80%;
+  background-color: #f3f3f3;
+  border: 2px solid black;
+  position: fixed;
+  top: 10%;
+  left: 10%; }
+#popup #closebtn {
+  text-align: right;
+  font-size: 2vw;
+  padding: 1vw;
+  position: fixed;
+  top: 10%;
+  left: 10%;
+  width: 80%;
+  height: 5%; }
+#popup #closebtn #noselect {
+  padding: 5px; }
+#popup #btn_copy {
+  text-align: right;
+  font-size: 2vw;
+  padding: 1vw;
+  position: fixed;
+  top: 10%;
+  left: 10%;
+  width: 75%;
+  height: 5%; }
+#popup #btn_copy span {
+  padding: 5px; }
+#popup #download_text_div {
+  overflow: auto; }
+#popup #popupFlex {
+  width: 100%;
+  height: 100%; }
+#popup #popupFlex div {
+  width: 100%; }
+#popup #popupFlex #popup_title {
+  text-align: center;
+  padding: 20px;
+  background-color: white;
+  flex-basis: 15%; }
+#popup #popupFlex #download_text_div {
+  flex-basis: 85%; }
+#popup #popupFlex #download_text_div textarea {
+  width: 100%;
+  height: 99%;
+  resize: none;
+  font-size: 2vw;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  white-space: pre-wrap; }
+
+/*# sourceMappingURL=combo-structures.css.map */
