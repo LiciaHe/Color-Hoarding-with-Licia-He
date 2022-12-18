@@ -367,3 +367,58 @@ function init_popup(){
     document.getElementById("popup").style.display="none";//test only
     document.getElementById("noselect").addEventListener("click",hidePopup);
 }
+
+function link_unlink_preview_higlight_extractor(e){
+    let target_info=e.target.getAttribute("info").split("_");
+    //find sample_div_id, by index
+    let sd=document.getElementById(`sample_div_${target_info[0]}`);
+    let sd_ds=sd.children;
+    let selected_cs;
+    for (let i=0;i<sd_ds.length;i++){
+        let s=sd_ds[i].getAttribute("style");
+        if(s.includes(target_info[2])){
+            //has the hex
+            selected_cs=sd_ds[i]
+        }
+    }
+
+    let to_highlight=[e.target,selected_cs,target_info];
+    return to_highlight
+}
+function link_preview_highlight(e){
+    let to_highlight=link_unlink_preview_higlight_extractor(e);
+    update_element_attribute(
+        to_highlight[0],
+        {
+            "stroke":"FFB200FF",
+            "opacity":0.8
+        }
+    )
+    let c=to_highlight[1].getAttribute("class");
+    if (!c){
+        update_element_attribute(
+            to_highlight[1],
+            {"class":`highlighted`}
+        )
+    }else if (!c.includes("highlighted")){
+        update_element_attribute(
+            to_highlight[1],
+            {"class":`${c} highlighted`}
+        )
+    }
+    // let
+}
+function unlink_preview_highlight(e) {
+    let to_highlight = link_unlink_preview_higlight_extractor(e);
+    update_element_attribute(
+        to_highlight[0],
+        {
+            "stroke": to_highlight[2][2],//get hex value
+            "opacity":1
+        }
+    )
+    update_element_attribute(
+        to_highlight[1],
+        {"class":""}
+    )
+}

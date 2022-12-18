@@ -208,6 +208,7 @@
   //background-color: gray
   @extend .center-start-column
   border: 1px solid black
+  background-color: #efefef
   div
     //border: 1px solid black
     width: 100%
@@ -219,14 +220,16 @@
     overflow-y: auto
     overflow-x: hidden
     flex-basis: 75%
+
     .sample_display
       width: 95%
       @extend .center-center-row
       margin-top: 5px
       margin-bottom: 5px
       //padding: 20px
-      background-color: #e8e8e8
+      background-color: #f6f1f1
       border: 2px solid white
+      border-radius: 2px
       &:hover
         border: 2px solid black
       .rule_id_display
@@ -356,4 +359,9 @@
 
 
 
+
+
+.highlighted
+  border: 4px solid rgb(255, 178, 0) !important
+  //padding: 20px
 

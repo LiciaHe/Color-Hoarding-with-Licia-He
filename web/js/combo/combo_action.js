@@ -292,7 +292,8 @@ function pass_hue_saturation_information(id_tag){
         }
     }
 }
-function populate_color_div(div_id,id_tag,sr_hexs){
+function populate_color_div(div_id,id_tag){
+    let sr_hexs=GVS(["sim_result"])[id_tag];
     let div=document.getElementById(`${div_id}_${id_tag}`);
     let color_blocks=Array.from(div.getElementsByTagName("div"));
 
@@ -311,7 +312,7 @@ function populate_color_div(div_id,id_tag,sr_hexs){
             update_element_attribute(
                 div,
                 {
-                    "background-color":sr_hexs[i]
+                    "style":`background-color:${sr_hexs[i]};`
                 }
             )
         }
@@ -326,11 +327,15 @@ function populate_simulation(id_tag){
     let rule_values=get_rule_values_by_id(id_tag);
     let simulate_results_hsl=run_single_rule_simulation(rule_values);
     let sr_hexs=simulate_results_hsl.map((hsl)=>hslToHex(...hsl));
-    GVS(["sim_result"])[id_tag]=sr_hexs;
-    let rule_test_div=document.getElementById(`rule_test_m_${id_tag}`);
 
-    populate_color_div("rule_test_m",id_tag,sr_hexs);
-    populate_color_div("sample_div",id_tag,sr_hexs);
+    //store the sr_hexes
+    GVS(["sim_result"])[id_tag]=sr_hexs;
+    // let rule_test_div=document.getElementById(`rule_test_m_${id_tag}`);
+
+
+    populate_color_div("rule_test_m",id_tag);
+    populate_color_div("sample_div",id_tag);
+
 
     //will trigger preview change
     if(GVS(["valid_rule_id"]).size>0){
@@ -604,6 +609,7 @@ function redraw_palette(){
     valid_id.forEach(
         (id)=>populate_simulation(id)
     )
+    populate_preview_color();
 }
 function download_palette(){
     /**
@@ -657,12 +663,14 @@ function init_preview_rects(){
             attr["id"]=`preview_block_${idx}`;
             attr["x"]=`${x}%`;
             attr["y"]=`${y}%`;
-            addElementToSvg(
+            let rect=addElementToSvg(
                 "rect",
                 attr,
                 selector
             )
             idx+=1
+            rect.addEventListener("mouseenter",link_preview_highlight)
+            rect.addEventListener("mouseleave",unlink_preview_highlight)
         }
     }
 
@@ -680,6 +688,7 @@ function populate_preview_color(){
             {
                 "fill":hex,
                 "stroke":hex,
+                "info":`${draw_result[idx][0]}_${draw_result[idx][1]}_${draw_result[idx][2]}`
             })
     }
 }

@@ -196,7 +196,8 @@
 #palette_display {
   flex-basis: 35%;
   height: 100%;
-  border: 1px solid black; }
+  border: 1px solid black;
+  background-color: #efefef; }
   #palette_display div {
     width: 100%; }
   #palette_display .title_text {
@@ -209,8 +210,9 @@
       width: 95%;
       margin-top: 5px;
       margin-bottom: 5px;
-      background-color: #e8e8e8;
-      border: 2px solid white; }
+      background-color: #f6f1f1;
+      border: 2px solid white;
+      border-radius: 2px; }
       #palette_display #rule_sample_container .sample_display:hover {
         border: 2px solid black; }
       #palette_display #rule_sample_container .sample_display .rule_id_display {
@@ -303,5 +305,8 @@
         -moz-box-sizing: border-box;
         box-sizing: border-box;
         white-space: pre-wrap; }
+
+.highlighted {
+  border: 4px solid #ffb200 !important; }
 
 /*# sourceMappingURL=combo-structures.css.map */
